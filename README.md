@@ -6,15 +6,15 @@
 
 `/` — Главная страница
 
-`/menu/` — Редирект на категорию по умолчанию
+`/catalog/` — Редирект на категорию по умолчанию
 
-`/menu/<category>/` — Список товаров в категории
+`/catalog/<category>/` — Список товаров в категории
 
-`/menu/<category>/<product>/` — Карточка товара
+`/catalog/<category>/<product>/` — Карточка товара
 
-`/profile/` — Профиль с настройками
+`/i/` — Профиль с настройками
 
-`/profile/history` — История заказов
+`/i/history` — История заказов
 
 `/actions/` — Список акций
 
@@ -34,353 +34,170 @@
 
 `/order/` — Оформление заказа
 
-
 ## Апи
 
-`/api/` — адрес обработки поступающих запросов. Ключ ключ апи передаётся в ключ пост-запроса.
+`/api/<method>?<parametrs>` — адрес обработки поступающих запросов.
 
-Ответом должен быть объект с ключами, например, на запрос `/api/` c ключами `menu`, `product=1` и `product=margarita` должно вернуться:
+### Список методов
 
+#### catalog
+
+Возвращает список категорий
 
 ```javascript
-{
-	"menu": { ... },
-	"product-1": { ... },
-	"product-margarita": { ... }
-}
+[
+    {
+        id: 1, // индентификатор категории
+        alt: "pizza", // адрес страницы
+        name: "Пицца", // название
+        image_small: "pizza-small.png", // маленькая картинка
+        image_medium: "pizza-big.png", // большая картинка
+        countProducts: 34, // количество товаров
+        products: [ // товары категории, доступен с параметром get_products
+            { id: 1, ... },
+            ...
+        ],
+        tags: [
+            { tagId: 1, name: "Лёгкая" },
+            ...
+        ]
+    },
+    ...
+]
 ```
 
+Доступные параметры
+
+|---|
+| category_id | поиск по id |
+| category_alt | поиск по ссылке |
+| get_products | возвращат категории со списком товаров, доступные поля: `id`, `alt`, `name`, `image_small`, `image_medium`, `image_big`, `price`, `price_old`, `categoryId`, `weight`, `tags`   |
+| get_products_limit | количество продуктов для категории, _доступен только с get_products_ |
 
 
-## Ключи апи
+#### product
 
-
-`menu` — список категорий в меню
-
+Возвращает список товаров
+ 
 ```javascript
-{
-	"category": {
-		"id": 1,
-		"name": "Пицца",
-		"alt": "pizza",
-		"image-small": "/f/images/category/pizza-small.png", // маленькая 
-		"image-medium": "/f/images/category/pizza-medium.png", // средняя
-		"count": 24,
-		"tags": [
-			{
-				"id": 1,
-				"name": "Что-нибудь острое",
-			},
-			...
-		]
-	},
-	...
-}
-```
-
-
-`menu=<alt|id>` — список товаров в категории
-
-```javascript
-{
-	"category-<id>": [ 1, ... ],
-	"product-1": [ ... ], // см. ключ product=<alt|id>,<alt|id>...
-	...
-}
-```
-
-
-`product=<alt|id>,<alt|id>...` — информация о товаре
-
-```javascript
-{
-	"product-<alt|id>": {
-		"id": 1,
-		"name": "Маргарита",
-		"alt": "margarita",
-		"image-small": "/f/images/menu/margarita-small.png",
-		"image-medium": "/f/images/menu/margarita-medium.png",
-		"image-big": "/f/images/menu/margarita-big.png",
-		"price": 299.1,
-		"oldPrice": 199,
-		"category": 1,
-		"weight": 500, // в граммах
-		"count": 20, // для наборов
-		"part": "Сыр моцарелла, ...",
-		"sauce": [
-			{
-				"id": 1,
-				"name": "Соевый"
-			}
-		],
-		"bake": 30, // цена запекания, если не указанна, то запекание невозможно
-		"toppingsMaxCount": 3, // макс. количество выбранных топпингов
-		"toppings": [
-			{
-				"id": 1,
-				"name": "Авокадо",
-				"price": 15,
-			},
-			...
-		],
-		foodValue: [
-			{
-				"name": "Белки",
-				"notation": "г",
-				"value": 15,
-				"max": 108
-			},
-			...
-		]
-	},
-	...
-}
-```
-
-
-`banners` — баннеры на главной странице
-```javascript
-{
-	"banners": [
-		{
-			"productID": 1,
-			"bgImage": "/f/images/banners/super-bg.png",
-			"productImage": "/f/images/banners/super-product.png",
-		},
-		...
-	],
-	"product-1": { ... }
-}
-```
-
-
-`banners` — баннеры на главной странице
-```javascript
-{
-	"banners": [
-		{
-			"productID": 1,
-			"bgImage": "/f/images/banners/super-bg.png",
-			"productImage": "/f/images/banners/super-product.png",
-		},
-		...
-	],
-	"product-1": { ... }
-}
-```
-
-
-`city` — список городов
-```javascript
-{
-	"city": [
-		{
-			'id': 1,
-			'name': "Санкт-Петербург и ЛО",
-		},
-		...
-	]
-}
-```
-
-
-`city=<id>` — список магазинов в городе
-```javascript
-{
-	"city-1": {
-		"groups": [
-			{
-				"id": 1,
-				"name": "Нарвская",
-				"color": "#000"
-			}
-		],
-		"shops": [
+[
+    {
+        "id": 1,
+        "name": "Маргарита",
+        "alt": "margarita",
+        "image_small": "margarita-small.png",
+        "image_medium": "margarita-medium.png",
+        "image_big": "margarita-big.png",
+        "price": 299.1,
+        "price_old": 199,
+        "category": 1,
+        "tags": [ 1, ... ],
+        "label": "star", // бейдж, доступны: star, veg, hot, new, discount
+        "weight": 500, // вес, в граммах
+        "count": 20, // количество эллементов, для наборов
+        "part": "Сыр моцарелла, ...", // состав
+        "sauce": [ // соусы
             {
-                "adres": "Старо-Петергофский пр., 52",
-                "coord": {
-                    "lat": 0.000000,
-                    "lng": 0.000000
-                },
-                "mode": {
-                    "to": "10:00",
-                    "from": "10:00",
-                },
-                "phone": "+78127779277",
-                "delivery": true,
-                "new": true,
-                "groups": [ 1, 2, ... ]
+                "id": 1,
+                "name": "Соевый"
+            }
+        ],
+        "bake": 30,
+        "toppings_max": 3, // макс. количество выбранных топпингов
+        "toppings": [ // список топингов
+            {
+                "id": 1,
+                "name": "Авокадо",
+                "price": 15,
+            },
+            ...
+        ],
+        food_value: [ // состав
+            {
+                "name": "Белки",
+                "notation": "г",
+                "value": 15,
+                "value_max": 108
             },
             ...
         ]
-	}
-}
+    }
+]
 ```
 
+Доступные параметры
 
-`actions` — список акций
+| --- |
+| product_id | поиск по id |
+| product_alt | поиск по ссылке |
+| product_limit | количество |
+| product_category | пренадлежащие категории |
+
+
+#### city
+
+Возвращает список городов и регионов
+
 ```javascript
 {
-	"actions": [
-		{
-			"id": 1,
-			"name": "Конкурс фуд-фото в Инстаграме",
-			"image": "/f/images/actions/food-foto-insta-medium.jpg",
-			"alt": "food-foto-insta",
-		},
-		...
-	]
+    city: [
+        {
+            id: 2,
+            name: 'Всеволожск',
+            group_id: 1, // группа, если город находится в группе
+            place_id: 'ChIJ_8Y8ln8blkYRSNyeP5aeVmI'
+        }
+    ],
+    groups: [
+        {
+            id: 1,
+            name: 'Ленинградская область'
+        }
+    ],
+    sort: [
+        {
+            type: 'city',
+            id: 1
+        },
+        {
+            type: 'group',
+            id: 1
+        }
+    ]
 }
 ```
 
-`actions=<id|alt>` — карточка акции
+#### shops
+
+Возвращает список магазинов и групп
+
 ```javascript
 {
-	"actions-<alt|id>": {
-		"id": 1,
-		"name": "Конкурс фуд-фото в Инстаграме",
-		"alt": "food-foto-insta",
-		"content": "...",
-		"image": "/f/images/actions/food-foto-insta-big.jpg",
-	}
+    shops: [
+        {
+            id: 1,
+            adres: "Невский проспект, 5",
+            geo_lat: 40.72,
+            geo_lng: -73.96,
+            phone: "+79992006971",
+            group_id: 1,
+            is_new: true,
+            is_delivery: true,
+            mode_from: "10:00",
+            mode_to: "20:00"
+        }
+    ],
+    groups: [
+        {
+            id: 1,
+            name: "Купчино",
+            color: "#000"
+        }
+    ]
 }
 ```
 
+Доступные параметры
 
-`journal` — список статей в журнале.
-Доступны модификаторы `journal_tag=<id|alt>` и `journal_limit=<count>`. 
-```javascript
-{
-	"journal": [
-		{
-			"id": 1,
-			"name": "Открываем два сушишопа",
-			"descr": "...",
-			"alt": "open-two-sushishop",
-			"bg": {
-				"color": {
-					"from": "#000",
-					"to": "#fff"
-				},
-				"image": "/f/images/journal/open-two-sushishop-medium.jpg",
-			},
-			"tags": [ 1, ... ]
-		},
-		...
-	]
-}
-```
-
-
-`journal=<id|alt>,...` — карточка акции
-```javascript
-{
-	"journal-<alt|id>": {
-		"id": 1,
-		"name": "Конкурс фуд-фото в Инстаграме",
-		"alt": "food-foto-insta",
-		"content": "...",
-		"tags": [ 1, ... ]
-	}
-}
-```
-
-
-`journal-tags` — список тегов в журнале
-```javascript
-{
-	"journal-tags": [
-		{
-			"id": 1,
-			"name": "Рецепты",
-			"alt": "recipes"
-		},
-		...
-	]
-}
-```
-
-
-`company` — страница компании
-```javascript
-{
-	"company": [
-		"growth": [ 
-			{
-				"year": 2011,
-				"count": 0,
-				"diameter": 10,
-				"forecast": true
-			},
-			...
-		],
-		"ownRecipes": 80, // процентов собственных рецептов
-		"employeesPerMonth": 472 // количество новых сотрудников в месяц,
-		"opening": {
-			"invest": 1300000,
-			"payback": 6,
-			"success": 200
-		}
-	]
-}
-```
-
-
-`feedback=<json>` — отправка отзыва
-Передаём в `<json>`:
-```javascript
-{
-	"name": "Шкуренко Артём Игоревич",
-	"phone": "+79992006971",
-	"email": "artshkurenko@ya.ru",
-	"images": [ ... ],
-	"story": "...",
-	"shopId": 1 
-}
-```
-Получаем:
-```javascript
-{
-	"feedback": {
-		"status": "ok" // ok, error
-	}
-}
-```
-
-
-`reg=<json>` — регистрация
-Передаём в `<json>`:
-```javascript
-{
-	"name": "Шкуренко Артём Игоревич",
-	"phone": "+79992006971"
-}
-```
-Получаем в `<json>`:
-```javascript
-{
-	"reg": {
-		"status": "ok" // ok, error
-	}
-}
-```
-
-
-`reg-confirm=<code>` — подтверждение регистрации по коду из смс
-```javascript
-{
-	"reg-confirm": {
-		"status": "ok" // ok, error
-	}
-}
-```
-
-
-`reg-confirm-repeat` — запросить код подтверждение регистрации ещё раз
-```javascript
-{
-	"reg-confirm-repeat": {
-		"status": "ok" // ok, error
-	}
-}
-```
+| --- |
+| shop_id | поиск по id |
