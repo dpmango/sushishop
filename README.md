@@ -48,8 +48,8 @@
 [
     {
         id: 1,
-        labelImage: 'swagset-label.png',
-        productImage: 'swagset-product.png',
+        label_image: 'swagset-label.png',
+        product_image: 'swagset-product.png',
         productId: 1
     }
 ]
@@ -69,7 +69,7 @@
         name: "Пицца", // название
         image_small: "pizza-small.png", // маленькая картинка
         image_medium: "pizza-big.png", // большая картинка
-        countProducts: 34, // количество товаров
+        count_products: 34, // количество товаров
         products: [ // товары категории, доступен с параметром get_products
             { id: 1, ... },
             ...
