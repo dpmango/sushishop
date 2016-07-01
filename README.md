@@ -50,8 +50,8 @@
         id: 1,
         label_image: 'swagset-label.png',
         product_image: 'swagset-product.png',
-        bg_image: 'swagset-bg.png',
-        productId: 1
+        bg_image: 'swagset-bg.jpg',
+        product_id: 1
     }
 ]
 ```
