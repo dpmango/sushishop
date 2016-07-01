@@ -58,11 +58,9 @@
             ...
         ],
         tags: [
-            { tagId: 1, name: "Лёгкая" },
-            ...
+            { tagId: 1, name: "Лёгкая" }
         ]
-    },
-    ...
+    }
 ]
 ```
 
@@ -132,6 +130,7 @@
 | product_alt | поиск по ссылке |
 | product_limit | количество |
 | product_category | пренадлежащие категории |
+| shop_id | поиск по магазину |
 
 
 #### city
@@ -144,8 +143,7 @@
         {
             id: 2,
             name: 'Всеволожск',
-            group_id: 1, // группа, если город находится в группе
-            place_id: 'ChIJ_8Y8ln8blkYRSNyeP5aeVmI'
+            group_id: 1 // группа, если город находится в группе
         }
     ],
     groups: [
@@ -183,8 +181,9 @@
             group_id: 1,
             is_new: true,
             is_delivery: true,
-            mode_from: "10:00",
-            mode_to: "20:00"
+            mode_from: "10-00",
+            mode_to: "20-00",
+            city_id: 1
         }
     ],
     groups: [
@@ -201,3 +200,369 @@
 
 | --- |
 | shop_id | поиск по id |
+| city_id | поиск по городу |
+
+
+#### journal
+
+Возвращает список анонсов
+
+```javascript
+[
+    {
+        id: 1,
+        alt: "open-two-narian-mare",
+        name: "Открываем два СушиШопа в Нарьян-Маре",
+        descr: "В карю холодных рек ...",
+        category: [ 1, 2 ],
+        image_medium: "open-two-narian-mare-medium.jpg",
+        bg_to: "#000",
+        bg_from: "#fff"
+    }
+]
+```
+
+Доступные параметры
+
+| --- |
+| category_id | поиск по категории |
+| limit | количество |
+| offset | смещение |
+
+
+#### journal.category
+
+Возвращает список категорий журнала
+
+```javascript
+[
+    {
+        id: 1,
+        alt: "recipes",
+        name: "Рецепты"
+    }
+]
+```
+
+
+#### journal.article
+
+Возвращает статью из журнала
+
+```javascript
+[
+    {
+        id: 1,
+        alt: "sushi-burito",
+        content: "<img src=\"burito.jpg\">...",
+        product_id: 1,
+        next_article: {
+            id: 2,
+            alt: "kartofelnye-krokety",
+            image_small: "kartofelnye-krokety-small.jpg",
+            name: "Картофельные крокеты за 10 минут"
+        }
+    }
+]
+```
+
+Доступные параметры
+
+| --- |
+| article_id | поиск по id |
+| article_alt | поиск по ссылке |
+
+
+#### company
+
+Возвращает данные для страницы компании
+
+```javascript
+{
+    growth: [
+        {
+            year: 2011,
+            diameter: 10, // в пикселях
+            count: 5,
+            is_forecast: true
+        }
+    ],
+    own_recipes: 80, // процент собственных рецептов
+    joined_staff_month: 472, // новопришедших сотрудников,
+    initial_investment: 1300000, // первоначальные инвестиции, руб
+    average_return: 6, // средняя окупаемость, месяцев
+    successful_franchisors: 200 // успешных франчайзиров
+}
+```
+
+
+#### vacancies
+
+Возвращает вакансии
+
+```javascript
+[
+    {
+        id: 1,
+        name: 'Су-шеф',
+        city_id: 1,
+        price: 40000,
+        price_to: 135,
+        price_from: 150,
+        price_value: 'ч', // ч, смена,
+        recruiter: {
+            name: "Иннокентий Христорождественский",
+            phone: "+79999876599"
+        },
+        requirements: [ // Требования
+            "опыт работы ..."
+        ],
+        duties: [ // Обязанности
+            "Организация работы ..."
+        ],
+        conditions: [ // Условия
+            "Бесплатное питание"
+        ]
+    }
+]
+```
+
+Доступные параметры
+
+| --- |
+| city_id | поиск по городу |
+
+
+#### success_stories
+
+Выводит список историй успеха
+
+```javascript
+[
+    {
+        id: 1,
+        name: "Иннокентий Христорождественский",
+        post: "Региональный управляющий",
+        in_team: "В команде с октября 2011 г.",
+        content: "<p>Пришёл в компанию</p>",
+        image_small: "pasha-small.jpg",
+        image_big: "pasha-big.jpg"
+    }
+]
+```
+
+
+#### actions
+
+Выводит список акций
+
+```javascript
+[
+    {
+        id: 1,
+        name: "Конкурс фуд-фото в инстаграмме",
+        image: "konkurs-foodfooto.jpg"
+    }
+]
+```
+
+Доступные параметры
+
+| --- |
+| city_id | поиск по городу |
+
+
+
+
+
+#### form
+
+Отправляет форму
+
+```javascript
+{
+    status: "success" // success, error
+}
+
+```
+
+Доступные параметры
+
+| --- |
+| name | название формы (латиницей) |
+| value | объект заполненных полей (формата ключ: значение) |
+
+
+
+
+
+#### order
+
+Оформление заказа
+
+```javascript
+{
+    status: "success" // success, error,
+    order_id: 1234567890,
+    pay_link: "https://alfa..." 
+}
+
+```
+
+
+Список продуктов
+```javascript
+[
+    {
+        product_id: 1,
+        count: 1,
+        toppings: [ 1 ],
+        sauce_id: 1,
+    }
+]
+```
+
+
+Доступные параметры
+
+| --- |
+| shop_id | id города |
+| products | список продуктов |
+| delivery | адрес доставки |
+| persons | количество персон |
+| phone | телефон |
+| cook_time | приготовить ко времени |
+| pay_id | id способа оплаты |
+| fio |имя |
+| phone | телефон |
+
+
+
+
+#### register
+
+Регистрация
+
+```javascript
+{
+    status: "success" // success, error, phone_used — телефон есть в базе
+}
+
+```
+
+
+Доступные параметры
+
+| --- |
+| fio | имя |
+| phone | телефон |
+
+
+
+#### register.confirm
+
+Подтверждение регистрации
+
+```javascript
+{
+    status: "success" // success, error
+}
+
+```
+
+
+Доступные параметры
+
+| --- |
+| code | код подтверждения |
+
+
+#### auth
+
+Авторизация
+
+```javascript
+{
+    status: "success" // success, error
+}
+
+```
+
+
+Доступные параметры
+
+| --- |
+| phone | телефон |
+| password | пароль |
+
+
+#### change_password
+
+Смена пароля
+
+```javascript
+{
+    status: "success" // success, error
+}
+
+```
+
+
+Доступные параметры
+
+| --- |
+| password_old | старый пароль |
+| password_new | новый пароль |
+
+
+#### profile
+
+Профиль
+
+```javascript
+{
+    name: "Артём Шкуренко",
+    phones: [
+        "+79992006971",
+        "+79002546984"
+    ],
+    discount: 10 // проценты
+}
+
+```
+
+
+#### order_history
+
+История заказов
+
+
+```javascript
+[
+    {
+        id: 123456789,
+        date: "2015-12-15",
+        products: [
+            {
+                id: 1,
+                name: "Спринг-ролл",
+                count: 1,
+                price: 290,
+                toppings: [
+                    {
+                        id: 1,
+                        name: "Огурец"
+                    }
+                ],
+                sauce: {
+                    id: 1,
+                    name: "Спайси соус"
+                },
+                bake: true
+            }
+        ],
+        city_id: 1,
+        adres: "Шлиссельбургский пр., 46" // для доставки
+    }
+]
+```
