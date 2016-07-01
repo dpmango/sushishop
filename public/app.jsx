@@ -1,67 +1,47 @@
-window.React = require('react');
-window.ReactDOM = require('react-dom');
-window.ReactDOM = require('react-dom');
-window.Router = require('react-router').Router;
-window.Route = require('react-router').Route;
-window.Link = require('react-router').Link;
-window.browserHistory = require('react-router').browserHistory;
+Router = require('react-router');
+Route = Router.Route;
+Link = Router.Link;
+browserHistory = Router.browserHistory;
+IndexRoute = Router.IndexRoute;
+IndexRedirect = Router.IndexRedirect;
+Router = Router.Router;
+objectAssign = require('object-assign');
+Redux = require('redux');
+createStore = Redux.createStore;
+combineReducers = Redux.combineReducers;
+ReactRedux = require('react-redux');
+Provider = ReactRedux.Provider;
+connect = ReactRedux.connect;
 
-window.Extends = require('./blocks/_extends/_extends.jsx');
-window.Header = require('./blocks/header/header.jsx');
-window.Nav = require('./blocks/nav/nav.jsx');
 
 
-var About = React.createClass({
-    render() {
-        return (
-            <div>
-                about
-            </div>
-        );
-    }
-});
-var Users = React.createClass({
-    render() {
-        return (
-            <div>
-                Users
-            </div>
-        );
-    }
-});
-var User = React.createClass({
-    render() {
-        return (
-            <div>
-                User
-            </div>
-        );
-    }
-});
-var NoMatch = React.createClass({
-    render() {
-        return (
-            <div>
-                NoMatch
-            </div>
-        );
-    }
-});
+App = require('./blocks/App/App.jsx');
+Header = require('./blocks/Header/Header.jsx');
+Nav = require('./blocks/Nav/Nav.jsx');
+Index = require('./blocks/Index/Index.jsx');
+Catalog = require('./blocks/Catalog/Catalog.jsx');
+CatalogCategory = require('./blocks/CatalogCategory/CatalogCategory.jsx');
+CatalogProduct = require('./blocks/CatalogProduct/CatalogProduct.jsx');
+Icon = require('./blocks/Icon/Icon.jsx');
+MainBanners = require('./blocks/MainBanners/MainBanners.jsx');
+MainBanner = require('./blocks/MainBanner/MainBanner.jsx');
+Swiper = require('./blocks/Swiper/Swiper.jsx');
+Decl = require('./blocks/Decl/Decl.jsx');
 
+store = createStore(require('./reducer.jsx'));
 
 ReactDOM.render((
-    <Router history={browserHistory}>
-        <Route path="/" component={Extends}>
-            <Route path="menu" component={Menu}>
-                <Route path=":categoryId" component={MenuCategory}>
-                    <Route path=":productId" component={MenuProduct}/>
+    <Provider store={store}>
+        <Router history={browserHistory}>
+            <Route path="/" component={App}>
+                <IndexRoute component={Index}/>
+                <Route path="catalog" component={Catalog}>
+                    <IndexRedirect to="rolls" />
+                    <Route path=":categoryId" component={CatalogCategory}>
+                        <Route path=":productId" component={CatalogProduct}/>
+                    </Route>
                 </Route>
             </Route>
-            <Route path="*" component={NoMatch}/>
-        </Route>
-    </Router>
-), document.getElementById('extends'));
-
-
-
-// ReactDOM.render(<Extends />, document.getElementById('extends'));
+        </Router>
+    </Provider>
+), document.getElementById('app'));

@@ -1,9 +1,8 @@
 module.exports = React.createClass({
-    render() {
+    render: function() {
         return (
             <div>
-                {this.props.children}
-                <Header />
+                <MainBanners/>
             </div>
         );
     }

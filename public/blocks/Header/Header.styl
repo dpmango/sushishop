@@ -1,0 +1,186 @@
+.header
+	background $color__white
+	box-shadow 0 2px 4px 0 alpha($color__black, .2)
+	display flex
+	@media (min-width 1100px)
+		height 102px
+	@media (min-width 900px) and (max-width 1100px)
+		height 82px
+	@media (max-width 900px)
+		height 50px
+	&__inner
+		display flex
+		@media (min-width 900px)
+			flex-direction row
+			align-items stretch
+			width 100%
+			max-width 1280px
+			margin 0 auto
+		@media (max-width 900px)
+			position absolute
+			left -273px
+			width 273px
+			flex-direction column
+			background $color__white
+			height 100vh
+			z-index 100
+			box-shadow 0 0 0 500px alpha($color__gray, 0)
+			transition .3s box-shadow
+			.open-menu &
+				box-shadow 0 0 0 500px alpha($color__gray, .75)
+	&__logo
+		display flex
+		@media (min-width 900px)
+			align-items center
+			min-width 214px
+			padding 0 30px
+		@media (max-width 900px)
+			padding 20px 16px
+			width 100%
+			box-sizing border-box
+			min-width 207px
+		&_active
+			cursor default
+		.logo-icon
+			fill #F16722
+			@media (max-width 900px)
+				width 39px
+				height 40px
+			@media (min-width 900px)
+				width 41px
+				height 42px
+		.logo-text
+			fill #323232
+			margin-left 13px
+			@media (max-width 900px)
+				width 153px
+				height 40px
+			@media (min-width 900px)
+				width 160px
+				height 42px
+	&__nav
+		width 100%
+		display flex
+	&__profile
+		display flex
+		align-items center
+		@media (min-width 900px)
+			padding 18px 32px 18px 18px
+			min-width 34px
+		@media (max-width 900px)
+			border-top 1px solid lighten($color__gray_light, 50%)
+			padding 7px 16px
+			margin-top 45px
+		&:hover
+			svg
+				fill $color__orange
+				transition-duration .05s
+		&:active
+			svg
+				fill $color__orange_dark
+		svg
+			width 36px
+			height 36px
+			fill $color__gray
+			transition .3s fill
+		span
+			white-space nowrap
+			font-size 18px
+			text-transform uppercase
+			font-weight bold
+			margin-left 10px
+			@media (min-width 900px)
+				display none
+	&__mobile
+		@media (min-width 900px)
+			display none
+		@media (max-width 900px)
+			display flex
+			flex-direction row
+			align-items stretch
+			width 100%
+			position relative
+	&__header
+		display flex
+	&__burger
+		display flex
+		min-width 26px
+		padding 0 22px 0 11px
+		position relative
+		opacity .75
+		transition .2s opacity
+		&:active
+			opacity 1
+			transition-duration .05s
+		&:before
+			content ''
+			display block
+			width 26px
+			height 4px
+			background $color__gray
+			top 14px
+			left 11px
+			position absolute
+			box-shadow 0 9px 0 0 $color__gray,  0 18px 0 0  $color__gray
+	&__logo-mobile
+		display flex
+		width 100%
+		&:active
+			svg
+				fill $color__orange_dark
+		&_active
+			cursor default
+		svg
+			width 30px
+			height 30px
+			fill $color__orange
+			margin 0 auto
+			align-self center
+			position absolute
+			left 50%
+			top 50%
+			margin -15px 0 0 -15px
+	&__cart
+		display flex
+		flex-wrap nowrap
+		padding 0 10px 0 20px
+		font-size 14px
+		min-width 90px
+	&__cart-package
+		display flex
+		flex-wrap nowrap
+		position relative
+		align-self center
+		margin 0 0 0 8px
+		min-width 28px
+		height 31px
+		svg
+			width 28px
+			height 31px
+			fill $color__orange
+			position relative
+			z-index 40
+			left 0
+			top -2px
+		span
+			position absolute
+			color $color__white
+			width 100%
+			z-index 50
+			left 0
+			right 0
+			top 9px
+			text-align center
+	&__cart-price
+		align-self center
+		width 100%
+		text-align right
+		color alpha($color__gray_dark, .5)
+	&__bg
+		position absolute
+		z-index 90
+		width 100vh
+		height 100vh
+		right 100vh
+		.open-menu &
+			right 0

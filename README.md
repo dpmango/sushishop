@@ -40,6 +40,23 @@
 
 ### Список методов
 
+
+#### banners
+
+Возвращает список баннеров
+```javascript
+[
+    {
+        id: 1,
+        labelImage: 'swagset-label.png',
+        productImage: 'swagset-product.png',
+        productId: 1
+    }
+]
+```
+
+
+
 #### catalog
 
 Возвращает список категорий

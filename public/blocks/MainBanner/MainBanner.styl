@@ -1,0 +1,96 @@
+.main-banner
+	height 400px
+	color $color__white
+	background #393836 center center
+	background-size cover
+	&__product
+		position absolute
+		left 56.5%
+		top 0
+		bottom 0
+		display flex
+		align-items center
+		justify-content center
+		width 610px
+		margin-left -305px
+		img
+			max-width 100%
+			max-height 100%
+	&__info
+		position absolute
+		text-align center
+		display flex
+		flex-flow column
+		align-items center
+		justify-content center
+		width 340px
+		left 100px
+		top 0
+		bottom 0
+	&__category
+		font-size 14px
+		text-transform uppercase
+		letter-spacing .075em
+		margin-bottom 20px
+	&__label
+		max-width 100%
+		margin-bottom 14px
+	&__props
+		font-size 14px
+		margin-bottom 14px
+	&__part
+		font-size 16px
+		line-height 1.1
+		padding 0 10%
+	&__price
+		position absolute
+		right 75px
+		top 0
+		bottom 0
+		width 200px
+		text-align center
+		display flex
+		flex-flow column
+		align-items center
+		justify-content center
+	&__price-now
+		font-weight bold
+		font-size 42px
+		position relative
+		line-height 1
+		display inline-block
+		span
+			font-size 20px
+			font-weight normal
+			vertical-align top
+			padding-top 2px
+			display inline-block
+	&__price-old
+		font-size 26px
+		opacity .6
+		position relative
+		display inline-block
+		svg
+			position absolute
+			width 170%
+			height 100%
+			left -35%
+			top 0
+			stroke $color__white
+			stroke-width 2.75px
+	&__buy
+		color $color__white
+		background $color__orange
+		font-size 18px
+		text-transform uppercase
+		letter-spacing .075em
+		padding 16px 29px 14px 29px
+		border-radius 40px
+		display inline-block
+		transition-property background
+		&:hover, &:active
+			color $color__white
+		&:hover
+			background lighten($color__orange, 10%)
+		&:active
+			background darken($color__orange, 10%)

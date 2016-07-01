@@ -1,23 +1,11 @@
-const NavItem = React.createClass({
-    render() {
-        return (
-            <a href={this.props.link}>
-                {this.props.name}
-            </a>
-        );
-    }
-});
-
 module.exports = React.createClass({
-    render() {
+    render: function() {
         return (
             <nav className="nav">
-                {
-                    NAV.map(function (item) {
-                        // if (!item.link) item.link = false;
-                        return <NavItem key={item.section} link={item.link} name={item.name} />
-                    })
-                }
+                <Link to="/catalog/rolls" className="nav__item" activeClassName="nav__item_active">Меню</Link>
+                <Link to="/actions" className="nav__item" activeClassName="nav__item_active">Акции</Link>
+                <Link to="/shops" className="nav__item" activeClassName="nav__item_active">Магазины</Link>
+                <a href="//www.sushishop-fr.ru/" className="nav__item" target="_blank">Франшиза</a>
             </nav>
         );
     }

@@ -1,0 +1,35 @@
+.main-banners
+	.swiper-button-prev, .swiper-button-next
+		position absolute
+		width 15px
+		height 60px
+		top 50%
+		z-index 90
+		padding 20px
+		margin-top -50px
+		&:not(.swiper-button-disabled):hover
+			cursor pointer
+			svg
+				transition-duration .15s
+		&.swiper-button-disabled
+			opacity .3
+		svg
+			width 15px
+			height 60px
+			stroke $color__white
+			stroke-width 3px
+			transition transform .3s
+	.swiper-button-prev
+		left 0
+		padding-left 40px
+		&:not(.swiper-button-disabled):hover svg
+			transform translateX(-10px) scaleX(-1)
+		svg
+			transform scaleX(-1)
+			transform-origin center center
+	.swiper-button-next
+		right 0
+		padding-right 40px
+		cursor default
+		&:not(.swiper-button-disabled):hover svg
+			transform translateX(10px)
