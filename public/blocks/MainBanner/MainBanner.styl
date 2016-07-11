@@ -1,64 +1,141 @@
 .main-banner
-	height 400px
 	color $color__white
-	background #393836 center center
-	background-size cover
+	position relative
+	@media (min-width 1280px)
+		height 400px
+	@media (max-width 1280px)
+		background-size auto 310px
+	&__bg
+		background #393836 center center
+		background-size auto 100%
+		@media (min-width 1280px)
+			height 100%
+		@media (max-width 1280px) and (min-width 700px)
+			height 310px
+		@media (max-width 700px)
+			height 320px
 	&__product
 		position absolute
-		left 56.5%
 		top 0
-		bottom 0
 		display flex
 		align-items center
 		justify-content center
-		width 610px
-		margin-left -305px
+		@media (min-width 1280px)
+			bottom 0
+			left 56.5%
+			width 610px
+			margin-left -305px
+		@media (max-width 1280px) and (min-width 700px)
+			height 310px
+			right 0
+			width 60%
+		@media (max-width 700px)
+			height 320px
+			padding 50px 20px 20px 20px
+			box-sizing border-box
+			width 100%
+			display flex
+			align-items flex-end
 		img
-			max-width 100%
-			max-height 100%
+			@media (min-width 1280px)
+				max-width 100%
+				max-height 100%
+			@media (max-width 1280px) and (min-width 700px)
+				padding 10%
+				max-width 100%
+				box-sizing border-box
+			@media (max-width 700px)
+				max-width 100%
+				max-height 100%
+				margin 0 auto
 	&__info
-		position absolute
-		text-align center
-		display flex
-		flex-flow column
-		align-items center
-		justify-content center
-		width 340px
-		left 100px
-		top 0
-		bottom 0
+		@media (min-width 1280px)
+			bottom 0
+			left 100px
+			width 340px
+		@media (max-width 1280px) and (min-width 700px)
+			height 310px
+			width 30%
+			padding 0 3% 0 7%
+		@media (min-width 700px)
+			position absolute
+			text-align center
+			display flex
+			flex-flow column
+			align-items center
+			justify-content center
+			top 0
+		@media (max-width 700px)
+			background $color__white
+			color $color__gray
 	&__category
 		font-size 14px
 		text-transform uppercase
 		letter-spacing .075em
 		margin-bottom 20px
+		@media (max-width 700px)
+			display none
 	&__label
 		max-width 100%
 		margin-bottom 14px
+		@media (max-width 700px)
+			position absolute
+			top 20px
+			left 30px
+			right 30px
+		img
+			max-width 100%
 	&__props
 		font-size 14px
 		margin-bottom 14px
+		@media (max-width 700px)
+			display none
 	&__part
-		font-size 16px
-		line-height 1.1
 		padding 0 10%
+		@media (min-width 1280px)
+			font-size 16px
+			line-height 1.1
+		@media (max-width 1280px)
+			font-size 14px
+			line-height 1.2
+		@media (max-width 700px)
+			text-align center
+			padding 20px 40px 10px 40px
 	&__price
-		position absolute
-		right 75px
-		top 0
-		bottom 0
-		width 200px
-		text-align center
-		display flex
-		flex-flow column
-		align-items center
-		justify-content center
+		@media (min-width 1280px)
+			position absolute
+			right 75px
+			top 0
+			bottom 0
+			width 200px
+			text-align center
+			display flex
+			flex-flow column
+			align-items center
+			justify-content center
+		@media (max-width 1280px)
+			background $color__white
+			color $color__gray
+			display flex
+			flex-flow row
+		@media (max-width 1280px) and (min-width 700px)
+			padding 20px 50px
+			justify-content flex-end
+		@media (max-width 700px)
+			padding 0 20px
+			justify-content space-between
 	&__price-now
 		font-weight bold
-		font-size 42px
 		position relative
 		line-height 1
 		display inline-block
+		@media (max-width 1280px)
+			align-self center
+			padding 8px 22px 0 0
+		@media (min-width 700px)
+			font-size 42px
+		@media (max-width 700px)
+			font-size 36px
 		span
 			font-size 20px
 			font-weight normal
@@ -70,6 +147,8 @@
 		opacity .6
 		position relative
 		display inline-block
+		@media (max-width 1280px)
+			display none
 		svg
 			position absolute
 			width 170%
@@ -81,13 +160,35 @@
 	&__buy
 		color $color__white
 		background $color__orange
-		font-size 18px
 		text-transform uppercase
 		letter-spacing .075em
-		padding 16px 29px 14px 29px
-		border-radius 40px
 		display inline-block
 		transition-property background
+		@media (min-width 700px)
+			padding 16px 29px 14px 29px
+			border-radius 40px
+			font-size 18px
+		@media (max-width 700px)
+			font-size 0
+			width 42px
+			height 42px
+			border-radius 50%
+			position relative
+			&:after, &:before
+				content ''
+				display block
+				background $color__white
+				position absolute
+				top 50%
+				left 50%
+			&:after
+				width 2px
+				height 16px
+				margin -8px 0 0 -1px
+			&:before
+				width 16px
+				height 2px
+				margin -1px 0 0 -8px
 		&:hover, &:active
 			color $color__white
 		&:hover

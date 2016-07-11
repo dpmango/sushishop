@@ -2,6 +2,8 @@
 	background $color__white
 	box-shadow 0 2px 4px 0 alpha($color__black, .2)
 	display flex
+	position relative
+	z-index 1
 	@media (min-width 1100px)
 		height 102px
 	@media (min-width 900px) and (max-width 1100px)
@@ -24,10 +26,10 @@
 			background $color__white
 			height 100vh
 			z-index 100
-			box-shadow 0 0 0 500px alpha($color__gray, 0)
+			box-shadow 0 0 0 5000px alpha($color__gray, 0)
 			transition .3s box-shadow
 			.open-menu &
-				box-shadow 0 0 0 500px alpha($color__gray, .75)
+				box-shadow 0 0 0 5000px alpha($color__gray, .75)
 	&__logo
 		display flex
 		@media (min-width 900px)
@@ -61,6 +63,11 @@
 	&__nav
 		width 100%
 		display flex
+	&__adres
+		@media (min-width 900px)
+			align-self center
+		@media (max-width 900px)
+			order 3
 	&__profile
 		display flex
 		align-items center
@@ -184,3 +191,101 @@
 		right 100vh
 		.open-menu &
 			right 0
+	&__cart-mobile
+		@media (min-width 900px)
+			display none
+
+
+
+.header-adres
+	display flex
+	white-space nowrap
+	@media (max-width 900px)
+		flex-flow column
+		padding 20px
+	&__adres
+		display block
+		&:hover
+			color $color__gray
+	&__city
+		font-size 11px
+	&__shop
+		display inline-block
+		position relative
+		border-bottom 1px dotted $color__orange
+	&__pen
+		position absolute
+		width 16px
+		height 16px
+		fill $color__orange
+		left 100%
+		top -1px
+		opacity .5
+		margin-left 6px
+		transition .3s opacity
+	&__adres:hover &__pen
+		opacity 1
+		transition-duration .1s
+	&__block-adres
+		@media (max-width 900px)
+			display flex
+			flex-flow row
+			justify-content space-between
+	&__phone
+		width 36px
+		height 36px
+		border-radius 50%
+		background #97BA40
+		display flex
+		align-items center
+		justify-content center
+		margin-top -4px
+		@media (min-width 900px)
+			display none
+		svg
+			width 20px
+			height 20px
+			fill $color__white
+			margin-top -1px
+	&__change
+		margin-top 20px
+		padding 11px 0 10px 0
+		@media (min-width 900px)
+			display none
+
+
+.header-cart
+	background $color__orange
+	padding 0 20px
+	height 53px
+	display flex
+	flex-flow row
+	justify-content space-between
+	align-items center
+	color $color__white
+	&__count
+		min-width 28px
+		height 31px
+		position relative
+		svg
+			position absolute
+			fill $color__white
+			width 28px
+			height 31px
+		span
+			color $color__orange
+			font-size 14px
+			font-weight bold
+			position absolute
+			width 100%
+			top 12px
+			text-align center
+	&__name
+		width 100%
+		font-size 18px
+		font-weight bold
+		letter-spacing .015em
+		text-transform uppercase
+		margin 0 0 -2px 15px
+	&__price
+		font-size 14px

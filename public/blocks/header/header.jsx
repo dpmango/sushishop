@@ -1,18 +1,9 @@
-module.exports = React.createClass({
-    getInitialState: function () {
-        return {
-            isOpenMenu: false
-        }
-    },
-    openMenu: function () {
-        this.setState({
-            isOpenMenu: !this.state.isOpenMenu
+const HeaderContainer = React.createClass({
+    toggleMenu: function (e) {
+        store.dispatch({
+            type: 'TOGGLE_MENU'
         });
-        if (this.state.isOpenMenu) {
-            document.body.classList.remove('open-menu');
-        } else {
-            document.body.classList.add('open-menu');
-        }
+        e.preventDefault();
     },
     render: function() {
         return (
@@ -22,11 +13,38 @@ module.exports = React.createClass({
                         {Icon.logoIcon}
                         {Icon.logoText}
                     </Link>
+                    <div className="header__adres">
+                        <div className="header-adres">
+                            <div className="header-adres__block-adres">
+                                <a href="#" className="header-adres__adres">
+                                    <div className="header-adres__city">Санкт-Петербург и&nbsp;ЛО</div>
+                                    <div className="header-adres__shop">
+                                        ул.&nbsp;Строителей, 4
+                                        <div className="header-adres__pen">{Icon.pen}</div>
+                                    </div>
+                                </a>
+                                <a href="tel:+79992006971" className="header-adres__phone">
+                                    {Icon.phone}
+                                </a>
+                            </div>
+                            <a href="#" className="header-adres__change button button_small button_border">Выбрать другой магазин</a>
+                        </div>
+                    </div>
                     <div className="header__nav"><Nav /></div>
                     <Link to="/profile/" className="header__profile">
                         {Icon.profile}
                         <span>Мой СушиШоп</span>
                     </Link>
+                    <a href="#" className="header__cart-mobile">
+                        <div className="header-cart">
+                            <div className="header-cart__count">
+                                {Icon.package}
+                                <span>15</span>
+                            </div>
+                            <div className="header-cart__name">Покупки</div>
+                            <div className="header-cart__price">1500&nbsp;₽</div>
+                        </div>
+                    </a>
                 </div>
                 <div className="header__mobile">
                     <a href="#" className="header__burger" onClick={this.openMenu} />
@@ -43,7 +61,15 @@ module.exports = React.createClass({
                     <div className="header__bg" onClick={this.openMenu}></div>
                 </div>
             </div>
-
         );
     }
 });
+
+const mapStateToProps = function(store) {
+    return {
+        catalog: store.catalog.list
+    }
+};
+
+
+module.exports = connect(mapStateToProps)(HeaderContainer);

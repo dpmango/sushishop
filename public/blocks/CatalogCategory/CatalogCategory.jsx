@@ -1,13 +1,9 @@
 const CatalogContainer = React.createClass({
-    componentDidMount: function() {
-        store.dispatch({
-            type: 'EDIT_NAME',
-            name: 'Лена'
-        })
-    },
     render: function() {
         return (
-            <div>{this.props.name}</div>
+            <div>
+                {this.props.params.categoryId}
+            </div>
         );
     }
 });

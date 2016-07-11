@@ -1,4 +1,11 @@
 .main-banners
+	position relative
+	@media (min-width 500px)
+		margin-bottom 45px
+	@media (max-width 500px)
+		margin-bottom 20px
+	.swiper-wrapper
+		overflow hidden
 	.swiper-button-prev, .swiper-button-next
 		position absolute
 		width 15px
@@ -7,6 +14,8 @@
 		z-index 90
 		padding 20px
 		margin-top -50px
+		@media (max-width 1280px)
+			display none
 		&:not(.swiper-button-disabled):hover
 			cursor pointer
 			svg
@@ -33,3 +42,44 @@
 		cursor default
 		&:not(.swiper-button-disabled):hover svg
 			transform translateX(10px)
+	.swiper-pagination
+		line-height 1
+		@media (min-width 1280px)
+			display none
+		@media (max-width 1280px) and (min-width 700px)
+			bottom 33px
+			left 50px
+			position absolute
+			font-size 0
+		@media (max-width 700px)
+			background $color__white
+			text-align center
+			padding 5px 0
+		.swiper-pagination-bullet
+			display inline-block
+			position relative
+			z-index 2
+			@media (min-width 700px)
+				width 26px
+				height 26px
+			@media (max-width 700px)
+				width 20px
+				height 20px
+			&:after
+				content ''
+				position absolute
+				top 50%
+				left 50%
+				display block
+				background alpha($color__gray, .3)
+				border-radius 50%
+				@media (min-width 700px)
+					width 12px
+					height 12px
+					margin -6px 0 0 -6px
+				@media (max-width 700px)
+					width 8px
+					height 8px
+					margin -4px 0 0 -4px
+		.swiper-pagination-bullet-active:after
+			background $color__orange

@@ -1,11 +1,10 @@
 module.exports = React.createClass({
     render: function() {
         return (
-            <div key={this.props.name} className="main-banner" style={{backgroundImage: 'url('+this.props.bgImage+')'}}>
-                <div className="main-banner__image">
-                    <div className="main-banner__product">
-                        <img src={this.props.productImage} />
-                    </div>
+            <div key={'main-banner-'+this.props.id} className="main-banner">
+                <div className="main-banner__bg" style={{backgroundImage: 'url('+this.props.bgImage+')'}} />
+                <div className="main-banner__product">
+                    <img src={this.props.productImage} />
                 </div>
                 <div className="main-banner__info">
                     <div className="main-banner__category">{this.props.category}</div>

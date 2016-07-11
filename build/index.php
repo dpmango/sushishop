@@ -23,12 +23,13 @@
 	<meta name="msapplication-config" content="/f/favicons/browserconfig.xml">
 	<meta name="theme-color" content="#ffffff">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<script src="//cdn.polyfill.io/v2/polyfill.js?features=es6,fetch,HTMLPictureElement" async></script>
 </head>
 <body>
 	<div id="app"></div>
-	<script src="https://fb.me/react-15.1.0.js"></script>
-	<script src="https://fb.me/react-dom-15.1.0.js"></script>
-	<script src="/f/script/app.js"></script>
 	<link rel="stylesheet" href="/f/style/style.css">
+	<script src="//fb.me/react-15.1.0.js"></script>
+	<script src="//fb.me/react-dom-15.1.0.js"></script>
+	<script src="/f/script/app.js"></script>
 </body>
 </html>

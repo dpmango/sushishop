@@ -3,6 +3,7 @@ module.exports = React.createClass({
         return (
             <div>
                 <MainBanners/>
+                <MainCatalog/>
             </div>
         );
     }

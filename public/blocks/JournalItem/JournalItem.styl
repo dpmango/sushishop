@@ -1,0 +1,78 @@
+.journal-item
+	display block
+	position relative
+	overflow hidden
+	&:before
+		content ''
+		padding-top 67.9245283%
+		width 100%
+		display block
+	&__bg, &__wrapper, &__photo, &__gradient
+		position absolute
+		top 0
+		right 0
+		bottom 0
+		left 0
+	&__wrapper
+		z-index 2
+		display flex
+		flex-flow column
+		text-align center
+		justify-content center
+		padding 0 10%
+	&__photo
+		background $color__black
+		img
+			opacity .65
+			transition .3s opacity
+	&__gradient
+		opacity 1
+		transition .3s opacity
+	&:hover &__photo img
+		opacity .7
+	&:hover &__gradient
+		opacity .8
+	&__gradient + &__wrapper
+		color $color__gray_dark
+	&__gradient + &__wrapper &__descr:before
+		background $color__gray_dark
+	&__photo + &__wrapper
+		color $color__white
+	&__photo + &__wrapper &__descr:before
+		background $color__white
+	&__name
+		font-weight bold
+		text-transform uppercase
+		letter-spacing .05em
+		@media (min-width 900px)
+			font-size 24px
+			line-height 1.1
+		@media (max-width 900px) and (min-width 600px)
+			font-size 20px
+			line-height 1.15
+		@media (max-width 600px)
+			font-size 16px
+			line-height 1.25
+	&__descr
+		line-height 1.45
+		position relative
+		@media (min-width 900px)
+			font-size 18px
+			padding-top 20px
+			margin-top 20px
+		@media (max-width 900px) and (min-width 600px)
+			font-size 16px
+			padding-top 15px
+			margin-top 15px
+		@media (max-width 600px)
+			font-size 14px
+			padding-top 10px
+			margin-top 10px
+		&:before
+			content ''
+			display block
+			position absolute
+			width 28%
+			height 3px
+			left 36%
+			top -2px

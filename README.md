@@ -52,6 +52,7 @@
         product_image: 'swagset-product.png',
         bg_image: 'swagset-bg.jpg',
         product_id: 1
+        
     }
 ]
 ```
@@ -76,7 +77,7 @@
             ...
         ],
         tags: [
-            { tagId: 1, name: "Лёгкая" }
+            { id: 1, name: "Лёгкая" }
         ]
     }
 ]
@@ -163,7 +164,8 @@ get_products_limit | количество продуктов для катего
         {
             id: 2,
             name: 'Всеволожск',
-            group_id: 1 // группа, если город находится в группе
+            group_id: 1, // группа, если город находится в группе
+            isChange: true // город выбранный по умолчанию
         }
     ],
     groups: [
@@ -203,7 +205,8 @@ get_products_limit | количество продуктов для катего
             is_delivery: true,
             mode_from: "10-00",
             mode_to: "20-00",
-            city_id: 1
+            city_id: 1,
+            isChange: true // магазин выбранный по умолчанию
         }
     ],
     groups: [

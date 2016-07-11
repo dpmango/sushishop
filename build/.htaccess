@@ -1,6 +1,6 @@
 DirectoryIndex index.php
-RewriteEngine On
 AddDefaultCharset utf8
+RewriteEngine On
 
 RewriteRule ^api/([a-zA-Z._-]+)(/?)$ api.php?method=$1 [L]
 
