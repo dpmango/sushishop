@@ -9,6 +9,7 @@ module.exports = (
                         <Route path=":productId" component={CatalogProduct}/>
                     </Route>
                 </Route>
+                <Route path="shops" component={Shops} />
             </Route>
         </Router>
     </Provider>

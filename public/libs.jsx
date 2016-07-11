@@ -35,5 +35,10 @@ window.MainJournal = require('./blocks/MainJournal/MainJournal.jsx')
 window.JournalItem = require('./blocks/JournalItem/JournalItem.jsx')
 window.Footer = require('./blocks/Footer/Footer.jsx')
 window.CatalogListCategory = require('./blocks/CatalogListCategory/CatalogListCategory.jsx')
+window.Shops = require('./blocks/Shops/Shops.jsx')
+
 
 window.store = createStore(require('./reducer.jsx'))
+
+
+window.localForage = require('localforage')

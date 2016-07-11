@@ -3,13 +3,23 @@ const HeaderContainer = React.createClass({
         store.dispatch({
             type: 'TOGGLE_MENU'
         });
-        e.preventDefault();
+        if (e.currentTarget.getAttribute('href') == '#') {
+            e.preventDefault();
+        }
+    },
+    hideMenu: function (e) {
+        store.dispatch({
+            type: 'HIDE_MENU'
+        });
+        if (e.currentTarget.getAttribute('href') == '#') {
+            e.preventDefault();
+        }
     },
     render: function() {
         return (
             <div className="header">
                 <div className="header__inner">
-                    <Link to="/" onlyActiveOnIndex={true} className="header__logo" activeClassName="header__logo_active">
+                    <Link to="/" onClick={this.hideMenu} onlyActiveOnIndex={true} className="header__logo" activeClassName="header__logo_active">
                         {Icon.logoIcon}
                         {Icon.logoText}
                     </Link>
@@ -47,7 +57,7 @@ const HeaderContainer = React.createClass({
                     </a>
                 </div>
                 <div className="header__mobile">
-                    <a href="#" className="header__burger" onClick={this.openMenu} />
+                    <Link to="#" className="header__burger" onClick={this.toggleMenu} />
                     <Link to="/" onlyActiveOnIndex={true} className="header__logo-mobile" activeClassName="header__logo-mobile_active">
                         {Icon.logoIcon}
                     </Link>
@@ -58,7 +68,7 @@ const HeaderContainer = React.createClass({
                             <span className="header__cart-count">15</span>
                         </span>
                     </a>
-                    <div className="header__bg" onClick={this.openMenu}></div>
+                    <div className="header__bg" onClick={this.toggleMenu}></div>
                 </div>
             </div>
         );
@@ -72,4 +82,6 @@ const mapStateToProps = function(store) {
 };
 
 
-module.exports = connect(mapStateToProps)(HeaderContainer);
+module.exports = connect(mapStateToProps, null, null, {
+    pure: false
+})(HeaderContainer);
