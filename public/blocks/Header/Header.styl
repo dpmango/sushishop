@@ -28,8 +28,8 @@
 			z-index 100
 			box-shadow 0 0 0 5000px alpha($color__gray, 0)
 			transition .3s box-shadow
-			.open-menu &
-				box-shadow 0 0 0 5000px alpha($color__gray, .75)
+		.open-menu &
+			box-shadow 0 0 0 5000px alpha($color__gray, .75)
 	&__logo
 		display flex
 		@media (min-width 900px)
@@ -205,14 +205,28 @@
 		padding 20px
 	&__adres
 		display block
+		line-height 1
 		&:hover
 			color $color__gray
 	&__city
 		font-size 11px
+		margin-bottom 6px
+		&_loading:after
+			content 'Санкт-Петербург'
+			display inline-block
+			width 60px
+			loading()
 	&__shop
 		display inline-block
 		position relative
 		border-bottom 1px dotted $color__orange
+		&_loading
+			border-bottom-color transparent
+			&:after
+				content 'ул. Строителей, 4'
+				display inline-block
+				width 60px
+				loading()
 	&__pen
 		position absolute
 		width 16px

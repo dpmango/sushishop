@@ -5,7 +5,7 @@ const CatalogListCategoryItem = React.createClass({
     render: function () {
         return (
             <div>
-                <Link to={'/catalog/'+this.props.alt} className="catalog-list-category__link" className="catalog-list-category__item" activeClassName="catalog-list-category__item_active">
+                <Link to={'/catalog/'+this.props.alt} className="catalog-list-category__item" activeClassName="catalog-list-category__item_active">
                     <picture className="catalog-list-category__photo">
                         <source media="(min-width: 800px)" srcSet={this.props.image_medium}/>
                         <img srcSet={this.props.image_small} alt=""/>

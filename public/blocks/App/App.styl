@@ -6,6 +6,7 @@ $color__gray_dark = #222
 $color__gray_light = #AAA
 $color__orange = #F16722
 $color__orange_dark = darken($color__orange, 20%)
+$color__red = #D0021B
 
 
 @font-face
@@ -106,3 +107,24 @@ h2
 	&__inner
 		@media (max-width 900px)
 			height calc(100% + 1px)
+
+
+
+loading()
+	animation-duration .75s
+	animation-fill-mode forwards
+	animation-iteration-count infinite
+	animation-name wave
+	animation-timing-function linear
+	background #dddddd
+	background-image linear-gradient(to right,  lighten(#dddddd, 25%) 0%,  lighten(#f5f5f5, 25%) 20%,  lighten(#e5e5e5, 25%) 40%,  lighten(#dddddd, 25%) 100%)
+	background-repeat no-repeat
+	background-size 400px 100px
+	color transparent
+
+@keyframes wave
+	0%
+		background-position -200px 0
+	100%
+		background-position 200px 0
+

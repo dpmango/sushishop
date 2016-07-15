@@ -1,4 +1,16 @@
 module.exports = React.createClass({
+    componentWillMount: function() {
+        store.dispatch({
+            type: 'GET_IAM'
+        });
+        store.dispatch({
+            type: 'GET_CITY'
+        });
+        store.dispatch({
+            type: 'GET_SHOPS'
+        });
+
+    },
     mainPagerIgnoreList: new Set([
         'shops'
     ]),
@@ -7,11 +19,6 @@ module.exports = React.createClass({
     },
     mainPager: function () {
         return (this.mainPagerIgnoreList.has(this.props.location.pathname)) ? <Pager /> : '';
-    },
-    componentWillMount: function() {
-        store.dispatch({
-            type: 'GET_CITY'
-        });
     },
     render: function() {
         return (

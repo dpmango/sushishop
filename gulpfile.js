@@ -3,6 +3,9 @@ const gulp = require('gulp'),
 	rename = require('gulp-rename'),
 	concat = require('gulp-concat');
 
+
+var isFirst = true;
+
 gulp.task('jsx', function() {
 	const browserify = require('browserify'),
 		buffer = require('vinyl-buffer'),
@@ -10,20 +13,44 @@ gulp.task('jsx', function() {
 		sourcemaps = require('gulp-sourcemaps'),
 		babelify = require('babelify');
 
-	var bundler = browserify({
+	if (isFirst) {
+		let bundler = browserify({
+			entries: './public/libs.jsx',
+			debug: true
+		});
+		bundler.transform(babelify);
+
+		bundler.bundle()
+			.on('error', function (err) {
+				console.log(err.toString());
+				this.emit("end");
+			})
+			.pipe(source('libs.js'))
+			.pipe(buffer())
+			.pipe(sourcemaps.init({ loadMaps: true }))
+			// .pipe(uglify())
+			.pipe(sourcemaps.write('./'))
+			.pipe(gulp.dest('./build/f/script'));
+
+		isFirst = false;
+	}
+
+	let bundler = browserify({
 		entries: './public/app.jsx',
 		debug: true
 	});
 	bundler.transform(babelify);
 
 	return bundler.bundle()
-		.pipe(plumber())
+		.on('error', function (err) {
+			console.log(err.toString());
+			this.emit("end");
+		})
 		.pipe(source('app.js'))
 		.pipe(buffer())
 		.pipe(sourcemaps.init({ loadMaps: true }))
 		// .pipe(uglify())
 		.pipe(sourcemaps.write('./'))
-		.pipe(plumber.stop())
 		.pipe(gulp.dest('./build/f/script'));
 });
 

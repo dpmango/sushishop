@@ -3,10 +3,122 @@
 	display flex
 	flex-flow row
 	&__list
-		width 350px
+		min-width 350px
 		height 100%
 		position relative
 		overflow hidden
 		background $color__white
+		padding 40px 30px
+		box-sizing border-box
+		.swiper-scrollbar
+			position absolute
+			top 5px
+			bottom 5px
+			right 5px
+			z-index 99
+		.swiper-scrollbar-drag
+			width 8px
+			background alpha($color__gray, .5)
+			border-radius 4px
 		.swiper-slide
 			height auto
+	&__city
+		font-size 18px
+		text-transform uppercase
+		letter-spacing .05em
+		margin-bottom 16px
+		line-height 1.1
+		a
+			color $color__orange
+			border-bottom 1px dotted $color__orange
+	&__near
+		font-size 14px
+		text-transform uppercase
+		font-weight bold
+		letter-spacing .05em
+		padding 11px 20px 10px 38px
+		text-align center
+		border-radius 20px
+		box-sizing border-box
+		position relative
+		margin-bottom 20px
+		span
+			width 22px
+			height 22px
+			fill $color__orange
+			display inline-block
+			position absolute
+			top 50%
+			margin-top -11px
+			left 10px
+	&__map
+		width 100%
+		height 100%
+
+
+.shops-item
+	padding 8px 30px
+	margin 0 -30px
+	cursor pointer
+	&:hover
+		background #fefefe
+	&__adres
+		display inline-block
+	&__new
+		background $color__red
+		color $color__white
+		border-radius 3px
+		display inline-block
+		text-transform uppercase
+		font-size 13px
+		line-height 1
+		letter-spacing .05em
+		vertical-align middle
+		padding 4px 7px 2px 7px
+		margin -5px -7px -2px 12px
+	&__phone
+		margin-top 4px
+		display inline-block
+		color $color__gray
+
+
+
+.shop-infobox
+	background $color__white
+	border-radius 10px
+	font normal normal 16px/1.125 DIN, Helvetica, Arial, sans-serif
+	padding 25px
+	width 420px
+	margin-left auto
+	box-sizing border-box
+	margin 0 auto
+	&:before
+		content ''
+		border 10px solid transparent
+		border-bottom 18px solid $color__white
+		display block
+		position absolute
+		left 50%
+		margin-left -10px
+		bottom 100%
+	&__adres
+		margin-bottom 10px
+	&__time
+		display inline-block
+		margin-right 40px
+	&__phone
+		display inline-block
+		a
+			color $color__gray_dark
+	&__action
+		margin-top 20px
+	&__reviews
+		font-size 14px
+		font-weight bold
+		padding 11px 23px 9px 23px
+		line-height 15px
+	&__change
+		display inline-block
+		color $color__orange
+		border-bottom 1px dotted $color__orange
+		margin-left 22px

@@ -18,7 +18,7 @@ module.exports = function (state = { list: [], status: 'empty' }, action) {
         return state;
     }
     if (action.type == "SET_CATALOG") {
-        let catalog = new Map;
+        let catalog = new Map();
         action.catalog.map((item) => {
             catalog
                 .set(item.id, item)

@@ -224,12 +224,12 @@
             }
         },
 
-        componentWillUnmount: function () {
-            if (this.activeSwiper) {
-                this.swiper.destroy(true, true);
-                delete this.swiper;
-            }
-        },
+        // componentWillUnmount: function () {
+        //     if (this.activeSwiper) {
+        //         this.swiper.destroy(true, true);
+        //         delete this.swiper;
+        //     }
+        // },
 
         // shouldComponentUpdate: function (nextProps) {
         //     return nextProps.children !== this.props.children;
