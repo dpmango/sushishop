@@ -27,6 +27,7 @@
     "gulp-stylus": "^2.5.0",
     "localforage": "^1.4.2",
     "object-assign": "^4.1.0",
+    "react-addons-css-transition-group": "^15.2.1",
     "react-cookie": "^0.4.7",
     "react-dom": "^15.2.0",
     "react-google-maps": "^4.11.0",

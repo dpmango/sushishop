@@ -9,7 +9,11 @@ module.exports = (
                         <Route path=":productId" component={CatalogProduct}/>
                     </Route>
                 </Route>
+                <Route path="actions" component={Actions}>
+                    <Route path=":actionAlt" component={CatalogProduct}/>
+                </Route>
                 <Route path="shops" component={Shops} />
+                <Route path="about" component={About} />
             </Route>
         </Router>
     </Provider>

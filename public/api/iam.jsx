@@ -1,4 +1,4 @@
-var initialState = {
+const initialState = {
     cityId: 0,
     shopId: 0
 };
@@ -14,6 +14,15 @@ module.exports = function (state = initialState, action) {
                 });
             }
         });
+        localForage.getItem('shopId').then((data) => {
+            if (data) {
+                store.dispatch({
+                    type: 'SET_IAM_SHOP_LIGHT',
+                    shopId: data
+                });
+            }
+        });
+        return state;
     }
     if (action.type == 'SET_IAM_CITY') {
         localForage.setItem('cityId', action.cityId);

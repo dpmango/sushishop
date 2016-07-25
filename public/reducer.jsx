@@ -4,5 +4,7 @@ module.exports = combineReducers({
     openMenu: require('./api/openMenu.jsx'),
     city: require('./api/city.jsx'),
     shops: require('./api/shops.jsx'),
-    iam: require('./api/iam.jsx')
+    iam: require('./api/iam.jsx'),
+    shadow: require('./api/shadow.jsx'),
+    actions: require('./api/actions.jsx')
 });

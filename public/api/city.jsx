@@ -45,16 +45,28 @@ module.exports = function (state = { list: [], status: 'empty' }, action) {
     }
     if (action.type == "SET_CITY") {
         let city = new Map(),
-            groups = new Map();
-        city.set(action.city[0], action.city[0]);
+            groups = new Map(),
+            listSort = [];
         for (let item of action.city) {
             city.set(item.id, item);
+            if (item.group_id) {
+                listSort.push({
+                    type: 'city',
+                    sort: item.sort,
+                    id: item.id
+                });
+            }
         }
         action.city.map((item) => {
             city.set(item.id, item);
         });
         action.groups.map((item) => {
             groups.set(item.id, item);
+            listSort.push({
+                type: 'group',
+                sort: item.sort,
+                id: item.id
+            });
         });
         return {
             status: 'load',

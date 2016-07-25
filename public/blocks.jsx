@@ -19,6 +19,8 @@ window.CatalogListCategory = require('./blocks/CatalogListCategory/CatalogListCa
 window.Shops = require('./blocks/Shops/Shops.jsx')
 window.MapShops = require('./blocks/MapShops/MapShops.jsx')
 window.InfoBox = require('./blocks/Infobox/Infobox.jsx')
+window.About= require('./blocks/About/About.jsx')
+window.Actions= require('./blocks/Actions/Actions.jsx')
 
 
 window.store = createStore(require('./reducer.jsx'))

@@ -16,3 +16,5 @@ window.connect = ReactRedux.connect
     
 window.cookie = require('react-cookie')
 window.localForage = require('localforage')
+
+window.Transition = require('./blocks/Transition/Transition.jsx')

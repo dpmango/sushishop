@@ -1,7 +1,27 @@
+function ShopsListShadow() {
+    let blockList = document.querySelector('.shops__list'),
+        beginClass = 'shops__list_begin',
+        endClass = 'shops__list_end',
+        swiper = blockList.swiper;
+    if (swiper.isBeginning && !blockList.classList.contains(beginClass)) {
+        blockList.classList.add(beginClass);
+    }
+    if (!swiper.isBeginning && blockList.classList.contains(beginClass)) {
+        blockList.classList.remove(beginClass);
+    }
+    // if (swiper.isEnd && !blockList.classList.contains(endClass)) {
+    //     blockList.classList.add(endClass);
+    // }
+    // if (!swiper.isEnd && blockList.classList.contains(endClass)) {
+    //     blockList.classList.remove(endClass);
+    // }
+}
+
 const ShopsContainer = React.createClass({
     getInitialState: function () {
         return {
-            near: 0
+            near: 0,
+            changeCity: false
         }
     },
     itemShop: function (shopId) {
@@ -36,48 +56,152 @@ const ShopsContainer = React.createClass({
         this.setState({ near: this.state.near + 1 });
         e.preventDefault();
     },
+    transition: function () {
+        this.transitionCityPopup = new Transition({
+            el: this.refs.cityPopup,
+            className: 'shops__city-popup',
+            speedShow: 200,
+            speedHide: 400
+        })
+    },
     city: function () {
         let cityId = this.props.iam.cityId;
         return (cityId == 0) ? '': this.props.city.get(cityId).name;
     },
+    cityChoose: function (e) {
+        this.transition()
+
+        if (this.state.changeCity) {
+            store.dispatch({
+                type: 'SHADOW_HIDE'
+            })
+            this.transitionCityPopup.hide()
+        } else {
+            store.dispatch({
+                type: 'SHADOW_SHOW',
+                name: 'city-choose'
+            })
+            this.transitionCityPopup.show()
+        }
+        this.setState({
+            changeCity: !this.state.changeCity
+        })
+        if (e) {
+            e.preventDefault();
+        }
+    },
+    changeCity: function (e) {
+        let el = e.currentTarget,
+            id = el.dataset.id
+
+        store.dispatch({
+            type: 'SET_IAM_CITY',
+            cityId: parseInt(id)
+        })
+        this.cityChoose()
+        e.preventDefault()
+    },
+    listCity: function () {
+        let list = []
+        if (this.props.city.length == 0) return buf;
+        let groups = new Set()
+        this.props.city.forEach((data) => {
+            if (data.group_id == 0) {
+                list.push(<div className="shops-city-item" key={data.id}>
+                    <span data-id={data.id} onClick={this.changeCity}>{data.name}</span>
+                </div>)
+            } else {
+                if (!groups.has(data.group_id)) {
+                    groups.add(data.group_id)
+                    let group = this.props.city.get(data.group_id)
+                    list.push(<div className="shops-city-item shops-city-item_group" key={'group-'+group.id}>
+                        <span>{group.name}</span>
+                    </div>)
+                }
+            }
+        })
+        let buf = [[], []];
+        for (let i = 0;i < Math.ceil(list.length / 2);i++) {
+            buf[0].push(list[i]);
+        }
+        for (let i = Math.ceil(list.length / 2);i < list.length;i++) {
+            buf[1].push(list[i]);
+        }
+        buf = <div className="shops-city__list">
+            <div className="shops-city__column">{buf[0]}</div><div className="shops-city__column">{buf[1]}</div>
+        </div>;
+        return buf;
+    },
+    componentWillUpdate: function(nextProps) {
+        this.transition()
+
+        if (this.props.shadow.name == 'city-choose' && nextProps.shadow.name == '') {
+            this.cityChoose();
+        }
+    },
     render: function() {
         return (
             <div className="shops">
+                <div className="shops__header">
+                    <div className={"shops__city"+((this.state.changeCity) ? ' shops__city_open' : '')+((typeof this.props.iam.shopId != 'number' || this.props.iam.shopId == 0) ? ' shops__city_loading': '')}>
+                        Выберите удобный СушиШоп<br />
+                        в <a href="#" onClick={this.cityChoose}>{this.city()}{Icon.arrow_down}</a>
+                    </div>
+                    <a href="#" className="shops__near button button_border button_medium" onClick={this.near}>
+                        <span>{Icon.geo}</span>
+                        Магазины возле меня
+                    </a>
+                </div>
                 <Swiper
                     slidesPerView='auto'
                     freeMode={true}
                     scrollbar=".swiper-scrollbar"
-                    scrollbarHide={false}
-                    className="shops__list"
+                    scrollbarHide={true}
+                    className="shops__list shops__list_begin"
                     direction="vertical"
                     mousewheelControl={true}
                     grabCursor={false}
                     simulateTouch={false}
+                    scrollbarDraggable={true}
+                    onWheel={ShopsListShadow}
+                    onTransitionEnd={ShopsListShadow}
                 >
                     <div className="swiper-slide">
-                        <div className="shops__city">
-                            Выберите удобный СушиШоп<br />
-                            в <a href="#">{this.city()}</a>
-                        </div>
-                        <a href="#" className="shops__near button button_border button_medium" onClick={this.near}>
-                            <span>{Icon.geo}</span>
-                            Магазины возле меня
-                        </a>
                         {this.listShops()}
                     </div>
                 </Swiper>
+
                 <MapShops near={this.state.near} />
+
+                <div className="shops__city-popup shops__city-popup_hided" ref="cityPopup">
+                    <div className="shops__city-popup-wrapper">
+                        <div className="shops-sity shops-city_city">
+                            <div className="shops-city__title">Выберите город</div>
+                            {this.listCity()}
+                        </div>
+                        <div className="shops-sity shops-city_group">
+                            <div className="shops-city__title">Выберите город</div>
+                            <div className="shops-city__list">
+                                {this.listCity()}
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         );
     }
+
 });
 
 const mapStateToProps = function(store) {
     return {
         iam: store.iam,
         city: store.city.list,
+        cityGroup: store.city.groups,
+        cityStatus: store.city.status,
         shops: store.shops.shops,
-        shopsCity: store.shops.city
+        shopsCity: store.shops.city,
+        shadow: store.shadow
     }
 };
 

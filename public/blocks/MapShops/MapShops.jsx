@@ -1,9 +1,17 @@
 const MapShopsContainer = React.createClass({
-    componentDidMount: function() {
-        this.map = new google.maps.Map(this.refs.map, {
-            scrollwheel: false
-        });
-        this.buildMarker();
+    markerImage: {
+        i: '/f/images/map/marker-round-blue.png',
+        iBig: '/f/images/map/marker-blue.png',
+        activeShop: '/f/images/map/marker-orange.png',
+        activeShopBig: '/f/images/map/marker-orange-big.png',
+        shop: '/f/images/map/marker-round-orange.png',
+        shopBig: '/f/images/map/marker-sushishop.png'
+    },
+    getInitialState: function() {
+        return {
+            isBuild: false,
+            actionBuild: false
+        };
     },
     buildMarker: function (isMove = true) {
         if (typeof this.mapMarkers == 'object') {
@@ -26,14 +34,16 @@ const MapShopsContainer = React.createClass({
                 });
             }
         }
-        console.log(isMove);
         if (isMove) {
             this.map.fitBounds(this.mapBounds);
         }
     },
     infobox: function (data) {
         let infobox = document.createElement('div');
-        infobox.classList.add('shop-infobox');
+        infobox.classList.add('shop-infobox')
+        if (data.id == this.props.iam.shopId) {
+            infobox.classList.add('shop-infobox_active')
+        }
 
         let adres = document.createElement('div');
         adres.classList.add('shop-infobox__adres');
@@ -80,11 +90,7 @@ const MapShopsContainer = React.createClass({
                 type: 'SET_IAM_SHOP',
                 shopId: data.id
             })
-            for (let key in this.mapWindows) {
-                let item = this.mapWindows[key];
-                console.log(key, item);
-                item.close()
-            }
+            this.mapWindows[data.id].close();
             this.mapMarkers[data.id].setVisible(true)
             e.preventDefault();
         });
@@ -103,9 +109,9 @@ const MapShopsContainer = React.createClass({
             this.mapBounds.extend(latlng);
             this.mapMarkers[shopId] = new google.maps.Marker({
                 position: latlng,
-                map: this.map,
-                icon: '/f/images/map/marker.png'
+                map: this.map
             });
+            this.markerUpdate()
             this.mapWindows[shopId] = new InfoBox({
                 pixelOffset: new google.maps.Size(-270, 0),
                 boxStyle: {
@@ -143,11 +149,10 @@ const MapShopsContainer = React.createClass({
 
         myPosition = new google.maps.LatLng(myPosition.lat, myPosition.lng);
 
-        if (this.props.near == 1) {
+        if (this.props.near == 0) {
             this.mapMarkers['i'] = new google.maps.Marker({
                 position: myPosition,
-                map: this.map,
-                icon: '/f/images/map/marker-blue.png'
+                map: this.map
             });
         }
 
@@ -184,12 +189,53 @@ const MapShopsContainer = React.createClass({
         this.mapBounds.extend(new google.maps.LatLng(longitudeShop.geo_lat, longitudeShop.geo_lng));
         this.map.fitBounds(this.mapBounds);
     },
-    componentDidUpdate: function(nextProps, nextState, nextContext) {
-        if (this.props != nextProps && this.props.near == nextProps.near) {
-            if (this.props.iam.cityId != nextProps.iam.cityId) {
-                this.buildMarker();
+    changeCity: function (from, to) {
+        // this.mapMarkers[from].setIcon('/f/images/map/marker.png')
+        // this.mapMarkers[to].setIcon('/f/images/map/marker-orange.png')
+        this.mapWindows[from].content_.classList.remove('shop-infobox_active')
+        this.mapWindows[to].content_.classList.add('shop-infobox_active')
+        this.markerUpdate()
+    },
+    markerUpdate: function () {
+        let zoom = this.map.getZoom(),
+            isBig = zoom > 11;
+        for(let i in this.mapMarkers) {
+            if (this.mapMarkers.hasOwnProperty(i)) {
+                let item = this.mapMarkers[i];
+                if (i == this.props.iam.shopId) {
+                    item.setIcon((isBig) ? this.markerImage.activeShopBig : this.markerImage.activeShop)
+                } else if (i == 'i') {
+                    item.setIcon((isBig) ? this.markerImage.iBig : this.markerImage.i)
+                } else {
+                    item.setIcon((isBig) ? this.markerImage.shopBig : this.markerImage.shop)
+                }
             }
         }
+    },
+    componentWillReceiveProps: function(nextProps) {
+        if (this.state.isBuild) {
+            // изменение города
+            if ((this.props.iam.cityId != nextProps.iam.cityId)
+                && nextProps.iam.shopId != 0 && nextProps.iam.cityId != 0 && this.props.iam.shopId != 0 && this.props.iam.cityId != 0) {
+                this.buildMarker(false);
+            }
+            // изменение магазина
+            if (this.props.iam.shopId != nextProps.iam.shopId) {
+                this.changeCity(this.props.iam.shopId, nextProps.iam.shopId);
+            }
+        } else {
+            // инициализация
+            if ((this.props.iam.cityId == 0 || this.props.iam.shopId == 0 || this.props.shopsStatus != 'load' || this.props.cityStatus != 'load')
+                && (nextProps.iam.cityId != 0 && nextProps.iam.shopId != 0 && nextProps.shopsStatus == 'load' && nextProps.cityStatus == 'load')) {
+                this.setState({
+                    isBuild: true,
+                    actionBuild: true
+                });
+            }
+        }
+        return false;
+    },
+    componentWillUpdate: function(nextProps) {
         if (this.props.near != nextProps.near) {
             this.near();
         }
@@ -198,7 +244,27 @@ const MapShopsContainer = React.createClass({
         return (
             <div className="shops__map" ref="map"></div>
         )
+    },
+    componentDidMount: function() {
+        this.map = new google.maps.Map(this.refs.map, {
+            scrollwheel: false
+        });
+        this.map.addListener('zoom_changed', () => {
+            this.markerUpdate()
+        })
+        if (this.props.iam.shopId != 0 && this.props.shopsStatus == 'load' && this.props.cityStatus == 'load') {
+            this.buildMarker();
+        }
+    },
+    componentDidUpdate: function() {
+        if (this.state.actionBuild == true) {
+            this.buildMarker();
+            this.setState({
+                actionBuild: false
+            })
+        }
     }
+
 });
 
 
@@ -207,8 +273,10 @@ const mapStateToProps = function(store) {
     return {
         iam: store.iam,
         city: store.city.list,
+        cityStatus: store.city.status,
         shops: store.shops.shops,
-        shopsCity: store.shops.city
+        shopsCity: store.shops.city,
+        shopsStatus: store.shops.status
     }
 };
 

@@ -21,9 +21,13 @@ const HeaderContainer = React.createClass({
     },
     shop: function () {
         let shopId = this.props.iam.shopId;
+        // console.log((typeof shopId == 'number' && shopId != 0));
+        // if (typeof shopId == 'number' && shopId != 0) {
+        //     console.log(this.props.shops.get(shopId));
+        // }
         return (typeof shopId != 'number' || shopId == 0) ? '': this.props.shops.get(shopId).adres;
     },
-    componentWillUpdate: function(nextProps, nextState, nextContext) {
+    componentWillUpdate: function() {
         return true;
     },
 

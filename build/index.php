@@ -23,7 +23,7 @@
 	<meta name="msapplication-config" content="/f/favicons/browserconfig.xml">
 	<meta name="theme-color" content="#ffffff">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-	<script src="//cdn.polyfill.io/v2/polyfill.js"></script>
+	<script src="//cdn.polyfill.io/v2/polyfill.js?features=fetch"></script>
 </head>
 <body>
 	<div id="app"></div>

@@ -172,7 +172,8 @@
             paginationTotalClass: React.PropTypes.string,
             paginationProgressbarClass: React.PropTypes.string,
             buttonDisabledClass: React.PropTypes.string,
-            destroy: React.PropTypes.number
+            destroy: React.PropTypes.number,
+            onWheel: React.PropTypes.func
         },
 
         getDefaultProps: function() {
@@ -263,7 +264,7 @@
             var slideClass = this.props.slideClass;
             return React.createElement(
                 'div',
-                { className: this.props.slideClassContainer+' '+(this.props.className) ? this.props.className : '' },
+                { onWheel: (this.props.onWheel) ? this.props.onWheel : '' , className: this.props.slideClassContainer+' '+(this.props.className) ? this.props.className : '' },
                 React.createElement(
                     'div',
                     { className: 'swiper-wrapper' },
