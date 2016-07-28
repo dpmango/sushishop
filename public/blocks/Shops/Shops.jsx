@@ -9,19 +9,14 @@ function ShopsListShadow() {
     if (!swiper.isBeginning && blockList.classList.contains(beginClass)) {
         blockList.classList.remove(beginClass);
     }
-    // if (swiper.isEnd && !blockList.classList.contains(endClass)) {
-    //     blockList.classList.add(endClass);
-    // }
-    // if (!swiper.isEnd && blockList.classList.contains(endClass)) {
-    //     blockList.classList.remove(endClass);
-    // }
 }
 
 const ShopsContainer = React.createClass({
     getInitialState: function () {
         return {
             near: 0,
-            changeCity: false
+            changeCity: false,
+            changeCityGroup: false
         }
     },
     itemShop: function (shopId) {
@@ -75,17 +70,22 @@ const ShopsContainer = React.createClass({
             store.dispatch({
                 type: 'SHADOW_HIDE'
             })
-            this.transitionCityPopup.hide()
+            this.transitionCityPopup.hide(() => {
+                this.setState({
+                    changeCity: !this.state.changeCity
+                })
+            })
         } else {
             store.dispatch({
                 type: 'SHADOW_SHOW',
                 name: 'city-choose'
             })
-            this.transitionCityPopup.show()
+            this.transitionCityPopup.show(() => {
+                this.setState({
+                    changeCity: !this.state.changeCity
+                })
+            })
         }
-        this.setState({
-            changeCity: !this.state.changeCity
-        })
         if (e) {
             e.preventDefault();
         }
@@ -94,11 +94,27 @@ const ShopsContainer = React.createClass({
         let el = e.currentTarget,
             id = el.dataset.id
 
+        this.transitionCityPopup.hide()
+        store.dispatch({
+            type: 'SHADOW_HIDE'
+        })
+        this.setState({
+            changeCity: false
+        })
         store.dispatch({
             type: 'SET_IAM_CITY',
             cityId: parseInt(id)
         })
-        this.cityChoose()
+        e.preventDefault()
+    },
+    changeCityGroup: function (e) {
+        let el = e.currentTarget,
+            id = el.dataset.id
+
+        this.setState({
+            changeCityGroup: id
+        })
+
         e.preventDefault()
     },
     listCity: function () {
@@ -114,7 +130,7 @@ const ShopsContainer = React.createClass({
                 if (!groups.has(data.group_id)) {
                     groups.add(data.group_id)
                     let group = this.props.city.get(data.group_id)
-                    list.push(<div className="shops-city-item shops-city-item_group" key={'group-'+group.id}>
+                    list.push(<div className="shops-city-item shops-city-item_group" key={'group-'+group.id} data-id={data.group_id} onClick={this.changeCityGroup}>
                         <span>{group.name}</span>
                     </div>)
                 }
@@ -134,10 +150,32 @@ const ShopsContainer = React.createClass({
     },
     componentWillUpdate: function(nextProps) {
         this.transition()
-
         if (this.props.shadow.name == 'city-choose' && nextProps.shadow.name == '') {
-            this.cityChoose();
+            this.setState({
+                changeCity: false
+            })
         }
+    },
+    groupPopup: function (id) {
+        if (!id) return ''
+        id = parseInt(id)
+
+        let group = this.props.cityGroup.get(id);
+
+        return (
+            <div className="shops-sity shops-city_group">
+                <div className="shops-city__title">{group.name}</div>
+                {this.listCity()}
+            </div>
+        )
+    },
+    shouldComponentUpdate: function(nextProps, nextState, nextContext) {
+        return (
+            this.props.iam.cityId != nextProps.iam.cityId
+            || this.props.iam.shopId != nextProps.iam.shopId
+            || this.props.shadow.name == "city-choose"
+            || this.state.changeCity  != nextState.changeCity
+        )
     },
     render: function() {
         return (
@@ -171,20 +209,15 @@ const ShopsContainer = React.createClass({
                     </div>
                 </Swiper>
 
-                <MapShops near={this.state.near} />
+                {(isNode) ? '' : <MapShops near={this.state.near} />}
 
-                <div className="shops__city-popup shops__city-popup_hided" ref="cityPopup">
+                <div className={"shops__city-popup "+((this.state.changeCity) ? "shops__city-popup_showed" : "shops__city-popup_hided" )+((this.state.changeCityGroup) ? " shops__city-popup_group" : '')} ref="cityPopup">
                     <div className="shops__city-popup-wrapper">
                         <div className="shops-sity shops-city_city">
                             <div className="shops-city__title">Выберите город</div>
                             {this.listCity()}
                         </div>
-                        <div className="shops-sity shops-city_group">
-                            <div className="shops-city__title">Выберите город</div>
-                            <div className="shops-city__list">
-                                {this.listCity()}
-                            </div>
-                        </div>
+                        {this.groupPopup(this.state.changeCityGroup)}
                     </div>
                 </div>
             </div>

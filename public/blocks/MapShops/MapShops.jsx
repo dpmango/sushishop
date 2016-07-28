@@ -221,7 +221,9 @@ const MapShopsContainer = React.createClass({
             }
             // изменение магазина
             if (this.props.iam.shopId != nextProps.iam.shopId) {
-                this.changeCity(this.props.iam.shopId, nextProps.iam.shopId);
+                this.setState({
+                    changeCity: [ this.props.iam.shopId, nextProps.iam.shopId ]
+                })
             }
         } else {
             // инициализация
@@ -247,7 +249,9 @@ const MapShopsContainer = React.createClass({
     },
     componentDidMount: function() {
         this.map = new google.maps.Map(this.refs.map, {
-            scrollwheel: false
+            scrollwheel: false,
+            styles: [{"featureType":"all","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"administrative.country","elementType":"all","stylers":[{"visibility":"on"}]},{"featureType":"administrative.province","elementType":"all","stylers":[{"visibility":"on"}]},{"featureType":"administrative.province","elementType":"geometry.fill","stylers":[{"visibility":"on"}]},{"featureType":"administrative.locality","elementType":"all","stylers":[{"visibility":"on"}]},{"featureType":"administrative.neighborhood","elementType":"all","stylers":[{"visibility":"on"}]},{"featureType":"administrative.land_parcel","elementType":"all","stylers":[{"visibility":"on"}]},{"featureType":"landscape","elementType":"all","stylers":[{"visibility":"on"}]},{"featureType":"landscape.man_made","elementType":"all","stylers":[{"visibility":"on"}]},{"featureType":"landscape.natural.landcover","elementType":"geometry.fill","stylers":[{"visibility":"on"}]},{"featureType":"road.highway","elementType":"labels","stylers":[{"visibility":"on"}]},{"featureType":"road.highway.controlled_access","elementType":"geometry.fill","stylers":[{"color":"#e2931e"}]},{"featureType":"road.highway.controlled_access","elementType":"geometry.stroke","stylers":[{"color":"#e2931e"}]},{"featureType":"road.arterial","elementType":"labels.text","stylers":[{"visibility":"on"}]},{"featureType":"road.local","elementType":"labels.text","stylers":[{"visibility":"on"}]},{"featureType":"water","elementType":"geometry.fill","stylers":[{"color":"#89beff"}]}],
+            zoom: 7
         });
         this.map.addListener('zoom_changed', () => {
             this.markerUpdate()
@@ -261,6 +265,12 @@ const MapShopsContainer = React.createClass({
             this.buildMarker();
             this.setState({
                 actionBuild: false
+            })
+        }
+        if (this.state.changeCity) {
+            this.changeCity(this.state.changeCity[0], this.state.changeCity[1]);
+            this.setState({
+                changeCity: null
             })
         }
     }

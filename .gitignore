@@ -3,3 +3,4 @@ node_modules
 .idea
 build/f/script
 build/f/style
+/index.jsx

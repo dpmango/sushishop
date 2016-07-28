@@ -1,6 +1,8 @@
+var isNode = typeof window === 'undefined';
+
 (function (root, factory) {
     module.exports = factory(
-        require('swiper')
+        (!isNode) ? require('swiper') : ''
     );
 }(this, function (Swiper) {
     'use strict';
@@ -177,51 +179,56 @@
         },
 
         getDefaultProps: function() {
-            return defaultProps;
+            return defaultProps
         },
 
         initialisation: function () {
-            this.swiper = Swiper(ReactDOM.findDOMNode(this), Object.assign({}, this.props));
+            if (!isNode) {
+                this.swiper = Swiper(ReactDOM.findDOMNode(this), Object.assign({}, this.props));
+            }
         },
 
         resize: function () {
-            if (document.body.clientWidth > this.props.destroy) {
-                if (!this.activeSwiper) {
-                    this.initialisation();
-                    this.activeSwiper = true;
-                }
-            } else {
-                if (this.activeSwiper) {
-                    this.swiper.destroy(true, true);
-                    this.activeSwiper = false;
+            if (!isNode) {
+                if (document.body.clientWidth > this.props.destroy) {
+                    if (!this.activeSwiper) {
+                        this.initialisation();
+                        this.activeSwiper = true;
+                    }
+                } else {
+                    if (this.activeSwiper) {
+                        this.swiper.destroy(true, true);
+                        this.activeSwiper = false;
+                    }
                 }
             }
         },
 
         componentDidMount: function () {
-            if (!this.props.destroy || document.body.clientWidth > this.props.destroy) {
-                this.initialisation();
-                var this_ = this;
-                setTimeout(function () {
-                    this_.swiper.onResize();
-                }, 10);
-                this.activeSwiper = true;
-            } else {
-                this.activeSwiper = false;
-            }
-            if (this.props.destroy) {
+            if (!isNode) {
+                if (!this.props.destroy || document.body.clientWidth > this.props.destroy) {
+                    this.initialisation();
+                    setTimeout(() => {
+                        this.swiper.onResize();
+                    });
+                    this.activeSwiper = true;
+                } else {
+                    this.activeSwiper = false;
+                }
                 window.addEventListener('resize', this.resize);
             }
         },
 
         componentDidUpdate: function () {
-            if (!this.props.destroy || (this.props.destroy && document.body.clientWidth > this.props.destroy)) {
-                if (this.props.rebuildOnUpdate) {
-                    this.swiper.destroy(true, true);
-                    this.swiper = Swiper(ReactDOM.findDOMNode(this), Object.assign({}, this.props));
+            if (!isNode) {
+                if (!this.props.destroy || (this.props.destroy && document.body.clientWidth > this.props.destroy)) {
+                    if (this.props.rebuildOnUpdate) {
+                        this.swiper.destroy(true, true);
+                        this.swiper = Swiper(ReactDOM.findDOMNode(this), Object.assign({}, this.props));
+                    }
+                    this.swiper.update();
+                    this.swiper.onResize();
                 }
-                this.swiper.update();
-                this.swiper.onResize();
             }
         },
 
@@ -233,11 +240,13 @@
         // },
 
         // shouldComponentUpdate: function (nextProps) {
-        //     return nextProps.children !== this.props.children;
+        //     console.log(this.activeSwiper, document.body.clientWidth,  nextProps)
+        //     return this.activeSwiper == (document.body.clientWidth > this.props.destroy)
         // },
         //
         // componentWillReceiveProps: function () {
         //     if (!this.props.destroy || (this.props.destroy && document.body.clientWidth > this.props.destroy)) {
+        //         console.log(this.swiper)
         //         if (this.swiper != null) {
         //             this.swiper.destroy(true, true);
         //         }
@@ -262,21 +271,31 @@
 
         render: function() {
             var slideClass = this.props.slideClass;
-            return React.createElement(
-                'div',
-                { onWheel: (this.props.onWheel) ? this.props.onWheel : '' , className: this.props.slideClassContainer+' '+(this.props.className) ? this.props.className : '' },
-                React.createElement(
+            if (!isNode && (!this.props.destroy || this.props.destroy && (document.body.clientWidth > this.props.destroy))) {
+                return React.createElement(
                     'div',
-                    { className: 'swiper-wrapper' },
+                    { onWheel: (this.props.onWheel) ? this.props.onWheel : '' , className: this.props.slideClassContainer+' '+(this.props.className) ? this.props.className : '' },
+                    React.createElement(
+                        'div',
+                        { className: 'swiper-wrapper' },
+                        React.Children.map(this.props.children, function (e) {
+                            return React.cloneElement(e, { className: [slideClass, e.props.className].join(' ') });
+                        })
+                    ),
+                    React.createElement('div', { className: 'swiper-pagination' }),
+                    this._renderScrollBar(),
+                    this._renderNextButton(),
+                    this._renderPrevButton()
+                );
+            } else {
+                return React.createElement(
+                    'div',
+                    { className: (this.props.className) ? this.props.className : '' },
                     React.Children.map(this.props.children, function (e) {
                         return React.cloneElement(e, { className: [slideClass, e.props.className].join(' ') });
                     })
-                ),
-                React.createElement('div', { className: 'swiper-pagination' }),
-                this._renderScrollBar(),
-                this._renderNextButton(),
-                this._renderPrevButton()
-            );
+                );
+            }
         }
     });
 

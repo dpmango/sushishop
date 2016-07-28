@@ -1,42 +1,44 @@
-const gulp = require('gulp'),
-	plumber = require('gulp-plumber'),
-	rename = require('gulp-rename'),
-	concat = require('gulp-concat');
+const gulp = require('gulp')
+const plumber = require('gulp-plumber')
+const rename = require('gulp-rename')
+const concat = require('gulp-concat')
 
+const browserify = require('browserify')
+const buffer = require('vinyl-buffer')
+const source = require('vinyl-source-stream')
+const sourcemaps = require('gulp-sourcemaps')
+const babelify = require('babelify')
 
-var isFirst = true;
+var isFirst = false
 
 gulp.task('jsx', function() {
-	const browserify = require('browserify'),
-		buffer = require('vinyl-buffer'),
-		source = require('vinyl-source-stream'),
-		sourcemaps = require('gulp-sourcemaps'),
-		babelify = require('babelify');
+	const bundler = browserify({
+		entries: './public/app.jsx',
+		debug: true
+	});
+	bundler.transform(babelify);
 
-	if (isFirst) {
-		let bundler = browserify({
-			entries: './public/libs.jsx',
-			debug: true
-		});
-		bundler.transform(babelify);
-
-		bundler.bundle()
-			.on('error', function (err) {
-				console.log(err.toString());
-				this.emit("end");
-			})
-			.pipe(source('libs.js'))
-			.pipe(buffer())
-			.pipe(sourcemaps.init({ loadMaps: true }))
-			// .pipe(uglify())
-			.pipe(sourcemaps.write('./'))
-			.pipe(gulp.dest('./build/f/script'));
-
-		isFirst = false;
+	if (!isFirst) {
+		gulp.run('jsx-libs')
+		isFirst = true
 	}
 
-	let bundler = browserify({
-		entries: './public/app.jsx',
+	return bundler.bundle()
+		.on('error', function (err) {
+			console.log(err.toString());
+			this.emit("end");
+		})
+		.pipe(source('app.js'))
+		.pipe(buffer())
+		.pipe(sourcemaps.init({ loadMaps: true }))
+		// .pipe(uglify())
+		.pipe(sourcemaps.write('./'))
+		.pipe(gulp.dest('./build/f/script'));
+});
+
+gulp.task('jsx-libs', function() {
+	const bundler = browserify({
+		entries: './public/libs.jsx',
 		debug: true
 	});
 	bundler.transform(babelify);
@@ -46,7 +48,7 @@ gulp.task('jsx', function() {
 			console.log(err.toString());
 			this.emit("end");
 		})
-		.pipe(source('app.js'))
+		.pipe(source('libs.js'))
 		.pipe(buffer())
 		.pipe(sourcemaps.init({ loadMaps: true }))
 		// .pipe(uglify())
@@ -70,37 +72,28 @@ gulp.task('style', function () {
 		.pipe(gulp.dest('./build/f/style'));
 });
 
-gulp.task('jsx-server', function() {
-	const gulpreact = require('gulp-react')
-	return gulp.src([ './public/*.jsx', './public/*/*/*.jsx' ])
-		.pipe(plumber())
-		.pipe(gulpreact())
-		.pipe(plumber.stop())
-		.pipe(gulp.dest('./server/'));
-});
+gulp.task('server-react', function () {
+	const browserify = require('browserify'),
+		buffer = require('vinyl-buffer'),
+		source = require('vinyl-source-stream'),
+		sourcemaps = require('gulp-sourcemaps'),
+		babelify = require('babelify');
 
-gulp.task('server', function() {
-	gulp.run('jsx-server');
+	const bundler = browserify({
+		entries: './public/app.jsx',
+		debug: true
+	});
+	bundler.transform(babelify);
 
-	const express = require('express'),
-		app = express(),
-		ReactDOMServer = require('react-dom/server');
-
-
-	React = require('react');
-	isNode = true;
-
-	app.get('*', function (req, res) {
-		res.send(
-			ReactDOMServer.renderToString(
-				require('./server/route')
-			)
-		)
-	})
-
-	app.listen(3000);
-});
-
+	return bundler.bundle()
+		.on('error', function (err) {
+			console.log(err.toString());
+			this.emit("end");
+		})
+		.pipe(source('server.js'))
+		// .pipe(uglify())
+		.pipe(gulp.dest('./build'));
+})
 
 gulp.task('default', [ 'jsx', 'style' ], function () {
 	gulp.watch([ './public/**/*.jsx' ], [ 'jsx' ]);

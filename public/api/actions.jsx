@@ -17,14 +17,13 @@ module.exports = function (state = { list: [], status: 'empty' }, action) {
         return state;
     }
     if (action.type == "SET_ACTIONS") {
-        let alts = new Map();
+        let list = new Map();
         action.list.map((item) => {
-            alts.set(item.alt, item.id)
+            list.set(item.alt, item)
         });
         return {
             status: 'load',
-            list: action.list,
-            alts: alts
+            list: list
         };
     }
     return state;
