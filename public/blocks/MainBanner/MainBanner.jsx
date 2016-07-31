@@ -1,7 +1,7 @@
 module.exports = React.createClass({
     render: function() {
         return (
-            <div key={'main-banner-'+this.props.id} className="main-banner">
+            <div key={'main-banner-'+this.props.id} className="swiper-slide main-banner">
                 <div className="main-banner__bg" style={{backgroundImage: 'url('+this.props.bgImage+')'}} />
                 <div className="main-banner__product">
                     <img src={this.props.productImage} />

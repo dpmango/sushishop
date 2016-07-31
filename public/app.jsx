@@ -1,8 +1,9 @@
-var isNode = typeof window === 'undefined';
+var self = (typeof window === 'undefined') ? GLOBAL : window
+self.isNode = typeof window === 'undefined'
 
 
 if (isNode) {
-    URL_API = "//sushi.endy.pro/api/"
+    URL_API = "http://sushi.endy.pro/api/"
 } else {
     window.URL_API = "//sushi.endy.pro/api/"
     window.store = createStore(require('./reducer.jsx'))

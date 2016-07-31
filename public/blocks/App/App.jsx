@@ -2,17 +2,17 @@ var isNode = typeof window === 'undefined';
 
 
 const AppContainer = React.createClass({
-    // componentWillMount: function() {
-    //     store.dispatch({
-    //         type: 'GET_IAM'
-    //     });
-    //     store.dispatch({
-    //         type: 'GET_CITY'
-    //     });
-    //     store.dispatch({
-    //         type: 'GET_SHOPS'
-    //     });
-    // },
+    componentWillMount: function() {
+        store.dispatch({
+            type: 'GET_IAM'
+        });
+        store.dispatch({
+            type: 'GET_CITY'
+        });
+        store.dispatch({
+            type: 'GET_SHOPS'
+        });
+    },
     // mainPagerIgnoreList: new Set([
     //     '/shops'
     // ]),
@@ -71,6 +71,7 @@ const AppContainer = React.createClass({
     //     );
     // }
     render: function() {
+
         return (
             <div>
                 <Header />

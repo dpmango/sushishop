@@ -4,18 +4,23 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "server": "clear && forever start ./index.jsx"
+    "server": "clear && node index.jsx"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "aliasify": "^2.0.0",
     "autoprefixer": "*",
+    "axios": "^0.13.1",
     "babel-cli": "^6.11.4",
+    "babel-polyfill": "^6.9.1",
     "babel-preset-es2015": "^6.9.0",
     "babel-preset-react": "^6.11.1",
     "babelify": "*",
     "browserify": "*",
+    "cached": "^4.2.3",
+    "es5-shim": "^4.5.9",
+    "es6-map": "^0.1.4",
     "express": "^4.14.0",
     "google-maps-infobox": "^1.1.13",
     "gulp": "*",

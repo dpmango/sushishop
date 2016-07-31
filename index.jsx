@@ -2,19 +2,40 @@ var express = require('express')
 var vhost = require('vhost')
 var app = express()
 
-// app.use(vhost('sushi-html.endy.pro'))
 app.use('/f', express.static('./build/f'))
 
 require('node-jsx').install({extension: '.jsx'})
+fs = require('fs')
+
+setCache = function(name, data) {
+    fs.writeFile('./cache/'+name+'.json', JSON.stringify(data))
+}
+getCache = function(name) {
+    var path = './cache/'+name+'.json'
+    if (fs.existsSync(path)) {
+        return JSON.parse(fs.readFileSync(path))
+    } else {
+        return false
+    }
+}
+
 
 GLOBAL._ = require('underscore')
+cached = require('cached')
 require('./public/libs.jsx')
 require('./public/app.jsx')
 routes = require('./public/route.jsx')
 
+myCache = cached('sushishop')
+
 store = createStore(require('./public/reducer.jsx'))
 
 app.get('*', (req, res) => {
+    console.log(req.url);
+    if ([ '/catalog', '/catalog/' ].indexOf(req.url) >= 0) {
+        res.redirect('/catalog/pizza')
+    }
+
     locationURL = req.url
 
     match({ routes: routes, location: req.url }, (err, redirect, props) => {
@@ -52,11 +73,11 @@ function renderPage(appHtml) {
             <meta name="msapplication-config" content="/f/favicons/browserconfig.xml">
             <meta name="theme-color" content="#ffffff">
             <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-            <script src="//cdn.polyfill.io/v2/polyfill.js?features=fetch"></script>
+            <link rel="stylesheet" href="/f/style/style.css">
         </head>
         <body>
             <div id="app">${appHtml}</div>
-            <link rel="stylesheet" href="/f/style/style.css">
+            <script src="//cdn.polyfill.io/v2/polyfill.js?features=fetch"></script>
             <script src="//fb.me/react-15.1.0.js"></script>
             <script src="//fb.me/react-dom-15.1.0.js"></script>
             <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCO26nKWXJSUraUFRGGhQgNUQEyGiauFDU&libraries=geometry"></script>

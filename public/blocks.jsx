@@ -1,4 +1,4 @@
-var isNode = typeof window === 'undefined';
+var isNode = typeof window === 'undefined'
 
 self = (isNode) ? GLOBAL : window
 

@@ -1,3 +1,5 @@
+var isNode = typeof window === 'undefined'
+
 const initialState = {
     cityId: 0,
     shopId: 0

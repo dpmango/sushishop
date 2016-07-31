@@ -4,3 +4,4 @@ node_modules
 build/f/script
 build/f/style
 /index.jsx
+cache/

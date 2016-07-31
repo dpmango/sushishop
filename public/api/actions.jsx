@@ -1,12 +1,10 @@
 module.exports = function (state = { list: [], status: 'empty' }, action) {
     if (action.type == "GET_ACTIONS") {
         if (state.status == 'empty') {
-            fetch('/api/actions').then(function (response) {
-                response.json().then(function(data) {
-                    store.dispatch({
-                        type: 'SET_ACTIONS',
-                        list: data
-                    });
+            axios.get(URL_API+'actions').then(function (response) {
+                store.dispatch({
+                    type: 'SET_ACTIONS',
+                    list: data
                 });
             });
             return {

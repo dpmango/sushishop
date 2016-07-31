@@ -102,9 +102,6 @@ const mapStateToProps = function(store) {
 };
 
 
-// module.exports = HeaderContainer
-
-
 module.exports = connect(mapStateToProps, null, null, {
     pure: false
 })(HeaderContainer);

@@ -5,7 +5,8 @@ const MainCatalogContainer = React.createClass({
         });
     },
     render: function() {
-        const createCatalog = function (item) {
+        const createCatalog = (id) => {
+            let item = this.props.catalog.list[id]
             return (
                 <div className={'main-catalog-item main-catalog-item_'+item.alt} key={'main_catalog_'+item.id}>
                     <Link to={'/catalog/'+item.alt} className="main-catalog-item__wrapper">
@@ -25,7 +26,7 @@ const MainCatalogContainer = React.createClass({
             <div className="main-catalog">
                 <h2 className="main-catalog__title">Выберите категорию меню</h2>
                 <div className="main-catalog__list">
-                    {this.props.catalog.map(createCatalog)}
+                    {this.props.catalog.sort.map(createCatalog)}
                 </div>
             </div>
         )
@@ -35,7 +36,7 @@ const MainCatalogContainer = React.createClass({
 
 const mapStateToProps = function(store) {
     return {
-        catalog: store.catalog.list
+        catalog: store.catalog.catalog
     }
 };
 

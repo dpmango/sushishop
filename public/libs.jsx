@@ -1,5 +1,5 @@
-var isNode = typeof self === 'undefined';
-var self = (isNode) ? GLOBAL : self
+var isNode = typeof window === 'undefined'
+var self = (isNode) ? GLOBAL : window
 
 
 if (isNode) {
@@ -17,6 +17,9 @@ if (isNode) {
     self.RouterContext = require('react-router').RouterContext
     self.match = require('react-router').match
 }
+if (!isNode) {
+    self.SwiperLib = require('swiper')
+}
 
 self.createStore = require('redux').createStore
 self.combineReducers = require('redux').combineReducers
@@ -28,6 +31,8 @@ self.cookie = require('react-cookie')
 self.localForage = require('localforage')
 
 self.Transition = require('./blocks/Transition/Transition.jsx')
+
+self.axios = require('axios')
 
 
 if (isNode) {

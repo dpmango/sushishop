@@ -1,28 +1,26 @@
 var BannersContainer = React.createClass({
-    // componentWillMount: function() {
-    //     store.dispatch({
-    //         type: 'GET_BANNERS'
-    //     });
-    // },
+    componentWillMount: function() {
+        store.dispatch({
+            type: 'GET_BANNERS'
+        });
+    },
     render: function() {
-        // const createBanner = function (item) {
-        //     return (
-        //         <div key={'swiper-main-banner-'+item.id}>
-        //             <MainBanner
-        //                 id={item.id}
-        //                 bgImage={item.product_bg}
-        //                 productImage={item.product_image}
-        //                 labelImage={item.label_image}
-        //                 category={item.category}
-        //                 price={item.price}
-        //                 priceOld={item.price_old}
-        //                 weight={item.weight}
-        //                 count={item.count}
-        //                 part={item.part}
-        //             />
-        //         </div>
-        //     )
-        // };
+        const createBanner = function (item) {
+            return (
+                <MainBanner
+                    id={item.id}
+                    bgImage={item.product_bg}
+                    productImage={item.product_image}
+                    labelImage={item.label_image}
+                    category={item.category}
+                    price={item.price}
+                    priceOld={item.price_old}
+                    weight={item.weight}
+                    count={item.count}
+                    part={item.part}
+                />
+            )
+        };
         // return (
         //     <Swiper
         //         pagination=".swiper-pagination"
@@ -41,18 +39,20 @@ var BannersContainer = React.createClass({
         //     </Swiper>
         // )
         return (
-            <div>banner</div>
+            <Swiper
+                className="main-banners">
+                {this.props.banners.map(createBanner)}
+            </Swiper>
         )
     }
 });
 
 
-// var mapStateToProps = function(store) {
-//     return {
-//         banners: store.banners
-//     }
-// };
+var mapStateToProps = function(store) {
+    return {
+        banners: store.banners
+    }
+};
 
 
-module.exports = BannersContainer
-// module.exports = connect(mapStateToProps)(BannersContainer);
+module.exports = connect(mapStateToProps)(BannersContainer)

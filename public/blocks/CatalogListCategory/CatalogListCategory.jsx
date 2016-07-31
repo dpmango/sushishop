@@ -4,7 +4,7 @@ const CatalogListCategoryItem = React.createClass({
     },
     render: function () {
         return (
-            <div>
+            <div className="catalog-list-category__item-outer swiper-slide">
                 <Link to={'/catalog/'+this.props.alt} className="catalog-list-category__item" activeClassName="catalog-list-category__item_active">
                     <picture className="catalog-list-category__photo">
                         <source media="(min-width: 800px)" srcSet={this.props.image_medium}/>
@@ -35,12 +35,11 @@ const CatalogListCategoryContainer = React.createClass({
                     freeMode={true}
                     className="catalog-list-category__wrapper"
                 >
-                    {this.props.catalog.map((item) => {
-                        item.activeCatagory = this.props.activeCategory;
+                    {this.props.catalog.sort.map((id) => {
+                        item = this.props.catalog.list[id]
+                        item.activeCatagory = this.props.activeCategory
                         return (
-                            <div key={'catalog-list-category-'+item.id} className="catalog-list-category__item-outer">
-                                <CatalogListCategoryItem {...item} />
-                            </div>
+                            <CatalogListCategoryItem {...item} key={'catalog-list-category-'+item.id} />
                         );
                     })}
                 </Swiper>
@@ -52,7 +51,7 @@ const CatalogListCategoryContainer = React.createClass({
 
 const mapStateToProps = function(store) {
     return {
-        catalog: store.catalog.list
+        catalog: store.catalog.catalog
     }
 };
 
