@@ -27,8 +27,10 @@ self.combineReducers = require('redux').combineReducers
 self.Provider = require('react-redux').Provider
 self.connect = require('react-redux').connect
 
-self.cookie = require('react-cookie')
-self.localForage = require('localforage')
+if (!isNode) {
+    self.cookie = require('react-cookie')
+    self.localForage = require('localforage')
+}
 
 self.Transition = require('./blocks/Transition/Transition.jsx')
 

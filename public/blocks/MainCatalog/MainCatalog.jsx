@@ -36,7 +36,7 @@ const MainCatalogContainer = React.createClass({
 
 const mapStateToProps = function(store) {
     return {
-        catalog: store.catalog.catalog
+        catalog: store.catalog
     }
 };
 

@@ -1,7 +1,9 @@
 var express = require('express')
 var vhost = require('vhost')
+var cookieParser = require('cookie-parser')
 var app = express()
 
+app.use(cookieParser())
 app.use('/f', express.static('./build/f'))
 
 require('node-jsx').install({extension: '.jsx'})
@@ -29,29 +31,29 @@ routes = require('./public/route.jsx')
 myCache = cached('sushishop')
 
 store = createStore(require('./public/reducer.jsx'))
-
+cookies = {}
 app.get('*', (req, res) => {
-    console.log(req.url);
     if ([ '/catalog', '/catalog/' ].indexOf(req.url) >= 0) {
-        res.redirect('/catalog/pizza')
+        res.redirect('/catalog/rolls')
     }
 
     locationURL = req.url
-
+    cookies = req.cookies
     match({ routes: routes, location: req.url }, (err, redirect, props) => {
-        const appHtml = ReactDOMServer.renderToString(React.createElement(
+        const html = ReactDOMServer.renderToString(React.createElement(
             Provider,
             { store: store },
             React.createElement(RouterContext, props))
         )
-        res.send(renderPage(appHtml))
+        res.send(renderPage(html, title, store.getState()))
     })
 })
-function renderPage(appHtml) {
+function renderPage(html, title, state) {
+    state = JSON.stringify(state)
     return `<!DOCTYPE html>
         <html>
         <head>
-            <title>СушиШоп</title>
+            <title>${title}</title>
             <link rel="apple-touch-icon" sizes="57x57" href="/f/favicons/apple-touch-icon-57x57.png">
             <link rel="apple-touch-icon" sizes="60x60" href="/f/favicons/apple-touch-icon-60x60.png">
             <link rel="apple-touch-icon" sizes="72x72" href="/f/favicons/apple-touch-icon-72x72.png">
@@ -76,10 +78,11 @@ function renderPage(appHtml) {
             <link rel="stylesheet" href="/f/style/style.css">
         </head>
         <body>
-            <div id="app">${appHtml}</div>
-            <script src="//cdn.polyfill.io/v2/polyfill.js?features=fetch"></script>
-            <script src="//fb.me/react-15.1.0.js"></script>
-            <script src="//fb.me/react-dom-15.1.0.js"></script>
+            <div id="app">${html}</div>
+            <script id="store" type="application/json">${state}</script>
+            <script src="//cdn.polyfill.io/v2/polyfill.js"></script>
+            <script src="//fb.me/react-15.3.0.js"></script>
+            <script src="//fb.me/react-dom-15.3.0.js"></script>
             <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCO26nKWXJSUraUFRGGhQgNUQEyGiauFDU&libraries=geometry"></script>
             <script src="/f/script/libs.js"></script>
             <script src="/f/script/app.js"></script>

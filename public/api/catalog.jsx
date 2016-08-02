@@ -1,33 +1,32 @@
-var initialState =  { catalog: {
+var initialState = {
     list: {},
     url: {},
     sort: []
-}, status: 'empty' }
+}
 
 if (isNode) {
     var data = getCache('catalog')
     if (data) {
-        initialState = {
-            status: 'load',
-            catalog: getCache('catalog')
-        }
+        initialState = data
     }
 }
 
 module.exports = function (state = initialState, action) {
     if (action.type == "GET_CATALOG") {
-        if (state.status == 'empty') {
-            axios.get(URL_API+'catalog').then(function (response) {
+        if (state.status == 'empty' || isNode) {
+            axios.get(URL_API+'catalog', {
+                params: {
+                    shop_id: 25,
+                    city_id: 2
+                }
+            }).then(function (response) {
                 var data = response.data.result
                 store.dispatch({
                     type: "SET_CATALOG",
                     catalog: data
                 })
             });
-            return {
-                status: 'loading',
-                list: []
-            };
+            return initialState
         }
 
         return state;
@@ -50,10 +49,7 @@ module.exports = function (state = initialState, action) {
         if (isNode) {
             setCache('catalog', catalog)
         }
-        return {
-            status: 'load',
-            catalog: catalog
-        };
+        return catalog
     }
     return state;
 };

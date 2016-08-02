@@ -8,33 +8,37 @@ const initialState = {
 
 module.exports = function (state = initialState, action) {
     if (action.type == 'GET_IAM') {
-        localForage.getItem('cityId').then((data) => {
-            if (data) {
+        if (isNode) {
+            if (cookies.cityId) {
                 store.dispatch({
-                    type: 'SET_IAM_CITY_LIGHT',
-                    cityId: data
-                });
+                    type: 'SET_IAM_CITY',
+                    cityId: cookies.cityId
+                })
             }
-        });
-        localForage.getItem('shopId').then((data) => {
-            if (data) {
+            if (cookies.shopId) {
                 store.dispatch({
-                    type: 'SET_IAM_SHOP_LIGHT',
-                    shopId: data
-                });
+                    type: 'SET_IAM_SHOP',
+                    shopId: cookies.shopId
+                })
             }
-        });
+        } else {
+
+        }
         return state;
     }
     if (action.type == 'SET_IAM_CITY') {
-        localForage.setItem('cityId', action.cityId);
+        if (!isNode) {
+            localForage.setItem('cityId', action.cityId);
+        }
         return Object.assign({}, state, { cityId: action.cityId });
     }
     if (action.type == 'SET_IAM_CITY_LIGHT') {
         return Object.assign({}, state, { cityId: action.cityId });
     }
     if (action.type == 'SET_IAM_SHOP') {
-        localForage.setItem('shopId', action.shopId);
+        if (!isNode) {
+            localForage.setItem('shopId', action.shopId);
+        }
         return Object.assign({}, state, { shopId: action.shopId });
     }
     if (action.type == 'SET_IAM_SHOP_LIGHT') {

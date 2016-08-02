@@ -7,9 +7,11 @@ if (isNode) {
 
 module.exports = function (state = initialState, action) {
     if (action.type == "GET_BANNERS") {
-        if (store.getState().banners.length > 0) {
+        if (store.getState().banners) {
             return store.getState().banners;
-        } else {
+        }
+
+        if (!store.getState().banners || isNode) {
             axios.get(URL_API+'banners').then(function (response) {
                 var data = response.data.result
                 store.dispatch({
