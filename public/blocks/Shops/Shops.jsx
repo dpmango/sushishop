@@ -20,7 +20,7 @@ const ShopsContainer = React.createClass({
         }
     },
     itemShop: function (shopId) {
-        let item = this.props.shops.get(shopId);
+        let item = this.props.shops.list[shopId];
 
         return <div className="shops-item" key={shopId}>
             <div>
@@ -35,16 +35,13 @@ const ShopsContainer = React.createClass({
     listShops: function () {
         let buf = [],
             cityId = this.props.iam.cityId;
-        if (cityId == 0) return buf;
+        if (cityId === 0) return buf;
 
-        for (let key in this.props.shopsCity) {
-            let list = this.props.shopsCity[key];
-            if (key == cityId) {
-                list.map((item) => {
-                    buf.push(this.itemShop(item));
-                });
+        this.props.shops.sort.map((key) => {
+            if (this.props.shops.list[key].city_id == cityId) {
+                buf.push(this.itemShop(key))
             }
-        }
+        })
         return buf;
     },
     near: function (e) {
@@ -60,8 +57,7 @@ const ShopsContainer = React.createClass({
         })
     },
     city: function () {
-        let cityId = this.props.iam.cityId;
-        return (cityId == 0) ? '': this.props.city.get(cityId).name;
+        return (this.props.iam.cityId === 0) ? ' ': this.props.city.list[this.props.iam.cityId].name;
     },
     cityChoose: function (e) {
         this.transition()
@@ -118,22 +114,24 @@ const ShopsContainer = React.createClass({
         e.preventDefault()
     },
     listCity: function () {
-        let list = []
-        if (this.props.city.length == 0) return buf;
-        let groups = new Set()
-        this.props.city.forEach((data) => {
-            if (data.group_id == 0) {
-                list.push(<div className="shops-city-item" key={data.id}>
-                    <span data-id={data.id} onClick={this.changeCity}>{data.name}</span>
-                </div>)
-            } else {
-                if (!groups.has(data.group_id)) {
-                    groups.add(data.group_id)
-                    let group = this.props.city.get(data.group_id)
-                    list.push(<div className="shops-city-item shops-city-item_group" key={'group-'+group.id} data-id={data.group_id} onClick={this.changeCityGroup}>
-                        <span>{group.name}</span>
+        var list = []
+        this.props.city.sort.map((item) => {
+            if (item.type === "city") {
+                let data = this.props.city.list[item.id]
+                if (data.group_id === 0) {
+                    list.push(<div className="shops-city-item" key={data.id}>
+                        <span data-id={data.id} onClick={this.changeCity}>{data.name}</span>
                     </div>)
                 }
+            } else {
+                // let data = this.props.city.groups[item.id]
+                // if (!groups.has(data.group_id)) {
+                //     groups.add(data.group_id)
+                //     let group = this.props.city.get(data.group_id)
+                //     list.push(<div className="shops-city-item shops-city-item_group" key={'group-'+group.id} data-id={data.group_id} onClick={this.changeCityGroup}>
+                //         <span>{group.name}</span>
+                //     </div>)
+                // }
             }
         })
         let buf = [[], []];
@@ -175,13 +173,14 @@ const ShopsContainer = React.createClass({
             || this.props.iam.shopId != nextProps.iam.shopId
             || this.props.shadow.name == "city-choose"
             || this.state.changeCity  != nextState.changeCity
+            || this.state.near  != nextState.near
         )
     },
     render: function() {
         return (
             <div className="shops">
                 <div className="shops__header">
-                    <div className={"shops__city"+((this.state.changeCity) ? ' shops__city_open' : '')+((typeof this.props.iam.shopId != 'number' || this.props.iam.shopId == 0) ? ' shops__city_loading': '')}>
+                    <div className={"shops__city"+((this.state.changeCity) ? ' shops__city_open' : '')}>
                         Выберите удобный СушиШоп<br />
                         в <a href="#" onClick={this.cityChoose}>{this.city()}{Icon.arrow_down}</a>
                     </div>
@@ -209,7 +208,7 @@ const ShopsContainer = React.createClass({
                     </div>
                 </Swiper>
 
-                {(isNode) ? '' : <MapShops near={this.state.near} />}
+                <MapShops near={this.state.near} />
 
                 <div className={"shops__city-popup "+((this.state.changeCity) ? "shops__city-popup_showed" : "shops__city-popup_hided" )+((this.state.changeCityGroup) ? " shops__city-popup_group" : '')} ref="cityPopup">
                     <div className="shops__city-popup-wrapper">
@@ -229,11 +228,8 @@ const ShopsContainer = React.createClass({
 const mapStateToProps = function(store) {
     return {
         iam: store.iam,
-        city: store.city.list,
-        cityGroup: store.city.groups,
-        cityStatus: store.city.status,
-        shops: store.shops.shops,
-        shopsCity: store.shops.city,
+        city: store.city,
+        shops: store.shops,
         shadow: store.shadow
     }
 };

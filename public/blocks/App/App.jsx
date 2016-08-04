@@ -2,6 +2,29 @@ var isNode = typeof window === 'undefined';
 
 
 const AppContainer = React.createClass({
+    iam: function () {
+        if (Object.keys(this.props.city.list).length > 0 && this.props.iam.cityId === 0) {
+            Object.keys(this.props.city.list).map((key) => {
+                if (this.props.city.list[key].isChange === true) {
+                    store.dispatch({
+                        type: 'SET_IAM_CITY',
+                        cityId: parseInt(key)
+                    })
+                }
+            })
+        }
+        if (Object.keys(this.props.shops.list).length > 0 && this.props.iam.shopId === 0) {
+            Object.keys(this.props.shops.list).map((key) => {
+                key = parseInt(key)
+                if (this.props.shops.list[key].isChange === true) {
+                    store.dispatch({
+                        type: 'SET_IAM_SHOP',
+                        shopId: parseInt(key)
+                    })
+                }
+            })
+        }
+    },
     componentWillMount: function() {
         store.dispatch({
             type: 'GET_IAM'
@@ -12,6 +35,7 @@ const AppContainer = React.createClass({
         store.dispatch({
             type: 'GET_SHOPS'
         });
+        this.iam()
     },
     // mainPagerIgnoreList: new Set([
     //     '/shops'
@@ -38,22 +62,23 @@ const AppContainer = React.createClass({
     //         type: 'SHADOW_HIDE'
     //     });
     // },
-    // componentDidUpdate: function(prevProps) {
-    //     this.transitionShadow = new Transition({
-    //         el: this.refs.shadow,
-    //         className: 'shadow',
-    //         speedShow: 200,
-    //         speedHide: 400
-    //     });
-    //
-    //     if (prevProps.shadow.name != this.props.shadow.name) {
-    //         if (this.props.shadow.name == '') {
-    //             this.transitionShadow.hide();
-    //         } else {
-    //             this.transitionShadow.show();
-    //         }
-    //     }
-    // },
+    componentDidUpdate: function(prevProps) {
+        this.transitionShadow = new Transition({
+            el: this.refs.shadow,
+            className: 'shadow',
+            speedShow: 200,
+            speedHide: 400
+        });
+
+        if (prevProps.shadow.name != this.props.shadow.name) {
+            if (this.props.shadow.name == '') {
+                this.transitionShadow.hide();
+            } else {
+                this.transitionShadow.show();
+            }
+        }
+        this.iam()
+    },
     // render: function() {
     //     return (
     //         <div>
@@ -91,7 +116,10 @@ const AppContainer = React.createClass({
 
 const mapStateToProps = function(store) {
     return {
-        shadow: store.shadow
+        shadow: store.shadow,
+        iam: store.iam,
+        city: store.city,
+        shops: store.shops
     }
 };
 

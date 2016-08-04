@@ -1,70 +1,59 @@
-module.exports = function (state = { list: [], groups: [], city: [], status: 'empty' }, action) {
+var initialState = {
+    list: {},
+    groups: {},
+    sort: []
+}
+
+if (isNode) {
+    var cache = Object.assign(initialState, getCache('shop'))
+    if (Object.keys(cache.list).length > 0) {
+        initialState = cache
+    }
+}
+
+module.exports = function (state = initialState, action) {
     if (action.type == "GET_SHOPS") {
-        if (state.status == 'empty') {
+        if (Object.keys(state.list).length === 0 || isNode) {
             axios.get(URL_API+'shops').then(function (response) {
-                var data = response.data
-                if (data.error_message != 'Ok') {
-                    setTimeout(function () {
-                        store.dispatch({
-                            type: 'GET_SHOPS'
-                        });
-                    }, 3000);
-                } else {
-                    localForage.getItem('shopId').then((value) => {
-                        if (typeof value != "number" || value == 0) {
-                            data.result.shops.map((item) => {
-                                if (item.isChange) {
-                                    store.dispatch({
-                                        type: 'SET_IAM_SHOP',
-                                        shopId: item.id
-                                    });
-                                }
-                            });
-                        } else {
-                            store.dispatch({
-                                type: 'SET_IAM_SHOP',
-                                shopId: value
-                            });
-                        }
-                    });
-                    store.dispatch({
-                        type: 'SET_SHOPS',
-                        shops: data.result.shops,
-                        groups: data.result.groups
-                    });
-                }
-            });
-            return {
-                status: 'loading',
-                list: [],
-                city: [],
-                groups: []
-            };
+                store.dispatch({
+                    type: 'SET_SHOPS',
+                    list: response.data.result.shops,
+                    groups: response.data.result.groups
+                });
+            })
         }
-        return state;
+        return state
     }
     if (action.type == "SET_SHOPS") {
-        let shops = new Map(),
-            groups = new Map(),
-            city = {};
-        action.shops.map((item) => {
-            if (item.city_id != 0) {
-                if (!city[item.city_id]) city[item.city_id] = [];
-                city[item.city_id].push(item.id);
-                shops
-                    .set(item.id, item);
-            }
-        });
+        state = {
+            list: {},
+            groups: {},
+            sort: []
+        }
+
         action.groups.map((item) => {
-            groups
-                .set(item.id, item);
-        });
-        return {
-            status: 'load',
-            shops: shops,
-            city: city,
-            groups: groups
-        };
+            state.groups[item.id] = Object.assign(item, { shops: [] })
+        })
+
+        action.list.map((item) => {
+            state.list[item.id] = item
+            state.sort.push(item.id)
+            if (item.group_id.length > 0) {
+                item.group_id.map((group_id) => {
+                    state.groups[group_id].shops.push(item.id)
+                })
+            }
+        })
+
+        state.sort.sort((a, b) => {
+            return state.list[a].sort - state.list[b].sort
+        })
+
+        if (isNode) {
+            setCache('shops', state)
+        }
+
+        return state
     }
-    return state;
+    return state
 };

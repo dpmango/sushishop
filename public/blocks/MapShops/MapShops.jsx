@@ -14,11 +14,13 @@ const MapShopsContainer = React.createClass({
         };
     },
     buildMarker: function (isMove = true) {
-        if (typeof this.mapMarkers == 'object') {
-            for (let key in this.mapMarkers) {
-                this.mapMarkers[key].setMap(null);
-            }
-        }
+        // if (typeof this.mapMarkers == 'object') {
+        //     Object.keys(this.mapMarkers).map((key) => {
+        //         this.mapMarkers[key].setMap(null);
+        //     })
+        // }
+
+        console.log(this.mapMarkers)
 
         this.mapMarkers = {}
         this.mapWindows = {}
@@ -27,13 +29,13 @@ const MapShopsContainer = React.createClass({
 
         this.mapBounds = new google.maps.LatLngBounds();
 
-        for (let key in this.props.shopsCity) {
-            if (key == this.props.iam.cityId) {
-                this.props.shopsCity[key].map((item) => {
-                    this.itemShopItem(item);
-                });
+        Object.keys(this.props.shops.list).map((key) => {
+            let item = this.props.shops.list[key]
+            if (item.city_id === this.props.iam.cityId) {
+                this.itemShopItem(item.id);
             }
-        }
+        })
+
         if (isMove) {
             this.map.fitBounds(this.mapBounds);
         }
@@ -102,7 +104,7 @@ const MapShopsContainer = React.createClass({
 
     },
     itemShopItem: function (shopId) {
-        let item = this.props.shops.get(shopId);
+        let item = this.props.shops.list[shopId];
         if (item.geo_lat && item.geo_lng) {
             let latlng = new google.maps.LatLng(item.geo_lat, item.geo_lng);
 
@@ -134,6 +136,8 @@ const MapShopsContainer = React.createClass({
         }
     },
     near: function () {
+        if (isNode) return
+
         let myPosition = {
             lat: 59.9017779,
             lng: 30.282486600000002
@@ -147,22 +151,25 @@ const MapShopsContainer = React.createClass({
             });
         }
 
-        myPosition = new google.maps.LatLng(myPosition.lat, myPosition.lng);
+        myPosition = new google.maps.LatLng(myPosition.lat, myPosition.lng)
 
         if (this.props.near == 0) {
             this.mapMarkers['i'] = new google.maps.Marker({
                 position: myPosition,
                 map: this.map
-            });
+            })
+            console.log(this.mapMarkers)
         }
 
         var longitude;
 
-        for(var item of this.props.shops.values()) {
+        Object.keys(this.props.shops.list).map((key) => {
+            let item = this.props.shops.list[key]
+
             let longitudeItem = google.maps.geometry.spherical.computeDistanceBetween(
                 myPosition,
                 new google.maps.LatLng(item.geo_lat, item.geo_lng)
-            );
+            )
             if (item.geo_lat && item.geo_lng) {
                 if (typeof longitude == "undefined") {
                     longitude = {
@@ -178,41 +185,45 @@ const MapShopsContainer = React.createClass({
                     }
                 }
             }
-        }
+        })
 
-        this.mapMarkers[longitude.id].setVisible(false);
-        this.mapWindows[longitude.id].open(this.map, this.mapMarkers[longitude.id]);
 
-        this.mapBounds = new google.maps.LatLngBounds();
-        this.mapBounds.extend(myPosition);
-        let longitudeShop = this.props.shops.get(longitude.id);
-        this.mapBounds.extend(new google.maps.LatLng(longitudeShop.geo_lat, longitudeShop.geo_lng));
-        this.map.fitBounds(this.mapBounds);
+        this.mapMarkers[longitude.id].setVisible(false)
+        this.mapWindows[longitude.id].open(this.map, this.mapMarkers[longitude.id])
+
+        this.mapBounds = new google.maps.LatLngBounds()
+        this.mapBounds.extend(myPosition)
+        let longitudeShop = this.props.shops.list[longitude.id]
+        this.mapBounds.extend(new google.maps.LatLng(longitudeShop.geo_lat, longitudeShop.geo_lng))
+        this.map.fitBounds(this.mapBounds)
     },
     changeCity: function (from, to) {
-        // this.mapMarkers[from].setIcon('/f/images/map/marker.png')
-        // this.mapMarkers[to].setIcon('/f/images/map/marker-orange.png')
+        if (isNode) return
+
         this.mapWindows[from].content_.classList.remove('shop-infobox_active')
         this.mapWindows[to].content_.classList.add('shop-infobox_active')
         this.markerUpdate()
     },
     markerUpdate: function () {
-        let zoom = this.map.getZoom(),
-            isBig = zoom > 11;
-        for(let i in this.mapMarkers) {
-            if (this.mapMarkers.hasOwnProperty(i)) {
-                let item = this.mapMarkers[i];
-                if (i == this.props.iam.shopId) {
-                    item.setIcon((isBig) ? this.markerImage.activeShopBig : this.markerImage.activeShop)
-                } else if (i == 'i') {
-                    item.setIcon((isBig) ? this.markerImage.iBig : this.markerImage.i)
-                } else {
-                    item.setIcon((isBig) ? this.markerImage.shopBig : this.markerImage.shop)
-                }
+        if (isNode) return
+
+        let zoom = this.map.getZoom()
+        let isBig = zoom > 11
+
+        Object.keys(this.mapMarkers).map((key) => {
+            let item = this.mapMarkers[key]
+            if (key == this.props.iam.shopId) {
+                item.setIcon((isBig) ? this.markerImage.activeShopBig : this.markerImage.activeShop)
+            } else if (key == 'i') {
+                item.setIcon((isBig) ? this.markerImage.iBig : this.markerImage.i)
+            } else {
+                item.setIcon((isBig) ? this.markerImage.shopBig : this.markerImage.shop)
             }
-        }
+        })
     },
     componentWillReceiveProps: function(nextProps) {
+        if (isNode) return
+
         if (this.state.isBuild) {
             // изменение города
             if ((this.props.iam.cityId != nextProps.iam.cityId)
@@ -227,13 +238,10 @@ const MapShopsContainer = React.createClass({
             }
         } else {
             // инициализация
-            if ((this.props.iam.cityId == 0 || this.props.iam.shopId == 0 || this.props.shopsStatus != 'load' || this.props.cityStatus != 'load')
-                && (nextProps.iam.cityId != 0 && nextProps.iam.shopId != 0 && nextProps.shopsStatus == 'load' && nextProps.cityStatus == 'load')) {
-                this.setState({
-                    isBuild: true,
-                    actionBuild: true
-                });
-            }
+            this.setState({
+                isBuild: true,
+                actionBuild: true
+            })
         }
         return false;
     },
@@ -248,19 +256,81 @@ const MapShopsContainer = React.createClass({
         )
     },
     componentDidMount: function() {
+        if (isNode) return
+
         this.map = new google.maps.Map(this.refs.map, {
             scrollwheel: false,
-            styles: [{"featureType":"all","elementType":"labels","stylers":[{"visibility":"off"}]},{"featureType":"administrative.country","elementType":"all","stylers":[{"visibility":"on"}]},{"featureType":"administrative.province","elementType":"all","stylers":[{"visibility":"on"}]},{"featureType":"administrative.province","elementType":"geometry.fill","stylers":[{"visibility":"on"}]},{"featureType":"administrative.locality","elementType":"all","stylers":[{"visibility":"on"}]},{"featureType":"administrative.neighborhood","elementType":"all","stylers":[{"visibility":"on"}]},{"featureType":"administrative.land_parcel","elementType":"all","stylers":[{"visibility":"on"}]},{"featureType":"landscape","elementType":"all","stylers":[{"visibility":"on"}]},{"featureType":"landscape.man_made","elementType":"all","stylers":[{"visibility":"on"}]},{"featureType":"landscape.natural.landcover","elementType":"geometry.fill","stylers":[{"visibility":"on"}]},{"featureType":"road.highway","elementType":"labels","stylers":[{"visibility":"on"}]},{"featureType":"road.highway.controlled_access","elementType":"geometry.fill","stylers":[{"color":"#e2931e"}]},{"featureType":"road.highway.controlled_access","elementType":"geometry.stroke","stylers":[{"color":"#e2931e"}]},{"featureType":"road.arterial","elementType":"labels.text","stylers":[{"visibility":"on"}]},{"featureType":"road.local","elementType":"labels.text","stylers":[{"visibility":"on"}]},{"featureType":"water","elementType":"geometry.fill","stylers":[{"color":"#89beff"}]}],
+            styles: [{
+                "featureType": "all",
+                "elementType": "labels",
+                "stylers": [{"visibility": "off"}]
+            }, {
+                "featureType": "administrative.country",
+                "elementType": "all",
+                "stylers": [{"visibility": "on"}]
+            }, {
+                "featureType": "administrative.province",
+                "elementType": "all",
+                "stylers": [{"visibility": "on"}]
+            }, {
+                "featureType": "administrative.province",
+                "elementType": "geometry.fill",
+                "stylers": [{"visibility": "on"}]
+            }, {
+                "featureType": "administrative.locality",
+                "elementType": "all",
+                "stylers": [{"visibility": "on"}]
+            }, {
+                "featureType": "administrative.neighborhood",
+                "elementType": "all",
+                "stylers": [{"visibility": "on"}]
+            }, {
+                "featureType": "administrative.land_parcel",
+                "elementType": "all",
+                "stylers": [{"visibility": "on"}]
+            }, {
+                "featureType": "landscape",
+                "elementType": "all",
+                "stylers": [{"visibility": "on"}]
+            }, {
+                "featureType": "landscape.man_made",
+                "elementType": "all",
+                "stylers": [{"visibility": "on"}]
+            }, {
+                "featureType": "landscape.natural.landcover",
+                "elementType": "geometry.fill",
+                "stylers": [{"visibility": "on"}]
+            }, {
+                "featureType": "road.highway",
+                "elementType": "labels",
+                "stylers": [{"visibility": "on"}]
+            }, {
+                "featureType": "road.highway.controlled_access",
+                "elementType": "geometry.fill",
+                "stylers": [{"color": "#e2931e"}]
+            }, {
+                "featureType": "road.highway.controlled_access",
+                "elementType": "geometry.stroke",
+                "stylers": [{"color": "#e2931e"}]
+            }, {
+                "featureType": "road.arterial",
+                "elementType": "labels.text",
+                "stylers": [{"visibility": "on"}]
+            }, {
+                "featureType": "road.local",
+                "elementType": "labels.text",
+                "stylers": [{"visibility": "on"}]
+            }, {"featureType": "water", "elementType": "geometry.fill", "stylers": [{"color": "#89beff"}]}],
             zoom: 7
         });
         this.map.addListener('zoom_changed', () => {
             this.markerUpdate()
         })
-        if (this.props.iam.shopId != 0 && this.props.shopsStatus == 'load' && this.props.cityStatus == 'load') {
-            this.buildMarker();
-        }
+        this.buildMarker();
     },
     componentDidUpdate: function() {
+        if (isNode) return
+
         if (this.state.actionBuild == true) {
             this.buildMarker();
             this.setState({
@@ -282,11 +352,8 @@ const MapShopsContainer = React.createClass({
 const mapStateToProps = function(store) {
     return {
         iam: store.iam,
-        city: store.city.list,
-        cityStatus: store.city.status,
-        shops: store.shops.shops,
-        shopsCity: store.shops.city,
-        shopsStatus: store.shops.status
+        city: store.city,
+        shops: store.shops,
     }
 };
 

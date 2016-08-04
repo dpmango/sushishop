@@ -17,15 +17,10 @@ const HeaderContainer = React.createClass({
     },
     city: function () {
         let cityId = this.props.iam.cityId;
-        return (typeof cityId != 'number' || cityId == 0) ? ' ': this.props.city.get(cityId).name;
+        return (cityId === 0) ? ' ': this.props.city[cityId].name;
     },
     shop: function () {
-        let shopId = this.props.iam.shopId;
-        // console.log((typeof shopId == 'number' && shopId != 0));
-        // if (typeof shopId == 'number' && shopId != 0) {
-        //     console.log(this.props.shops.get(shopId));
-        // }
-        return (typeof shopId != 'number' || shopId == 0) ? '': this.props.shops.get(shopId).adres;
+        return (this.props.iam.shopId === 0) ? ' ': this.props.shops[this.props.iam.shopId].adres;
     },
     componentWillUpdate: function() {
         return true;
@@ -43,8 +38,8 @@ const HeaderContainer = React.createClass({
                         <div className="header-adres">
                             <div className="header-adres__block-adres">
                                 <a href="#" className="header-adres__adres">
-                                    <div className={'header-adres__city'+((typeof this.props.iam.shopId != 'number' || this.props.iam.shopId == 0) ? ' header-adres__city_loading': '')}>{this.city()}</div>
-                                    <div className={'header-adres__shop'+((typeof this.props.iam.shopId != 'number' || this.props.iam.shopId == 0) ? ' header-adres__city_loading': '')}>
+                                    <div className="header-adres__city">{this.city()}</div>
+                                    <div className="header-adres__shop">
                                         {this.shop()}
                                         <div className="header-adres__pen">{Icon.pen}</div>
                                     </div>
@@ -96,7 +91,7 @@ const mapStateToProps = function(store) {
         iam: store.iam,
         cityStatus: store.city.status,
         city: store.city.list,
-        shops: store.shops.shops,
+        shops: store.shops.list,
         catalog: store.catalog.list
     }
 };

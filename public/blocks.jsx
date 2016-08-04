@@ -22,7 +22,9 @@ self.Footer = require('./blocks/Footer/Footer.jsx')
 self.CatalogListCategory = require('./blocks/CatalogListCategory/CatalogListCategory.jsx')
 self.Shops = require('./blocks/Shops/Shops.jsx')
 self.MapShops = require('./blocks/MapShops/MapShops.jsx')
-// self.InfoBox = require('./blocks/Infobox/Infobox.jsx')
+if (!isNode) {
+    self.InfoBox = require('./blocks/Infobox/Infobox.jsx')
+}
 self.About= require('./blocks/About/About.jsx')
 self.Actions= require('./blocks/Actions/Actions.jsx')
 self.Transition = require('./blocks/Transition/Transition.jsx')
