@@ -5,15 +5,15 @@ var initialState = {
 }
 
 module.exports = function (state = initialState, action) {
-    if (action.type == "GET_CATALOG") {
+    if (action.type == "GET_PRODUCT") {
         if (isNode) {
-            var data = getCache('catalog-'+action.city_id+'-'+action.shop_id)
+            var data = getCache('product-'+action.city_id+'-'+action.shop_id)
             if (data) {
                 initialState = data
             }
         }
         if (state.status == 'empty' || isNode) {
-            axios.get(URL_API+'catalog', {
+            axios.get(URL_API+'product', {
                 params: {
                     city_id: action.city_id,
                     shop_id: action.shop_id
@@ -21,8 +21,8 @@ module.exports = function (state = initialState, action) {
             }).then(function (response) {
                 var data = response.data.result
                 store.dispatch({
-                    type: "SET_CATALOG",
-                    catalog: data,
+                    type: "SET_PRODUCT",
+                    product: data,
                     city_id: action.city_id,
                     shop_id: action.shop_id
                 })
@@ -32,24 +32,21 @@ module.exports = function (state = initialState, action) {
 
         return state;
     }
-    if (action.type == "SET_CATALOG") {
-        var catalog = {
+    if (action.type == "SET_PRODUCT") {
+        var product = {
             list: {},
             url: {},
             sort: []
         }
         action.catalog.map((item) => {
-            catalog.list[item.id] = item
-            catalog.url[item.alt] = item.id
-            catalog.sort.push(item.id)
-        })
-        catalog.sort.sort(function (a,b) {
-            return catalog.list[a].sort - catalog.list[b].sort
+            product.list[item.id] = item
+            product.url[item.alt] = item.id
+            product.sort.push(item.id)
         })
         if (isNode) {
-            setCache('catalog-'+action.city_id+'-'+action.shop_id, catalog)
+            setCache('product-'+action.city_id+'-'+action.shop_id, product)
         }
-        return catalog
+        return product
     }
     return state;
 };

@@ -1,22 +1,23 @@
 var isNode = typeof window === 'undefined'
 
-var initialState = []
-if (isNode) {
-    initialState = getCache('banners')
-}
-
-module.exports = function (state = initialState, action) {
+module.exports = function (state = [], action) {
+    if (isNode && state.length === 0) {
+        state = getCache('banners-'+action.city_id+'-'+action.shop_id)
+    }
     if (action.type == "GET_BANNERS") {
-        if (store.getState().banners) {
-            return store.getState().banners;
-        }
-
         if (!store.getState().banners || isNode) {
-            axios.get(URL_API+'banners').then(function (response) {
+            axios.get(URL_API+'banners', {
+                params: {
+                    city_id: action.city_id,
+                    shop_id: action.shop_id
+                }
+            }).then(function (response) {
                 var data = response.data.result
                 store.dispatch({
                     type: "SET_BANNERS",
-                    banners: data
+                    banners: data,
+                    city_id: action.city_id,
+                    shop_id: action.shop_id
                 })
             });
         }
@@ -24,7 +25,7 @@ module.exports = function (state = initialState, action) {
     }
     if (action.type == "SET_BANNERS") {
         if (isNode) {
-            setCache('banners', action.banners)
+            setCache('banners-'+action.city_id+'-'+action.shop_id, action.banners)
         }
         return action.banners;
     }

@@ -18,7 +18,7 @@ module.exports = {
         <path d="M5.5 5L3.78 0H0v31h28V0h-3.873L22.5 5"/>
     </svg>,
     arrow: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19 64">
-        <path fill="none" stroke-width="3" stroke-linecap="round" d="M2 2l15 30L2 62"/>
+        <path fill="none" strokeWidth="3" strokeLinecap="round" d="M2 2l15 30L2 62"/>
     </svg>,
     stroke: <svg>
         <line strokeLinecap="round" x1="12.5%" y1="25%" x2="90%" y2="60%" />

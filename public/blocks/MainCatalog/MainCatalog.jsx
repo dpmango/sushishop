@@ -1,8 +1,12 @@
 const MainCatalogContainer = React.createClass({
     componentWillMount: function() {
-        store.dispatch({
-            type: 'GET_CATALOG'
-        });
+        if (this.props.iam.cityId && this.props.iam.shopId) {
+            store.dispatch({
+                type: 'GET_CATALOG',
+                city_id: this.props.iam.cityId,
+                shop_id: this.props.iam.shopId
+            })
+        }
     },
     render: function() {
         const createCatalog = (id) => {
@@ -36,6 +40,7 @@ const MainCatalogContainer = React.createClass({
 
 const mapStateToProps = function(store) {
     return {
+        iam: store.iam,
         catalog: store.catalog
     }
 };

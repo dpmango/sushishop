@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "server": "clear && node index.jsx"
+    "server": "clear && node index.jsx",
+    "gulp": "clear && gulp"
   },
   "author": "",
   "license": "ISC",

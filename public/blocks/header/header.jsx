@@ -17,10 +17,10 @@ const HeaderContainer = React.createClass({
     },
     city: function () {
         let cityId = this.props.iam.cityId;
-        return (cityId === 0) ? ' ': this.props.city[cityId].name;
+        return (cityId === 0) ? ' ': this.props.city[cityId].name
     },
     shop: function () {
-        return (this.props.iam.shopId === 0) ? ' ': this.props.shops[this.props.iam.shopId].adres;
+        return (this.props.iam.shopId === 0) ? ' ': this.props.shops[this.props.iam.shopId].adres
     },
     componentWillUpdate: function() {
         return true;

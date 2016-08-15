@@ -323,6 +323,7 @@ const MapShopsContainer = React.createClass({
             }, {"featureType": "water", "elementType": "geometry.fill", "stylers": [{"color": "#89beff"}]}],
             zoom: 7
         });
+
         this.map.addListener('zoom_changed', () => {
             this.markerUpdate()
         })

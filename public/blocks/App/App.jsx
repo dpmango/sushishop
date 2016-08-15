@@ -31,15 +31,15 @@ const AppContainer = React.createClass({
         });
         store.dispatch({
             type: 'GET_CITY'
-        });
+        })
         store.dispatch({
             type: 'GET_SHOPS'
-        });
+        })
         this.iam()
     },
-    // mainPagerIgnoreList: new Set([
-    //     '/shops'
-    // ]),
+    mainPagerIgnoreList: new Set([
+        '/shops'
+    ]),
     // mainJournal: function () {
     //     let url = (isNode) ? locationURL : this.props.location.pathname
     //     return (url == '/') ? <MainJournal /> : ''
@@ -49,14 +49,14 @@ const AppContainer = React.createClass({
         // return <MainJournal />
         return ''
     },
-    // mainPager: function () {
-    //     let url = (isNode) ? locationURL : this.props.location.pathname
-    //     return (!this.mainPagerIgnoreList.has(url)) ? <Pager /> : ''
-    // },
     mainPager: function () {
-        return <Pager />
-        // return 'test'
+        let url = (isNode) ? locationURL : this.props.location.pathname
+        return (!this.mainPagerIgnoreList.has(url)) ? <Pager /> : ''
     },
+    // mainPager: function () {
+    //     return <Pager />
+    //     // return 'test'
+    // },
     // hideShadow: function () {
     //     store.dispatch({
     //         type: 'SHADOW_HIDE'
@@ -96,10 +96,9 @@ const AppContainer = React.createClass({
     //     );
     // }
     render: function() {
-
         return (
             <div>
-                <Header />
+                {(this.props.iam.cityId === 0 || this.props.iam.shopId === 0) ? '' : <Header /> }
                 <div className="content">
                     <div className="content__inner">
                         {this.props.children}
@@ -108,7 +107,7 @@ const AppContainer = React.createClass({
                     </div>
                 </div>
             </div>
-        );
+        )
     }
 
 });

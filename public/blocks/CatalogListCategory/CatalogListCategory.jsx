@@ -21,22 +21,26 @@ const CatalogListCategoryItem = React.createClass({
 const CatalogListCategoryContainer = React.createClass({
     componentWillMount: function() {
         store.dispatch({
-            type: 'GET_CATALOG'
+            type: 'GET_CATALOG',
+            city_id: this.props.iam.cityId,
+            shop_id: this.props.iam.shopId
         });
     },
     render: function() {
         return (
             <div className={"catalog-list-category catalog-list-category_"+this.props.align}>
                 <Swiper
-                    slidesPerView='auto'
-                    simulateTouch={true}
-                    grabCursor={true}
-                    destroy={600}
-                    freeMode={true}
                     className="catalog-list-category__wrapper"
+                    options={{
+                        slidesPerView: 'auto',
+                        simulateTouch: true,
+                        grabCursor: true,
+                        destroy: 600,
+                        freeMode: true
+                    }}
                 >
                     {this.props.catalog.sort.map((id) => {
-                        item = this.props.catalog.list[id]
+                        let item = this.props.catalog.list[id]
                         item.activeCatagory = this.props.activeCategory
                         return (
                             <CatalogListCategoryItem {...item} key={'catalog-list-category-'+item.id} />
@@ -51,6 +55,7 @@ const CatalogListCategoryContainer = React.createClass({
 
 const mapStateToProps = function(store) {
     return {
+        iam: store.iam,
         catalog: store.catalog
     }
 };

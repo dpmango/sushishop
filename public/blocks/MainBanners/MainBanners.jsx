@@ -1,8 +1,12 @@
 var BannersContainer = React.createClass({
     componentWillMount: function() {
-        store.dispatch({
-            type: 'GET_BANNERS'
-        });
+        if (this.props.iam.cityId && this.props.iam.shopId) {
+            store.dispatch({
+                type: 'GET_BANNERS',
+                city_id: this.props.iam.cityId,
+                shop_id: this.props.iam.shopId
+            })
+        }
     },
     render: function() {
         const createBanner = function (item) {
@@ -21,27 +25,25 @@ var BannersContainer = React.createClass({
                     part={item.part}
                 />
             )
-        };
-        // return (
-        //     <Swiper
-        //         pagination=".swiper-pagination"
-        //         paginationClickable={true}
-        //         effect="fade"
-        //         nextButton='.swiper-button-next'
-        //         prevButton='.swiper-button-prev'
-        //         simulateTouch={false}
-        //         prevButtonContent={Icon.arrow}
-        //         nextButtonContent={Icon.arrow}
-        //         className="main-banners"
-        //         slidesPerView={1}
-        //         spaceBetween={0}
-        //     >
-        //         {this.props.banners.map(createBanner)}
-        //     </Swiper>
-        // )
+        }
+
         return (
             <Swiper
-                className="main-banners">
+                className= "main-banners"
+                prevButtonContent={Icon.arrow}
+                nextButtonContent={Icon.arrow}
+                options={{
+                    pagination: ".swiper-pagination",
+                    paginationClickable: true,
+                    effect: "fade",
+                    nextButton: '.swiper-button-next',
+                    prevButton: '.swiper-button-prev',
+                    simulateTouch: false,
+                    className: "main-banners",
+                    slidesPerView: 1,
+                    spaceBetween: 0
+                }}
+            >
                 {this.props.banners.map(createBanner)}
             </Swiper>
         )
@@ -51,7 +53,8 @@ var BannersContainer = React.createClass({
 
 var mapStateToProps = function(store) {
     return {
-        banners: store.banners
+        iam: store.iam,
+        banners: store.banners,
     }
 };
 

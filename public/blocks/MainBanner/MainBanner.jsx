@@ -12,7 +12,7 @@ module.exports = React.createClass({
                         <img src={this.props.labelImage} />
                     </div>
                     <div className="main-banner__props">{this.props.count}&nbsp;{Decl(this.props.count, ['штука', 'штуки', 'штук'])}, {this.props.weight}&nbsp;г</div>
-                    <div className="main-banner__part">{this.props.part}</div>
+                    <div className="main-banner__part" dangerouslySetInnerHTML={{ __html: this.props.part }} />
                 </div>
                 <div className="main-banner__price">
                     <div className="main-banner__price-old">{this.props.priceOld}{Icon.stroke}</div>

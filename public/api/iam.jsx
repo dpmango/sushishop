@@ -1,11 +1,6 @@
 var isNode = typeof window === 'undefined'
 
-const initialState = {
-    cityId: 0,
-    shopId: 0
-};
-
-module.exports = function (state = initialState, action) {
+module.exports = function (state = { cityId: 0, shopId: 0 }, action) {
     if (action.type == 'GET_IAM') {
         let data = {}
         if (isNode) {
