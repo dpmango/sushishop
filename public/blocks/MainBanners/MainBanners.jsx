@@ -12,7 +12,7 @@ var BannersContainer = React.createClass({
         const createBanner = function (item) {
             return (
                 <MainBanner
-                    key={'banners-'+item.id}
+                    key={item.id}
                     id={item.id}
                     bgImage={item.product_bg}
                     productImage={item.product_image}

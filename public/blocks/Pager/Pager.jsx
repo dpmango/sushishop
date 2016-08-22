@@ -17,24 +17,27 @@ module.exports = React.createClass({
 
                 <div className="pager__links">
                     <Swiper
-                        pagination=".swiper-pagination"
-                        paginationClickable={true}
-                        simulateTouch={false}
-                        slidesPerView={3}
-                        spaceBetween={0}
-                        touchRatio={0}
-                        breakpoints={{
-                            900: {
-                                slidesPerView: 2,
-                                touchRatio: 1
-                            },
-                            500: {
-                                slidesPerView: 1,
-                                touchRatio: 1
+                        className="pager__wrapper"
+                        options={{
+                            pagination: ".swiper-pagination",
+                            paginationClickable: true,
+                            simulateTouch: false,
+                            slidesPerView: 3,
+                            spaceBetween: 0,
+                            touchRatio: 0,
+                            breakpoints: {
+                                900: {
+                                    slidesPerView: 2,
+                                    touchRatio: 1
+                                },
+                                500: {
+                                    slidesPerView: 1,
+                                    touchRatio: 1
+                                }
                             }
                         }}
                     >
-                        <div>
+                        <div className="swiper-slide">
                             <Link to="/about" className="pager-link">
                                 <div className="pager-link__photo">
                                     <div className="pager-link__photo-wrapper">
@@ -47,7 +50,7 @@ module.exports = React.createClass({
                                 </div>
                             </Link>
                         </div>
-                        <div>
+                        <div className="swiper-slide">
                             <Link to="#" className="pager-link">
                                 <div className="pager-link__photo">
                                     <div className="pager-link__photo-wrapper">
@@ -60,7 +63,7 @@ module.exports = React.createClass({
                                 </div>
                             </Link>
                         </div>
-                        <div>
+                        <div className="swiper-slide">
                             <Link to="#" className="pager-link">
                                 <div className="pager-link__photo">
                                     <div className="pager-link__photo-wrapper">

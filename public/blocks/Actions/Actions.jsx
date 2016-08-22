@@ -1,11 +1,12 @@
 const ActionsContainer = React.createClass({
     componentWillMount: function() {
         store.dispatch({
-            type: "GET_ACTIONS"
+            type: "GET_ACTIONS",
+            city_id: this.props.iam.cityId
         })
     },
     Action: function () {
-        var data = this.props.actions[this.props.params.actionAlt];
+        var data = this.props.actions.list[this.props.actions.alt[this.props.params.actionAlt]];
         return (<div className="action">
             <div className="action__wrapper">
                 <div className="action__image">
@@ -19,35 +20,33 @@ const ActionsContainer = React.createClass({
         </div>)
     },
     render: function () {
-        if (this.props.actions.status == 'load') {
-            return (
-                <div className="actions">
-                    {(this.props.params.actionAlt) ? this.Action() : ''}
-                    {(this.props.params.actionAlt) ? <h2 className="actions__title">Другие акции</h2> : <h1 className="actions__title">Акции</h1>}
-                    <div className="actions__list">
-                        {this.props.actions.forEach((item) => {
-                            return (<div className="actions__item" key={'action'+item.id}>
-                                <Link to={"/actions/"+item.alt} className="actions-item">
-                                    <div className="actions-item__image">
-                                        <img src={item.image_small} alt={item.name}/>
-                                    </div>
-                                    <div className="actions-item__category">Акции</div>
-                                    <h3 className="actions-item__name">{item.name}</h3>
-                                </Link>
-                            </div>)
-                        })}
-                    </div>
+        return (
+            <div className="actions">
+                {(this.props.params.actionAlt) ? this.Action() : ''}
+                {(this.props.params.actionAlt) ? <h2 className="actions__title">Другие акции</h2> : <h1 className="actions__title">Акции</h1>}
+                <div className="actions__list">
+                    {this.props.actions.sort.map((id) => {
+                        let item = this.props.actions.list[id]
+                        return (<div className="actions__item" key={item.id}>
+                            <Link to={"/actions/"+item.alt} className="actions-item">
+                                <div className="actions-item__image">
+                                    <img src={item.image_small} alt={item.name}/>
+                                </div>
+                                <div className="actions-item__category">Акции</div>
+                                <h3 className="actions-item__name">{item.name}</h3>
+                            </Link>
+                        </div>)
+                    })}
                 </div>
-            )
-        } else {
-            return <div></div>
-        }
+            </div>
+        )
     }
-});
+})
 
 const mapStateToProps = function(store) {
     return {
-        actions: store.actions.list
+        iam: store.iam,
+        actions: store.actions
     }
 };
 

@@ -433,7 +433,7 @@
     </object>
     <object type="LMREQUEST" id="z138">
         <attribute name="uuid" type="string">B1047E59-4F81-4BEC-A031-472CCC9C5F8C</attribute>
-        <attribute name="url" type="string">http://sushi.endy.pro/api/actions?cityId=2\u2600shopId=82</attribute>
+        <attribute name="url" type="string">http://sushi.endy.pro/api/actions?city_id=2</attribute>
         <attribute name="storecookies" type="bool">1</attribute>
         <attribute name="sendcookies" type="bool">1</attribute>
         <attribute name="redirectmethod" type="bool">0</attribute>
@@ -441,7 +441,7 @@
         <attribute name="method" type="string">GET</attribute>
         <attribute name="followredirects" type="bool">0</attribute>
         <attribute name="order" type="int64">0</attribute>
-        <attribute name="name" type="string">My API</attribute>
+        <attribute name="name" type="string">actions</attribute>
         <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM" idrefs="z137"></relationship>
         <relationship name="children" type="0/0" destination="LMREQUESTTREEITEM"></relationship>
         <relationship name="headers" type="0/0" destination="LMKEYVALUE" idrefs="z139"></relationship>

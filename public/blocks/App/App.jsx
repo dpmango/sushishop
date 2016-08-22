@@ -35,6 +35,9 @@ const AppContainer = React.createClass({
         store.dispatch({
             type: 'GET_SHOPS'
         })
+        store.dispatch({
+            type: 'GET_CART'
+        })
         this.iam()
     },
     mainPagerIgnoreList: new Set([

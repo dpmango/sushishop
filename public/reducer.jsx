@@ -6,5 +6,7 @@ module.exports = combineReducers({
     shops: require('./api/shops.jsx'),
     iam: require('./api/iam.jsx'),
     shadow: require('./api/shadow.jsx'),
-    actions: require('./api/actions.jsx')
+    actions: require('./api/actions.jsx'),
+    products: require('./api/products.jsx'),
+    cart: require('./api/cart.jsx')
 });

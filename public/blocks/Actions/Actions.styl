@@ -1,10 +1,20 @@
 .actions
 	max-width 1080px
-	margin 0 auto
+	margin 0 auto 100px auto
+	&__title
+		margin 80px 0 40px 0
+		text-align center
+		text-transform uppercase
+		letter-spacing .03em
+		@media (min-width 500px)
+			font-size 48px
+		@media (max-width 500px)
+			font-size 20px
 	&__list
 		display flex
 		flex-flow row
 		flex-wrap wrap
+		margin-bottom -20px
 	&__item
 		width 50%
 		box-sizing border-box
@@ -44,6 +54,8 @@
 	&__image
 		margin 0 -40px 40px
 		display block
+		img
+			display block
 	&__category
 		font-size 24px
 		text-transform uppercase
