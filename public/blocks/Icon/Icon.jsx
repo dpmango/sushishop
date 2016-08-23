@@ -41,5 +41,8 @@ module.exports = {
     </svg>,
     close: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26.1 26.1">
         <path d="M26.1 1.4L24.7 0 13.1 11.6 1.4 0 0 1.4l11.6 11.7L0 24.7l1.4 1.4 11.7-11.6 11.6 11.6 1.4-1.4-11.6-11.6z"/>
+    </svg>,
+    fire: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8 14">
+        <path d="M3.8 14S8 10.9 8 7.9 3.8 0 3.8 0s-.5 5.2-1.4 5.2c-.5-1.3-.5-2.6-.5-2.6S0 4.8 0 7.9 3.8 14 3.8 14z"/>
     </svg>
 };

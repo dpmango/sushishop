@@ -7,16 +7,19 @@ module.exports = React.createClass({
     componentDidMount: function () {
         if (!isNode) {
             if (this.props.className && this.props.options) {
+                console.log(this.props.options)
                 this.swiper = new SwiperLib(ReactDOM.findDOMNode(this), this.props.options)
             }
         }
     },
+
     render: function () {
         return (
             <div className={"swiper-container"+((this.props.className) ? ' '+this.props.className : '')}>
                 <div className="swiper-wrapper">
                     {this.props.children}
                 </div>
+                {(this.props.options.scrollbar) ? <div className="swiper-scrollbar"></div> : ''}
                 {(this.props.options.pagination) ? <div className="swiper-pagination"></div> : ''}
                 {(this.props.options.prevButton) ? <div className="swiper-button-prev">{(this.props.prevButtonContent) ? this.props.prevButtonContent : ''}</div> : '' }
                 {(this.props.options.nextButton) ? <div className="swiper-button-next">{(this.props.nextButtonContent) ? this.props.nextButtonContent : ''}</div> : '' }

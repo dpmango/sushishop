@@ -1,0 +1,224 @@
+.product
+	position fixed
+	z-index 700
+	top 0
+	right 0
+	bottom 0
+	left 0
+	display flex
+	align-items center
+	justify-content center
+	&__shadow
+		background alpha(#867F78, .8)
+		position fixed
+		z-index 1
+		top 0
+		right 0
+		bottom 0
+		left 0
+	&__window
+		background $color__white
+		position relative
+		z-index 2
+		display flex
+		align-items stretch
+		color #55534F
+		height 620px
+	&__about
+		width 540px
+		padding 50px 60px
+		box-sizing border-box
+	&__other
+		width 320px
+		background #EFEBE5
+		padding 40px 50px 0 50px
+		box-sizing border-box
+		display flex
+		flex-flow column
+		align-items stretch
+		justify-content flex-start
+	&__final
+		width 270px
+		background #55524F
+		box-sizing border-box
+	&__title
+		font-size 24px
+		letter-spacing .06em
+		line-height 1
+		text-transform uppercase
+		margin-bottom .5em
+	&__ingre
+		font-size 16px
+		line-height 18px
+		margin-bottom 1em
+		opacity .9
+	&__weight
+		font-size 14px
+		opacity .8
+		margin-bottom .5em
+	&__about &__price
+		font-size 30px
+		font-weight bold
+		letter-spacing -.01em
+	&__image
+		margin-top 20px
+		img
+			max-width 100%
+			display block
+	&__close
+		width 25px
+		height 25px
+		position absolute
+		z-index 3
+		padding 20px
+		top 0
+		right 0
+		svg
+			width 100%
+			height 100%
+			fill $color__white
+
+
+.product-other
+	display flex
+	justify-content space-between
+	align-items center
+	min-height 40px
+	& + &
+		margin-top 15px
+	&__title
+		font-size 20px
+		text-transform uppercase
+		letter-spacing .03em
+		margin-bottom -2px
+
+
+.product-sauce
+	position relative
+	&__select
+		height 40px
+		border-radius 20px
+		border none
+		background alpha(#55534F, .2)
+		color #55534F
+		-webkit-appearance none
+		line-height 1
+		-moz-appearance none
+		text-indent 0.01px
+		text-overflow ''
+		-ms-appearance none
+		appearance none !important
+		box-sizing border-box
+		padding 0 60px 0 15px
+		&::-ms-expand
+			display none
+	i
+		position absolute
+		width 10px
+		height 6.25px
+		fill #55534F
+		display block
+		top 50%
+		margin-top -2px
+		right 15px
+		svg
+			display block
+			width 100%
+			height 100%
+
+
+.product-bake
+	display flex
+	align-items center
+	&__price
+		font-size 20px
+		margin 0 15px -2px 0
+	&__action
+		width 52px
+		height 26px
+		background alpha(#55534F, .2)
+		border-radius 13px
+		position relative
+		display block
+		span
+			width 20px
+			height 20px
+			border-radius 50%
+			background #55534F
+			position absolute
+			left 3px
+			top 3px
+			svg
+				fill #F2F2F2
+				width 8px
+				height 14px
+				display block
+				position absolute
+				top 3px
+				left 6px
+
+
+.product-toppings-count
+	display flex
+	&__item
+		width 12px
+		height 12px
+		background alpha(#55534F, .2)
+		border-radius 50%
+		display block
+		&_active
+			background #97BA40
+		& + &
+			margin-left 5px
+
+
+.product-toppings
+	overflow hidden
+	height 100%
+	position relative
+	margin 0 -30px !important
+	//border-top 1px solid alpha(#55534F, .2)
+	padding 10px 0
+	.swiper-wrapper
+		flex-flow column
+	.swiper-scrollbar
+		width 6px
+		top 12px
+		bottom 15px
+		right 0
+		background alpha(#55534F, .1)
+		position absolute
+		border-radius 3px
+		overflow hidden
+	.swiper-scrollbar-drag
+		width 6px
+		background alpha(#55534F, .5)
+		border-radius 3px
+	.swiper-slide
+		padding 0 30px
+		box-sizing border-box
+	&__item
+		height 40px
+		display flex
+		align-items center
+		justify-content space-between
+		border-bottom 1px solid alpha(#55534F, .2)
+	&__group
+		display flex
+	&__price
+		//
+	&__action
+		width 32px
+		height 16px
+		background alpha(#55534F, .2)
+		position relative
+		border-radius 8px
+		margin-left 16px
+		span
+			width 12px
+			height 12px
+			background alpha(#55534F, .8)
+			border-radius 50%
+			position absolute
+			left 2px
+			top 2px

@@ -27,4 +27,5 @@ if (!isNode) {
 }
 self.About= require('./blocks/About/About.jsx')
 self.Actions= require('./blocks/Actions/Actions.jsx')
+self.Product= require('./blocks/Product/Product.jsx')
 self.Transition = require('./blocks/Transition/Transition.jsx')

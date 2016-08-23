@@ -8,5 +8,6 @@ module.exports = combineReducers({
     shadow: require('./api/shadow.jsx'),
     actions: require('./api/actions.jsx'),
     products: require('./api/products.jsx'),
+    product: require('./api/product.jsx'),
     cart: require('./api/cart.jsx')
 });

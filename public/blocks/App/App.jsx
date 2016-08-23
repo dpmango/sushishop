@@ -109,6 +109,7 @@ const AppContainer = React.createClass({
                         <Footer />
                     </div>
                 </div>
+                <Product />
             </div>
         )
     }
