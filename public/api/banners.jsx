@@ -2,7 +2,10 @@ var isNode = typeof window === 'undefined'
 
 module.exports = function (state = [], action) {
     if (isNode && state.length === 0) {
-        state = getCache('banners-'+action.city_id+'-'+action.shop_id)
+        let data = getCache('banners-'+action.city_id+'-'+action.shop_id)
+        if (data) {
+            state = data
+        }
     }
     if (action.type == "GET_BANNERS") {
         if (!store.getState().banners || isNode) {

@@ -7,7 +7,7 @@ app.use(cookieParser())
 app.use('/f', express.static('./build/f'))
 
 require('node-jsx').install({extension: '.jsx'})
-fs = require('fs')
+fs = require('graceful-fs')
 
 setCache = function(name, data) {
     fs.writeFile('./cache/'+name+'.json', JSON.stringify(data))
@@ -21,8 +21,6 @@ getCache = function(name) {
     }
 }
 
-
-GLOBAL._ = require('underscore')
 cached = require('cached')
 require('./public/libs.jsx')
 require('./public/app.jsx')

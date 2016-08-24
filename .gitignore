@@ -5,3 +5,4 @@ build/f/script
 build/f/style
 /index.jsx
 cache/
+/npm-debug.log

@@ -9,24 +9,6 @@ var BannersContainer = React.createClass({
         }
     },
     render: function() {
-        const createBanner = function (item) {
-            return (
-                <MainBanner
-                    key={item.id}
-                    id={item.id}
-                    bgImage={item.product_bg}
-                    productImage={item.product_image}
-                    labelImage={item.label_image}
-                    category={item.category}
-                    price={item.price}
-                    priceOld={item.price_old}
-                    weight={item.weight}
-                    count={item.count}
-                    part={item.part}
-                />
-            )
-        }
-
         return (
             <Swiper
                 className= "main-banners"
@@ -44,7 +26,23 @@ var BannersContainer = React.createClass({
                     spaceBetween: 0
                 }}
             >
-                {this.props.banners.map(createBanner)}
+                {this.props.banners.map((item) => {
+                    return (
+                        <MainBanner
+                            key={item.id}
+                            id={item.id}
+                            bgImage={item.product_bg}
+                            productImage={item.product_image}
+                            labelImage={item.label_image}
+                            category={item.category}
+                            price={item.price}
+                            priceOld={item.price_old}
+                            weight={item.weight}
+                            count={item.count}
+                            part={item.part}
+                        />
+                    )
+                })}
             </Swiper>
         )
     }

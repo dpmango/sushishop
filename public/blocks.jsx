@@ -1,6 +1,5 @@
 var isNode = typeof window === 'undefined'
-
-self = (isNode) ? GLOBAL : window
+self = (isNode) ? global : window
 
 self.App = require('./blocks/App/App.jsx')
 self.Header = require('./blocks/Header/Header.jsx')
@@ -28,4 +27,5 @@ if (!isNode) {
 self.About= require('./blocks/About/About.jsx')
 self.Actions= require('./blocks/Actions/Actions.jsx')
 self.Product= require('./blocks/Product/Product.jsx')
+self.ProductItem= require('./blocks/ProductItem/ProductItem.jsx')
 self.Transition = require('./blocks/Transition/Transition.jsx')

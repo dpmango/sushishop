@@ -43,14 +43,9 @@ const AppContainer = React.createClass({
     mainPagerIgnoreList: new Set([
         '/shops'
     ]),
-    // mainJournal: function () {
-    //     let url = (isNode) ? locationURL : this.props.location.pathname
-    //     return (url == '/') ? <MainJournal /> : ''
-    // },
     mainJournal: function () {
         let url = (isNode) ? locationURL : this.props.location.pathname
-        // return <MainJournal />
-        return ''
+        return (url == '/') ? <MainJournal /> : ''
     },
     mainPager: function () {
         let url = (isNode) ? locationURL : this.props.location.pathname
@@ -82,34 +77,20 @@ const AppContainer = React.createClass({
         }
         this.iam()
     },
-    // render: function() {
-    //     return (
-    //         <div>
-    //             <Header />
-    //             <div className="content">
-    //                 <div className="content__inner">
-    //                     {this.props.children}
-    //                     {this.mainPager()}
-    //                     {this.mainJournal()}
-    //                     <Footer />
-    //                 </div>
-    //             </div>
-    //             <div className="shadow shadow_hided" style={{ zIndex: this.props.shadow.zIndex }} onClick={this.hideShadow} ref="shadow"></div>
-    //         </div>
-    //     );
-    // }
     render: function() {
         return (
             <div>
-                {(this.props.iam.cityId === 0 || this.props.iam.shopId === 0) ? '' : <Header /> }
                 <div className="content">
                     <div className="content__inner">
+                        {(this.props.iam.cityId === 0 || this.props.iam.shopId === 0) ? '' : <Header /> }
                         {this.props.children}
                         {this.mainPager()}
+                        {this.mainJournal()}
                         <Footer />
                     </div>
                 </div>
-                <Product />
+                <div className="shadow shadow_hided" style={{ zIndex: this.props.shadow.zIndex }} onClick={this.hideShadow} ref="shadow"></div>
+                {(this.props.product.active) ? <Product /> : ''}
             </div>
         )
     }
@@ -122,7 +103,8 @@ const mapStateToProps = function(store) {
         shadow: store.shadow,
         iam: store.iam,
         city: store.city,
-        shops: store.shops
+        shops: store.shops,
+        product: store.product
     }
 };
 

@@ -23,21 +23,25 @@ const CatalogContainer = React.createClass({
         }
     },
     render: function() {
+        const products = this.props.products.category[this.state.category_id]
+        const category = this.props.catalog.list[this.state.category_id]
         return (
             <div>
-                <div>
-                    {this.props.products.category[this.state.category_id].map((id) => {
-                        let item = this.props.products.list[id]
-                        let link = '/catalog/'+this.props.catalog.list[this.state.category_id].alt+'/'+item.alt
-                        return (<Link to={link} key={item.id}>
-                            <div>
-                                <img src={item.image_small} alt={item.name}/>
-                            </div>
-                            <div>{item.name}</div>
-                            <div>{item.label}</div>
-                            <div>{item.price}</div>
-                        </Link>)
-                    })}
+                <div className="catalog">
+                    <h1 className="catalog__title">{category.name}</h1>
+                    <div className="catalog-tags">
+                        <div className="catalog-tags__item">ЧТО-НИБУДЬ ОСТРОЕ</div>
+                        <div className="catalog-tags__item">ЛЕГКОЕ</div>
+                        <div className="catalog-tags__item">С УГРЕМ</div>
+                        <div className="catalog-tags__item">ЧТО-НИБУДЬ ОСТРОЕ</div>
+                    </div>
+                    <div className="catalog__list">
+                        {(products) ? products.map((id) => {
+                            let item = this.props.products.list[id]
+                            item = Object.assign(item, {link: '/catalog/'+this.props.catalog.list[this.state.category_id].alt+'/'+item.alt})
+                            return (<ProductItem {...item} key={item.id} />)
+                        }) : ''}
+                    </div>
                 </div>
                 {this.props.children}
             </div>

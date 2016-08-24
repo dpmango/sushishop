@@ -1,4 +1,10 @@
 var ProductContainer = React.createClass({
+    close: function () {
+        store.dispatch({
+            type: 'PRODUCT_HIDE'
+        })
+    },
+
     render: function () {
         return (<div className="product">
             <div className="product__shadow"></div>
@@ -62,7 +68,7 @@ var ProductContainer = React.createClass({
                     >
                         {[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19].map((item) => {
                             return (
-                                <div className="swiper-slide">
+                                <div className="swiper-slide" key={item}>
                                     <div className="product-toppings__item" key={item}>
                                         <div className="product-toppings__name">Авокадо</div>
                                         <div className="product-toppings__group">
@@ -97,7 +103,7 @@ var ProductContainer = React.createClass({
                     <div className="product__price">299 ₽</div>
                     <div className="product__buy button">В корзину</div>
                 </div>
-                <div className="product__close">{Icon.close}</div>
+                <div className="product__close" onClick={this.close}>{Icon.close}</div>
             </div>
         </div>)
     }

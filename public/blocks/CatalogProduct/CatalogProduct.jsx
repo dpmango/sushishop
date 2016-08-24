@@ -1,9 +1,14 @@
 const CatalogProductContainer = React.createClass({
-    
+    componentDidMount: function() {
+        store.dispatch({
+            type: 'PRODUCT_SHOW',
+            active: 1
+        })
+    },
     render: function() {
         return (
             <div>
-                catalogProduct
+                {this.props.params.productId}
             </div>
         );
     }

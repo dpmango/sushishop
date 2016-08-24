@@ -41,8 +41,9 @@
 			margin-bottom 20px
 		.swiper-slide
 			width auto
-		&-wrapper:not(.swiper-container-horizontal) .swiper-wrapper
-			flex-flow column
+		.swiper-wrapper
+			@media(max-width 400px)
+				flex-flow column
 		.swiper-container-horizontal
 			overflow hidden
 		.swiper-scrollbar
