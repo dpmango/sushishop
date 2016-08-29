@@ -61,6 +61,15 @@ const AppContainer = React.createClass({
     //     });
     // },
     componentDidUpdate: function(prevProps) {
+        if (this.props.location.pathname != prevProps.location.pathname) {
+            Scroll.scrollTo(0, {
+                duration: 500,
+                delay: 0,
+                smooth: true
+            })
+        }
+
+
         this.transitionShadow = new Transition({
             el: this.refs.shadow,
             className: 'shadow',

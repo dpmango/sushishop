@@ -16,7 +16,7 @@ const ShopsContainer = React.createClass({
         return {
             near: 0,
             changeCity: false,
-            changeCityGroup: false
+            change_group: false
         }
     },
     itemShop: function (shopId) {
@@ -38,9 +38,7 @@ const ShopsContainer = React.createClass({
         if (cityId === 0) return buf;
 
         this.props.shops.sort.map((key) => {
-            if (this.props.shops.list[key].city_id == cityId) {
-                buf.push(this.itemShop(key))
-            }
+            buf.push(<div className="swiper-slide">{this.itemShop(key)}</div>)
         })
         return buf;
     },
@@ -57,7 +55,7 @@ const ShopsContainer = React.createClass({
         })
     },
     city: function () {
-        return (this.props.iam.cityId === 0) ? ' ': this.props.city.list[this.props.iam.cityId].name;
+        return (this.props.iam.cityId === 0) ? '': this.props.city.list[this.props.iam.cityId].name;
     },
     cityChoose: function (e) {
         this.transition()
@@ -103,12 +101,12 @@ const ShopsContainer = React.createClass({
         })
         e.preventDefault()
     },
-    changeCityGroup: function (e) {
+    change_group: function (e) {
         let el = e.currentTarget,
             id = el.dataset.id
 
         this.setState({
-            changeCityGroup: id
+            change_group: id
         })
 
         e.preventDefault()
@@ -124,14 +122,11 @@ const ShopsContainer = React.createClass({
                     </div>)
                 }
             } else {
-                // let data = this.props.city.groups[item.id]
-                // if (!groups.has(data.group_id)) {
-                //     groups.add(data.group_id)
-                //     let group = this.props.city.get(data.group_id)
-                //     list.push(<div className="shops-city-item shops-city-item_group" key={'group-'+group.id} data-id={data.group_id} onClick={this.changeCityGroup}>
-                //         <span>{group.name}</span>
-                //     </div>)
-                // }
+                let data = this.props.city.groups[item.id]
+
+                list.push(<div className="shops-city-item shops-city-item_group" key={'group-'+data.id} data-id={data.id} onClick={this.change_group}>
+                    <span>{data.name}</span>
+                </div>)
             }
         })
         let buf = [[], []];
@@ -155,10 +150,9 @@ const ShopsContainer = React.createClass({
         }
     },
     groupPopup: function (id) {
-        if (!id) return ''
         id = parseInt(id)
 
-        let group = this.props.cityGroup.get(id);
+        let group = this.props.group[id].city;
 
         return (
             <div className="shops-sity shops-city_group">
@@ -190,33 +184,33 @@ const ShopsContainer = React.createClass({
                     </a>
                 </div>
                 <Swiper
-                    slidesPerView='auto'
-                    freeMode={true}
-                    scrollbar=".swiper-scrollbar"
-                    scrollbarHide={true}
                     className="shops__list shops__list_begin"
-                    direction="vertical"
-                    mousewheelControl={true}
-                    grabCursor={false}
-                    simulateTouch={false}
-                    scrollbarDraggable={true}
-                    onWheel={ShopsListShadow}
-                    onTransitionEnd={ShopsListShadow}
+                    options={{
+                        slidesPerView: 'auto',
+                        freeMode: true,
+                        scrollbar: ".swiper-scrollbar",
+                        scrollbarHide: true,
+                        direction: "vertical",
+                        mousewheelControl: true,
+                        grabCursor: false,
+                        simulateTouch: false,
+                        scrollbarDraggable: true,
+                        onWheel: ShopsListShadow,
+                        onTransitionEnd: ShopsListShadow
+                    }}
                 >
-                    <div className="swiper-slide">
-                        {this.listShops()}
-                    </div>
+                    {this.listShops()}
                 </Swiper>
 
                 <MapShops near={this.state.near} />
 
-                <div className={"shops__city-popup "+((this.state.changeCity) ? "shops__city-popup_showed" : "shops__city-popup_hided" )+((this.state.changeCityGroup) ? " shops__city-popup_group" : '')} ref="cityPopup">
+                <div className={"shops__city-popup "+((this.state.changeCity) ? "shops__city-popup_showed" : "shops__city-popup_hided" )+((this.state.change_group) ? " shops__city-popup_group" : '')} ref="cityPopup">
                     <div className="shops__city-popup-wrapper">
                         <div className="shops-sity shops-city_city">
                             <div className="shops-city__title">Выберите город</div>
                             {this.listCity()}
                         </div>
-                        {this.groupPopup(this.state.changeCityGroup)}
+                        {(this.state.change_group) ? this.groupPopup(this.state.change_group) : ''}
                     </div>
                 </div>
             </div>

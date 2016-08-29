@@ -36,6 +36,8 @@ self.Transition = require('./blocks/Transition/Transition.jsx')
 
 self.axios = require('axios')
 
+self.Scroll = require('react-scroll').animateScroll
+
 
 if (isNode) {
     self.fetch = require('node-fetch')

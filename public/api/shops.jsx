@@ -5,7 +5,8 @@ var initialState = {
 }
 
 if (isNode) {
-    var cache = Object.assign(initialState, getCache('shop'))
+    let iam = store.getState().iam
+    var cache = Object.assign(initialState, getCache('shops-'+iam.cityId))
     if (Object.keys(cache.list).length > 0) {
         initialState = cache
     }
@@ -13,15 +14,15 @@ if (isNode) {
 
 module.exports = function (state = initialState, action) {
     if (action.type == "GET_SHOPS") {
-        if (Object.keys(state.list).length === 0 || isNode) {
-            axios.get(URL_API+'shops').then(function (response) {
-                store.dispatch({
-                    type: 'SET_SHOPS',
-                    list: response.data.result.shops,
-                    groups: response.data.result.groups
-                });
-            })
-        }
+        axios.get(URL_API+'shops', {
+            city_id: iam.cityId
+        }).then(function (response) {
+            store.dispatch({
+                type: 'SET_SHOPS',
+                list: response.data.result.shops,
+                groups: response.data.result.groups
+            });
+        })
         return state
     }
     if (action.type == "SET_SHOPS") {
@@ -50,7 +51,7 @@ module.exports = function (state = initialState, action) {
         })
 
         if (isNode) {
-            setCache('shops', state)
+            setCache('shops-'+iam.cityId, state)
         }
 
         return state

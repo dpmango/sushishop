@@ -5,7 +5,7 @@
     <databaseInfo>
         <version>134481920</version>
         <UUID>4C71AFC0-CA70-4BDA-BD5E-133EF1370C7C</UUID>
-        <nextObjectID>139</nextObjectID>
+        <nextObjectID>143</nextObjectID>
         <metadata>
             <plist version="1.0">
                 <dict>
@@ -96,6 +96,7 @@
         <relationship name="headers" type="0/0" destination="LMKEYVALUE" idrefs="z115"></relationship>
     </object>
     <object type="LMREQUEST" id="z105">
+        <attribute name="clientcertificate" type="string">[{"data":{"mode":0},"identifier":"com.luckymarmot.CertificateDynamicValue"}]</attribute>
         <attribute name="uuid" type="string">0EF1CF4F-5EC3-4555-A8F4-CA6A719338CB</attribute>
         <attribute name="url" type="string">http://sushi.endy.pro/api/city</attribute>
         <attribute name="storecookies" type="bool">1</attribute>
@@ -137,7 +138,7 @@
     </object>
     <object type="LMREQUEST" id="z108">
         <attribute name="uuid" type="string">7ED93341-F7D8-4F23-B8DB-4299426A6D62</attribute>
-        <attribute name="url" type="string">http://sushi.endy.pro/api/shops</attribute>
+        <attribute name="url" type="string">http://sushi.endy.pro/api/shops?city_id=2</attribute>
         <attribute name="storecookies" type="bool">1</attribute>
         <attribute name="sendcookies" type="bool">1</attribute>
         <attribute name="redirectmethod" type="bool">0</attribute>
@@ -344,7 +345,7 @@
         <attribute name="order" type="int64">4</attribute>
         <attribute name="name" type="string">journal</attribute>
         <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM"></relationship>
-        <relationship name="children" type="0/0" destination="LMREQUESTTREEITEM" idrefs="z125 z109 z113"></relationship>
+        <relationship name="children" type="0/0" destination="LMREQUESTTREEITEM" idrefs="z109 z125 z113"></relationship>
         <relationship name="bodyparameters" type="0/0" destination="LMKEYVALUE"></relationship>
         <relationship name="headers" type="0/0" destination="LMKEYVALUE"></relationship>
         <relationship name="urlparameters" type="0/0" destination="LMKEYVALUE"></relationship>
@@ -455,5 +456,50 @@
         <relationship name="groupforheaders" type="0/1" destination="LMREQUESTGROUP"></relationship>
         <relationship name="groupforurlparameters" type="0/1" destination="LMREQUESTGROUP"></relationship>
         <relationship name="request" type="0/1" destination="LMREQUEST" idrefs="z138"></relationship>
+    </object>
+    <object type="LMREQUEST" id="z140">
+        <attribute name="uuid" type="string">113F77DF-CADD-4F9D-B7C1-D8115FE11F76</attribute>
+        <attribute name="url" type="string">http://sushi.endy.pro/api/register?fio=%D0%90%D1%80%D1%82%D1%91%D0%BC\u2600phone=%2B79992006971</attribute>
+        <attribute name="storecookies" type="bool">1</attribute>
+        <attribute name="sendcookies" type="bool">1</attribute>
+        <attribute name="redirectmethod" type="bool">0</attribute>
+        <attribute name="redirectauthorization" type="bool">0</attribute>
+        <attribute name="method" type="string">GET</attribute>
+        <attribute name="followredirects" type="bool">0</attribute>
+        <attribute name="order" type="int64">9</attribute>
+        <attribute name="name" type="string">My API (2)</attribute>
+        <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM"></relationship>
+        <relationship name="children" type="0/0" destination="LMREQUESTTREEITEM"></relationship>
+        <relationship name="headers" type="0/0" destination="LMKEYVALUE" idrefs="z141 z143 z142"></relationship>
+    </object>
+    <object type="LMKEYVALUE" id="z141">
+        <attribute name="value" type="string">Артём</attribute>
+        <attribute name="order" type="int64">0</attribute>
+        <attribute name="name" type="string">fio</attribute>
+        <attribute name="enabled" type="bool">0</attribute>
+        <relationship name="groupforbodyparameters" type="0/1" destination="LMREQUESTGROUP"></relationship>
+        <relationship name="groupforheaders" type="0/1" destination="LMREQUESTGROUP"></relationship>
+        <relationship name="groupforurlparameters" type="0/1" destination="LMREQUESTGROUP"></relationship>
+        <relationship name="request" type="0/1" destination="LMREQUEST" idrefs="z140"></relationship>
+    </object>
+    <object type="LMKEYVALUE" id="z142">
+        <attribute name="value" type="string">89992006971</attribute>
+        <attribute name="order" type="int64">1</attribute>
+        <attribute name="name" type="string">phone</attribute>
+        <attribute name="enabled" type="bool">0</attribute>
+        <relationship name="groupforbodyparameters" type="0/1" destination="LMREQUESTGROUP"></relationship>
+        <relationship name="groupforheaders" type="0/1" destination="LMREQUESTGROUP"></relationship>
+        <relationship name="groupforurlparameters" type="0/1" destination="LMREQUESTGROUP"></relationship>
+        <relationship name="request" type="0/1" destination="LMREQUEST" idrefs="z140"></relationship>
+    </object>
+    <object type="LMKEYVALUE" id="z143">
+        <attribute name="value" type="string"></attribute>
+        <attribute name="order" type="int64">2</attribute>
+        <attribute name="name" type="string"></attribute>
+        <attribute name="enabled" type="bool">1</attribute>
+        <relationship name="groupforbodyparameters" type="0/1" destination="LMREQUESTGROUP"></relationship>
+        <relationship name="groupforheaders" type="0/1" destination="LMREQUESTGROUP"></relationship>
+        <relationship name="groupforurlparameters" type="0/1" destination="LMREQUESTGROUP"></relationship>
+        <relationship name="request" type="0/1" destination="LMREQUEST" idrefs="z140"></relationship>
     </object>
 </database>

@@ -13,15 +13,13 @@ if (isNode) {
 
 module.exports = function (state = initialState, action) {
     if (action.type == "GET_CITY") {
-        if (Object.keys(state.list).length === 0 || isNode) {
-            axios.get(URL_API+'city').then(function (response) {
-                store.dispatch({
-                    type: 'SET_CITY',
-                    city: response.data.result.city,
-                    groups: response.data.result.groups
-                });
-            })
-        }
+        axios.get(URL_API+'city').then(function (response) {
+            store.dispatch({
+                type: 'SET_CITY',
+                city: response.data.result.city,
+                groups: response.data.result.groups
+            });
+        })
         return state
     }
     if (action.type == "SET_CITY") {

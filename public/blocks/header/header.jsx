@@ -1,4 +1,9 @@
 const HeaderContainer = React.createClass({
+    getInitialState: function() {
+        return {
+            profile: false
+        };
+    },
     toggleMenu: function (e) {
         store.dispatch({
             type: 'TOGGLE_MENU'
@@ -24,6 +29,14 @@ const HeaderContainer = React.createClass({
     },
     componentWillUpdate: function() {
         return true;
+    },
+
+    profile: function (e) {
+        this.setState({
+            profile: true
+        })
+
+        e.preventDefault()
     },
 
     render: function() {
@@ -52,7 +65,7 @@ const HeaderContainer = React.createClass({
                         </div>
                     </div>
                     <div className="header__nav"><Nav /></div>
-                    <Link to="/profile/" className="header__profile">
+                    <Link to="/profile/" onClick={this.profile} className="header__profile">
                         {Icon.profile}
                         <span>Мой СушиШоп</span>
                     </Link>
@@ -81,6 +94,7 @@ const HeaderContainer = React.createClass({
                     </a>
                     <div className="header__bg" onClick={this.toggleMenu}></div>
                 </div>
+                {(this.state.profile) ? <Login /> : ''}
             </div>
         );
     }

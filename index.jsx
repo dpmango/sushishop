@@ -26,8 +26,6 @@ require('./public/libs.jsx')
 require('./public/app.jsx')
 routes = require('./public/route.jsx')
 
-myCache = cached('sushishop')
-
 store = createStore(require('./public/reducer.jsx'))
 cookies = {}
 app.get('*', (req, res) => {

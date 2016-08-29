@@ -20,8 +20,6 @@ const MapShopsContainer = React.createClass({
         //     })
         // }
 
-        console.log(this.mapMarkers)
-
         this.mapMarkers = {}
         this.mapWindows = {}
 
