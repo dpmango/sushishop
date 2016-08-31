@@ -4,16 +4,17 @@ var initialState = {
     sort: []
 }
 
-if (isNode) {
-    let iam = store.getState().iam
-    var cache = Object.assign(initialState, getCache('shops-'+iam.cityId))
-    if (Object.keys(cache.list).length > 0) {
-        initialState = cache
-    }
-}
 
 module.exports = function (state = initialState, action) {
     if (action.type == "GET_SHOPS") {
+        let iam = store.getState().iam
+        if (isNode) {
+            var cache = Object.assign(initialState, getCache('shops-'+iam.cityId))
+            if (Object.keys(cache.list).length > 0) {
+                initialState = cache
+            }
+        }
+
         axios.get(URL_API+'shops', {
             city_id: iam.cityId
         }).then(function (response) {
@@ -51,6 +52,7 @@ module.exports = function (state = initialState, action) {
         })
 
         if (isNode) {
+            let iam = store.getState().iam
             setCache('shops-'+iam.cityId, state)
         }
 

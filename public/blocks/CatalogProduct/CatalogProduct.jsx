@@ -8,7 +8,6 @@ const CatalogProductContainer = React.createClass({
     render: function() {
         return (
             <div>
-                {this.props.params.productId}
             </div>
         );
     }

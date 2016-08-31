@@ -85,6 +85,8 @@ const AppContainer = React.createClass({
             }
         }
         this.iam()
+
+        console.log(this.props.product.active)
     },
     render: function() {
         return (
