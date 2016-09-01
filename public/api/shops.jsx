@@ -16,7 +16,9 @@ module.exports = function (state = initialState, action) {
         }
 
         axios.get(URL_API+'shops', {
-            city_id: iam.cityId
+            params: {
+                city_id: iam.cityId
+            }
         }).then(function (response) {
             store.dispatch({
                 type: 'SET_SHOPS',

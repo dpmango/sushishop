@@ -14,14 +14,9 @@ const AppContainer = React.createClass({
             })
         }
         if (Object.keys(this.props.shops.list).length > 0 && this.props.iam.shopId === 0) {
-            Object.keys(this.props.shops.list).map((key) => {
-                key = parseInt(key)
-                if (this.props.shops.list[key].isChange === true) {
-                    store.dispatch({
-                        type: 'SET_IAM_SHOP',
-                        shopId: parseInt(key)
-                    })
-                }
+            store.dispatch({
+                type: 'SET_IAM_SHOP',
+                shopId: parseInt(Object.keys(this.props.shops.list)[0])
             })
         }
     },
@@ -85,15 +80,13 @@ const AppContainer = React.createClass({
             }
         }
         this.iam()
-
-        console.log(this.props.product.active)
     },
     render: function() {
         return (
             <div>
+                {(this.props.iam.cityId === 0 || this.props.iam.shopId === 0) ? '' : <Header /> }
                 <div className="content">
                     <div className="content__inner">
-                        {(this.props.iam.cityId === 0 || this.props.iam.shopId === 0) ? '' : <Header /> }
                         {this.props.children}
                         {this.mainPager()}
                         {this.mainJournal()}

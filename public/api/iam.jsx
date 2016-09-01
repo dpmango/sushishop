@@ -1,5 +1,3 @@
-var isNode = typeof window === 'undefined'
-
 module.exports = function (state = { cityId: 0, shopId: 0 }, action) {
     if (action.type == 'GET_IAM') {
         let data = {}
