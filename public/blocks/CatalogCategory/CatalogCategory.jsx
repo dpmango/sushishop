@@ -2,7 +2,8 @@ const CatalogContainer = React.createClass({
     getInitialState: function () {
         let category_id = this.props.catalog.url[this.props.params.categoryId]
         return {
-            category_id: category_id
+            category_id: category_id,
+            indexLastTag: 0
         }
     },
     componentWillMount: function () {
@@ -22,18 +23,53 @@ const CatalogContainer = React.createClass({
             return false
         }
     },
+    tags: function () {
+        if (isNode) return
+
+        let el = this.refs.tags,
+            first = el.children[0].offsetTop
+
+        Array.prototype.map.call(el.children, (item) => {
+            if (first < item.offsetTop) {
+                item.classList.add('catalog-tags__item_hide')
+            }
+        })
+
+        el.querySelector('.catalog-tags__item:not(.catalog-tags__item_hide):last-of-type').classList.add('catalog-tags__item_hide')
+
+        let more = document.createElement('div')
+        more.classList.add('catalog-tags__more')
+        console.log(el.querySelector('.catalog-tags__item_hide').before(more))
+
+
+    },
+    componentDidMount: function() {
+        this.tags()
+    },
     render: function() {
         const products = this.props.products.category[this.state.category_id]
         const category = this.props.catalog.list[this.state.category_id]
+        const tags = [
+            "Острое",
+            "Лёгкое",
+            "С угрём",
+            "Без шампиньонов",
+            "Без бекона",
+            "Без лука",
+            "Без перца халапеньо",
+            "Без болгарского перца",
+            "Без маслин",
+            "Без мяса"
+        ]
+        let i = 0
         return (
             <div>
                 <div className="catalog">
                     <h1 className="catalog__title">{category.name}</h1>
-                    <div className="catalog-tags">
-                        <div className="catalog-tags__item">ЧТО-НИБУДЬ ОСТРОЕ</div>
-                        <div className="catalog-tags__item">ЛЕГКОЕ</div>
-                        <div className="catalog-tags__item">С УГРЕМ</div>
-                        <div className="catalog-tags__item">ЧТО-НИБУДЬ ОСТРОЕ</div>
+                    <div className="catalog-tags" ref="tags">
+                        {tags.map((item) => {
+                            return <div className="catalog-tags__item" key={item}>{item}</div>
+                        })}
                     </div>
                     <div className="catalog__list">
                         {(products) ? products.map((id) => {

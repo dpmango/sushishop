@@ -1,4 +1,10 @@
 .catalog
+	&__title
+		font-size 48px
+		text-transform uppercase
+		text-align center
+		color alpha(#222, .8)
+		margin 1em 0 .25em 0
 	&__list
 		margin -3px
 		display flex
@@ -8,3 +14,24 @@
 		.product-item
 			width calc((100% - 18px)/3 )
 			margin 3px
+
+
+.catalog-tags
+	display flex
+	justify-content center
+	margin-bottom 20px
+	flex-wrap wrap
+	&__item
+		background $color__white
+		box-shadow 0 5px 10px 0 alpha($color__black, .06)
+		border-radius 5px
+		margin 0 3px
+		font-size 16px
+		color #55534F
+		text-transform uppercase
+		letter-spacing .03em
+		padding 12px 20px 10px 20px
+		cursor pointer
+		white-space nowrap
+		&_hide
+			display none
