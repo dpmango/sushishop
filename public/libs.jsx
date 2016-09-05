@@ -32,8 +32,6 @@ if (!isNode) {
     self.localForage = require('localforage')
 }
 
-self.Transition = require('./blocks/Transition/Transition.jsx')
-
 self.axios = require('axios')
 
 self.Scroll = require('react-scroll').animateScroll

@@ -5,7 +5,8 @@ module.exports = function (config) {
         hide: config.className+'_hide',
         hided: config.className+'_hided'
     })
-    this.__proto__.hide = (callback) => {
+    console.log(this.config)
+    this.hide = (callback) => {
         this.config.el.classList.remove(this.config.show);
         this.config.el.classList.remove(this.config.showed);
         this.config.el.classList.add(this.config.hide);
@@ -14,11 +15,11 @@ module.exports = function (config) {
             this.config.el.classList.remove(this.config.hide);
             this.config.el.classList.add(this.config.hided);
             if (callback) {
-                callback();
+                callback()
             }
         }, this.config.speedHide)
     }
-    this.__proto__.show = (callback) => {
+    this.show = (callback) => {
         this.config.el.classList.remove(this.config.hide);
         this.config.el.classList.remove(this.config.hided);
         this.config.el.classList.add(this.config.show);
@@ -27,7 +28,7 @@ module.exports = function (config) {
             this.config.el.classList.remove(this.config.show);
             this.config.el.classList.add(this.config.showed);
             if (callback) {
-                callback();
+                callback()
             }
         }, this.config.speedShow)
     }

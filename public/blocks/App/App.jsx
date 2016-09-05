@@ -35,6 +35,14 @@ const AppContainer = React.createClass({
         })
         this.iam()
     },
+    componentDidMount: function() {
+        this.transitionShadow = new Transition({
+            el: this.refs.shadow,
+            className: 'shadow',
+            speedShow: 200,
+            speedHide: 400
+        })
+    },
     mainPagerIgnoreList: new Set([
         '/shops'
     ]),
@@ -65,18 +73,11 @@ const AppContainer = React.createClass({
         }
 
 
-        this.transitionShadow = new Transition({
-            el: this.refs.shadow,
-            className: 'shadow',
-            speedShow: 200,
-            speedHide: 400
-        });
-
         if (prevProps.shadow.name != this.props.shadow.name) {
             if (this.props.shadow.name == '') {
                 this.transitionShadow.hide();
             } else {
-                this.transitionShadow.show();
+                this.transitionShadow.show()
             }
         }
         this.iam()

@@ -4,10 +4,19 @@ const HeaderContainer = React.createClass({
             profile: false
         };
     },
+    componentDidMount: function() {
+        this.loginTransition = new Transition({
+            el: this.refs.login,
+            className: 'login',
+            speedShow: 200,
+            speedHide: 400
+        })
+    },
+
     toggleMenu: function (e) {
         store.dispatch({
             type: 'TOGGLE_MENU'
-        });
+        })
         if (e.currentTarget.getAttribute('href') == '#') {
             e.preventDefault();
         }
@@ -28,13 +37,28 @@ const HeaderContainer = React.createClass({
         return (this.props.iam.shopId === 0) ? ' ': this.props.shops[this.props.iam.shopId].adres
     },
     componentWillUpdate: function() {
-        return true;
+        return false
     },
 
     profile: function (e) {
-        this.setState({
-            profile: true
-        })
+        if (this.state.profile) {
+            this.loginTransition.hide()
+            this.setState({
+                profile: false
+            })
+            store.dispatch({
+                type: 'SHADOW_HIDE'
+            })
+        } else {
+            this.loginTransition.show()
+            this.setState({
+                profile: true
+            })
+            store.dispatch({
+                type: 'SHADOW_SHOW',
+                name: 'login'
+            })
+        }
 
         e.preventDefault()
     },
@@ -94,9 +118,18 @@ const HeaderContainer = React.createClass({
                     </a>
                     <div className="header__bg" onClick={this.toggleMenu}></div>
                 </div>
-                {(this.state.profile) ? <Login /> : ''}
+                <div className="login" ref="login">
+                    <div className="login__title">Вход в&nbsp;личный кабинет</div>
+                    <div className="login__descr">Личный кабинет и&nbsp;накопительную скидку можно получить после первого заказа</div>
+                    <div className="login__fields">
+                        <input type="tel" placeholder="Телефон" ref="phone"/>
+                        <input type="password" placeholder="Пароль" ref="password"/>
+                    </div>
+                    <a href="" className="login__forgot">Забыли пароль?</a>
+                    <div className="button button_fill button_medium login__button" onClick={this.submit}>Войти</div>
+                </div>
             </div>
-        );
+        )
     }
 });
 
@@ -111,6 +144,4 @@ const mapStateToProps = function(store) {
 };
 
 
-module.exports = connect(mapStateToProps, null, null, {
-    pure: false
-})(HeaderContainer);
+module.exports = connect(mapStateToProps, null, null, { pure: false })(HeaderContainer);

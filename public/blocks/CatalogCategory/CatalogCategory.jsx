@@ -29,19 +29,17 @@ const CatalogContainer = React.createClass({
         let el = this.refs.tags,
             first = el.children[0].offsetTop
 
-        Array.prototype.map.call(el.children, (item) => {
+        Array.prototype.map.call(el.children, (item, key) => {
             if (first < item.offsetTop) {
                 item.classList.add('catalog-tags__item_hide')
+                el.children[key - 1].classList.add('catalog-tags__item_hide')
+                el.children[key - 2].classList.add('catalog-tags__item_hide')
             }
         })
 
-        el.querySelector('.catalog-tags__item:not(.catalog-tags__item_hide):last-of-type').classList.add('catalog-tags__item_hide')
-
         let more = document.createElement('div')
         more.classList.add('catalog-tags__more')
-        console.log(el.querySelector('.catalog-tags__item_hide').before(more))
-
-
+        el.querySelector('.catalog-tags__item_hide').before(more)
     },
     componentDidMount: function() {
         this.tags()
