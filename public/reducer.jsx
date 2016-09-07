@@ -9,5 +9,6 @@ module.exports = combineReducers({
     actions: require('./api/actions.jsx'),
     products: require('./api/products.jsx'),
     product: require('./api/product.jsx'),
-    cart: require('./api/cart.jsx')
+    cart: require('./api/cart.jsx'),
+    login: require('./api/login.jsx')
 });

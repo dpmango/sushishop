@@ -1,39 +1,37 @@
-var initialState = {
-    list: {},
-    url: {},
-    sort: []
-}
-
-module.exports = function (state = initialState, action) {
+module.exports = function (state = {}, action) {
     if (action.type == "GET_CATALOG") {
+        let city_id = store.getState().iam.cityId,
+            shop_id = store.getState().iam.shopId
+
         if (isNode) {
-            var data = getCache('catalog-'+action.city_id+'-'+action.shop_id)
+            let data = getCache(`catalog-${shop_id}`)
             if (data) {
-                initialState = data
+                state = Object.assign({}, data)
             }
         }
-        if (state.status == 'empty' || isNode) {
+        if (Object.keys(state).length === 0 || isNode) {
+            let params = {
+                city_id: city_id,
+                shop_id: shop_id,
+                get_products: true
+            }
             axios.get(URL_API+'catalog', {
-                params: {
-                    city_id: action.city_id,
-                    shop_id: action.shop_id
-                }
-            }).then(function (response) {
+                params: params
+            }).then((response) => {
                 var data = response.data.result
                 store.dispatch({
                     type: "SET_CATALOG",
-                    catalog: data,
-                    city_id: action.city_id,
-                    shop_id: action.shop_id
+                    catalog: data
                 })
-            });
-            return initialState
+            })
+            return state
         }
 
-        return state;
+        return state
     }
     if (action.type == "SET_CATALOG") {
-        var catalog = {
+        let shop_id = store.getState().iam.shopId
+        let catalog = {
             list: {},
             url: {},
             sort: []
@@ -47,9 +45,9 @@ module.exports = function (state = initialState, action) {
             return catalog.list[a].sort - catalog.list[b].sort
         })
         if (isNode) {
-            setCache('catalog-'+action.city_id+'-'+action.shop_id, catalog)
+            setCache(`catalog-${shop_id}`, catalog)
         }
-        return catalog
+        return Object.assign({}, catalog)
     }
-    return state;
+    return state
 };

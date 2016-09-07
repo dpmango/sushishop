@@ -1,16 +1,3 @@
-function ShopsListShadow() {
-    let blockList = document.querySelector('.shops__list'),
-        beginClass = 'shops__list_begin',
-        endClass = 'shops__list_end',
-        swiper = blockList.swiper;
-    if (swiper.isBeginning && !blockList.classList.contains(beginClass)) {
-        blockList.classList.add(beginClass);
-    }
-    if (!swiper.isBeginning && blockList.classList.contains(beginClass)) {
-        blockList.classList.remove(beginClass);
-    }
-}
-
 const ShopsContainer = React.createClass({
     getInitialState: function () {
         return {
@@ -18,29 +5,6 @@ const ShopsContainer = React.createClass({
             changeCity: false,
             change_group: false
         }
-    },
-    itemShop: function (shopId) {
-        let item = this.props.shops.list[shopId];
-
-        return <div className="shops-item" key={shopId}>
-            <div>
-                <div className="shops-item__adres">{item.adres}</div>
-                {(item.is_new) ? <div className="shops-item__new">new</div> : '' }
-            </div>
-            <div>
-                {(item.phone) ? <a href={'tel:'+item.phone} className="shops-item__phone">{item.phone}</a> : '' }
-            </div>
-        </div>
-    },
-    listShops: function () {
-        let buf = [],
-            cityId = this.props.iam.cityId;
-        if (cityId === 0) return buf;
-
-        this.props.shops.sort.map((key) => {
-            buf.push(<div className="swiper-slide">{this.itemShop(key)}</div>)
-        })
-        return buf;
     },
     near: function (e) {
         this.setState({ near: this.state.near + 1 });
@@ -171,6 +135,21 @@ const ShopsContainer = React.createClass({
         )
     },
     render: function() {
+        if (Object.keys(this.props.shops.city).length === 0 && this.props.iam.cityId !== 0) return
+
+        let ShopsListShadow = function() {
+            let blockList = document.querySelector('.shops__list'),
+                beginClass = 'shops__list_begin',
+                endClass = 'shops__list_end',
+                swiper = blockList.swiper;
+            if (swiper.isBeginning && !blockList.classList.contains(beginClass)) {
+                blockList.classList.add(beginClass);
+            }
+            if (!swiper.isBeginning && blockList.classList.contains(beginClass)) {
+                blockList.classList.remove(beginClass);
+            }
+        }
+
         return (
             <div className="shops">
                 <div className="shops__header">
@@ -197,9 +176,21 @@ const ShopsContainer = React.createClass({
                         scrollbarDraggable: true,
                         onWheel: ShopsListShadow,
                         onTransitionEnd: ShopsListShadow
-                    }}
-                >
-                    {this.listShops()}
+                    }} >
+                    {this.props.shops.city[this.props.iam.cityId].map((key) => {
+                        let item = this.props.shops.list[key];
+                        return <div className="swiper-slide" key={key}>
+                            <div className="shops-item">
+                                <div>
+                                    <div className="shops-item__adres">{item.adres}</div>
+                                    {(item.is_new) ? <div className="shops-item__new">new</div> : '' }
+                                </div>
+                                <div>
+                                    {(item.phone) ? <a href={'tel:'+item.phone} className="shops-item__phone">{item.phone}</a> : '' }
+                                </div>
+                            </div>
+                        </div>
+                    })}
                 </Swiper>
 
                 <MapShops near={this.state.near} />

@@ -18,15 +18,15 @@ const HeaderContainer = React.createClass({
             type: 'TOGGLE_MENU'
         })
         if (e.currentTarget.getAttribute('href') == '#') {
-            e.preventDefault();
+            e.preventDefault()
         }
     },
     hideMenu: function (e) {
         store.dispatch({
             type: 'HIDE_MENU'
-        });
+        })
         if (e.currentTarget.getAttribute('href') == '#') {
-            e.preventDefault();
+            e.preventDefault()
         }
     },
     city: function () {
@@ -54,12 +54,28 @@ const HeaderContainer = React.createClass({
             this.setState({
                 profile: true
             })
+            this.refs.phone.focus()
             store.dispatch({
                 type: 'SHADOW_SHOW',
-                name: 'login'
+                name: 'login',
+                callback: () => {
+                    this.loginTransition.hide()
+                    this.setState({
+                        profile: false
+                    })
+                }
             })
         }
 
+        e.preventDefault()
+    },
+
+    submit: function (e) {
+        let data = {
+            phone: this.refs.phone.input.value,
+            password: this.refs.password.value
+        }
+        console.log(data)
         e.preventDefault()
     },
 
@@ -81,7 +97,7 @@ const HeaderContainer = React.createClass({
                                         <div className="header-adres__pen">{Icon.pen}</div>
                                     </div>
                                 </a>
-                                <a href="tel:+79992006971" className="header-adres__phone">
+                                <a href="tel:+71112006171" className="header-adres__phone">
                                     {Icon.phone}
                                 </a>
                             </div>
@@ -118,16 +134,16 @@ const HeaderContainer = React.createClass({
                     </a>
                     <div className="header__bg" onClick={this.toggleMenu}></div>
                 </div>
-                <div className="login" ref="login">
+                <form className="login" ref="login" onSubmit={this.submit}>
                     <div className="login__title">Вход в&nbsp;личный кабинет</div>
                     <div className="login__descr">Личный кабинет и&nbsp;накопительную скидку можно получить после первого заказа</div>
                     <div className="login__fields">
-                        <input type="tel" placeholder="Телефон" ref="phone"/>
+                        <InputMasked type="tel" mask="1 111 111-11-11" placeholder="Телефон" ref="phone" />
                         <input type="password" placeholder="Пароль" ref="password"/>
                     </div>
                     <a href="" className="login__forgot">Забыли пароль?</a>
                     <div className="button button_fill button_medium login__button" onClick={this.submit}>Войти</div>
-                </div>
+                </form>
             </div>
         )
     }

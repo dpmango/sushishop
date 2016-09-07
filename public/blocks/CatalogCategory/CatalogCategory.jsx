@@ -9,14 +9,13 @@ const CatalogContainer = React.createClass({
     componentWillMount: function () {
         store.dispatch({
             type: 'GET_PRODUCTS',
-            city_id: this.props.iam.cityId,
-            shop_id: this.props.iam.shopId
+            get_products: true
         })
     },
     shouldComponentUpdate: function(nextProps, nextState) {
         if (this.props.params.categoryId != nextProps.params.categoryId) {
             this.setState({
-                category_id: this.props.catalog.url[this.props.params.categoryId]
+                category_id: this.props.catalog.url
             })
             return true
         } else {
@@ -47,6 +46,7 @@ const CatalogContainer = React.createClass({
     render: function() {
         const products = this.props.products.category[this.state.category_id]
         const category = this.props.catalog.list[this.state.category_id]
+
         const tags = [
             "Острое",
             "Лёгкое",
@@ -72,7 +72,7 @@ const CatalogContainer = React.createClass({
                     <div className="catalog__list">
                         {(products) ? products.map((id) => {
                             let item = this.props.products.list[id]
-                            item = Object.assign(item, {link: '/catalog/'+this.props.catalog.list[this.state.category_id].alt+'/'+item.alt})
+                            item = Object.assign(item, {link: '/catalog/'+this.props.catalog.list.alt+'/'+item.alt})
                             return (<ProductItem {...item} key={item.id} />)
                         }) : ''}
                     </div>

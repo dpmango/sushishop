@@ -3,20 +3,23 @@ var isNode = typeof window === 'undefined';
 
 const AppContainer = React.createClass({
     iam: function () {
-        if (Object.keys(this.props.city.list).length > 0 && this.props.iam.cityId === 0) {
+        if (this.props.shops.sort.length === 0 || this.props.city.sort.lenght === 0) return
+        if (this.props.iam.cityId === 0) {
             Object.keys(this.props.city.list).map((key) => {
                 if (this.props.city.list[key].isChange === true) {
+                    let cityId = key
                     store.dispatch({
                         type: 'SET_IAM_CITY',
-                        cityId: parseInt(key)
+                        cityId: parseInt(cityId)
                     })
+                    if (this.props.iam.shopId === 0) {
+                        store.dispatch({
+                            type: 'SET_IAM_SHOP',
+                            shopId: parseInt(this.props.shops.city[cityId][0])
+                        })
+                        console.log(parseInt(this.props.shops.city[cityId][0]))
+                    }
                 }
-            })
-        }
-        if (Object.keys(this.props.shops.list).length > 0 && this.props.iam.shopId === 0) {
-            store.dispatch({
-                type: 'SET_IAM_SHOP',
-                shopId: parseInt(Object.keys(this.props.shops.list)[0])
             })
         }
     },
@@ -58,11 +61,12 @@ const AppContainer = React.createClass({
     //     return <Pager />
     //     // return 'test'
     // },
-    // hideShadow: function () {
-    //     store.dispatch({
-    //         type: 'SHADOW_HIDE'
-    //     });
-    // },
+    hideShadow: function () {
+        this.props.shadow.callback()
+        store.dispatch({
+            type: 'SHADOW_HIDE'
+        })
+    },
     componentDidUpdate: function(prevProps) {
         if (this.props.location.pathname != prevProps.location.pathname) {
             Scroll.scrollTo(0, {

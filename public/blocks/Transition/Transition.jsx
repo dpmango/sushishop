@@ -5,15 +5,14 @@ module.exports = function (config) {
         hide: config.className+'_hide',
         hided: config.className+'_hided'
     })
-    console.log(this.config)
     this.hide = (callback) => {
-        this.config.el.classList.remove(this.config.show);
-        this.config.el.classList.remove(this.config.showed);
-        this.config.el.classList.add(this.config.hide);
         this.config.el.style.transitionDuration = this.config.speedHide+'ms'
+        this.config.el.classList.remove(this.config.showed);
+        this.config.el.classList.add(this.config.show);
         setTimeout(() => {
-            this.config.el.classList.remove(this.config.hide);
+            this.config.el.classList.remove(this.config.show);
             this.config.el.classList.add(this.config.hided);
+            this.config.el.classList.add(this.config.hide);
             if (callback) {
                 callback()
             }

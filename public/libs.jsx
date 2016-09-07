@@ -32,6 +32,8 @@ if (!isNode) {
     self.localForage = require('localforage')
 }
 
+self.InputMasked = require('react-maskedinput')
+
 self.axios = require('axios')
 
 self.Scroll = require('react-scroll').animateScroll
