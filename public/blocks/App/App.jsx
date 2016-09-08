@@ -17,7 +17,6 @@ const AppContainer = React.createClass({
                             type: 'SET_IAM_SHOP',
                             shopId: parseInt(this.props.shops.city[cityId][0])
                         })
-                        console.log(parseInt(this.props.shops.city[cityId][0]))
                     }
                 }
             })

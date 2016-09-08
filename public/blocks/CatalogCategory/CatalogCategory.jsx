@@ -26,19 +26,28 @@ const CatalogContainer = React.createClass({
         if (isNode) return
 
         let el = this.refs.tags,
-            first = el.children[0].offsetTop
+            first = el.children[0].offsetTop,
+            isNext = false
 
         Array.prototype.map.call(el.children, (item, key) => {
-            if (first < item.offsetTop) {
+            if (first < item.offsetTop || isNext) {
                 item.classList.add('catalog-tags__item_hide')
+
                 el.children[key - 1].classList.add('catalog-tags__item_hide')
                 el.children[key - 2].classList.add('catalog-tags__item_hide')
+
+                isNext = true
             }
         })
 
         let more = document.createElement('div')
         more.classList.add('catalog-tags__more')
-        el.querySelector('.catalog-tags__item_hide').before(more)
+        more.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 13 3">
+            <circle cx="1.5" cy="1.5" r="1.5"/>
+            <circle cx="6.5" cy="1.5" r="1.5"/>
+            <circle cx="11.5" cy="1.5" r="1.5"/>
+            </svg>`
+        el.querySelector('.catalog-tags__item_hide').before(more.cloneNode(true))
     },
     componentDidMount: function() {
         this.tags()

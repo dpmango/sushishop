@@ -2,6 +2,7 @@ module.exports = function (state = { cityId: 0, shopId: 0 }, action) {
     if (action.type == 'GET_IAM') {
         let data = {}
         if (isNode) {
+            console.log(cookies)
             if (cookies.cityId && cookies.shopId) {
                 data = {
                     cityId: parseInt(cookies.cityId),
@@ -17,7 +18,7 @@ module.exports = function (state = { cityId: 0, shopId: 0 }, action) {
             }
         }
         if (data.cityId && data.shopId) {
-            return data
+            return Object.assign({}, data)
         }
         if (!isNode && state.cityId != cookie.select().cityId && state.shopId != cookie.select().shopId) {
             cookie.save('cityId', state.cityId)

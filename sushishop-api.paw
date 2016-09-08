@@ -82,7 +82,7 @@
     </object>
     <object type="LMREQUEST" id="z104">
         <attribute name="uuid" type="string">13E17E85-2C9C-4BF7-84BF-F710B096F111</attribute>
-        <attribute name="url" type="string">http://sushi.endy.pro/api/catalog?shop_id=82\u2600city_id=2</attribute>
+        <attribute name="url" type="string">http://sushi.endy.pro/api/catalog?shop_id=82\u2600city_id=2\u2600get_products=</attribute>
         <attribute name="storecookies" type="bool">1</attribute>
         <attribute name="sendcookies" type="bool">1</attribute>
         <attribute name="redirectmethod" type="bool">0</attribute>
