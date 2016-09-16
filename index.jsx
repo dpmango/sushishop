@@ -76,10 +76,10 @@ function renderPage(html, title, state) {
         <body>
             <div id="app">${html}</div>
             <script id="store" type="application/json">${state}</script>
-            <script src="//cdn.polyfill.io/v2/polyfill.js"></script>
-            <script src="//fb.me/react-15.3.0.js"></script>
-            <script src="//fb.me/react-dom-15.3.0.js"></script>
-            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCO26nKWXJSUraUFRGGhQgNUQEyGiauFDU&libraries=geometry"></script>
+            <script src="//cdn.polyfill.io/v2/polyfill.min.js"></script>
+            <script src="//unpkg.com/react@15.3.1/dist/react.min.js"></script>
+            <script src="//unpkg.com/react-dom@15.3.1/dist/react-dom.min.js"></script>
+            <script src="//maps.googleapis.com/maps/api/js?key=AIzaSyCO26nKWXJSUraUFRGGhQgNUQEyGiauFDU&libraries=geometry"></script>
             <script src="/f/script/libs.js"></script>
             <script src="/f/script/app.js"></script>
         </body>
