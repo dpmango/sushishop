@@ -23,6 +23,9 @@ const AppContainer = React.createClass({
         }
     },
     componentWillMount: function() {
+        if (!isNode && navigator.platform.indexOf('Mac') > -1) {
+            document.body.classList.add('mac')
+        }
         store.dispatch({
             type: 'GET_IAM'
         });

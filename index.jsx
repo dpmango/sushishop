@@ -44,15 +44,15 @@ app.get('*', (req, res) => {
             { store: store },
             React.createElement(RouterContext, props))
         )
-        res.send(renderPage(html, title, store.getState()))
+        res.send(renderPage(html, store.getState()))
     })
 })
-function renderPage(html, title, state) {
-    state = JSON.stringify(state)
+function renderPage(html, state) {
+    let storeJSON = JSON.stringify(state)
     return `<!DOCTYPE html>
         <html>
         <head>
-            <title>${title}</title>
+            <title>${state.meta.title}</title>
             <link rel="apple-touch-icon" sizes="57x57" href="/f/favicons/apple-touch-icon-57x57.png">
             <link rel="apple-touch-icon" sizes="60x60" href="/f/favicons/apple-touch-icon-60x60.png">
             <link rel="apple-touch-icon" sizes="72x72" href="/f/favicons/apple-touch-icon-72x72.png">
@@ -78,7 +78,7 @@ function renderPage(html, title, state) {
         </head>
         <body>
             <div id="app">${html}</div>
-            <script id="store" type="application/json">${state}</script>
+            <script id="store" type="application/json">${storeJSON}</script>
             <script src="//cdn.polyfill.io/v2/polyfill.min.js"></script>
             <script src="//unpkg.com/react@15.3.1/dist/react.min.js"></script>
             <script src="//unpkg.com/react-dom@15.3.1/dist/react-dom.min.js"></script>

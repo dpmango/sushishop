@@ -1,8 +1,9 @@
 const AboutContainer = React.createClass({
     componentWillMount: function () {
-        if (isNode) {
-            title = "О компании СушиШоп"
-        }
+        store.dispatch({
+            type: "SET_META",
+            title: 'О компании СушиШоп'
+        })
 
         store.dispatch({
             type: 'GET_COMPANY'

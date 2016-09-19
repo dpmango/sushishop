@@ -1,0 +1,153 @@
+.job
+	//
+
+.job-header
+	height 700px
+	position relative
+	color $color__white
+	text-align center
+	box-sizing border-box
+	padding 45px 0 0 0
+	&:before
+		content ''
+		display block
+		position absolute
+		top 0
+		right 0
+		bottom 0
+		left 0
+		z-index -2
+		background url(/f/images/job/header.jpg) center no-repeat
+		background-size cover
+	&:after
+		content ''
+		display block
+		position absolute
+		top 0
+		right 0
+		bottom 0
+		left 0
+		z-index -1
+		background alpha($color__black, .6)
+	&__logo
+		fill $color__white
+		width 90px
+		height 90px
+		display block
+		margin 0 auto
+		margin-bottom 20px
+	&__title
+		font-size 48px
+		text-transform uppercase
+		letter-spacing .03em
+		margin-bottom 30px
+	&__button
+		color $color__white !important
+		padding-right 47px
+		position relative
+		margin-top 40px
+		span
+			width 20px
+			height 20px
+			background $color__orange
+			color $color__white
+			font-size 12px
+			text-align center
+			line-height 20px
+			display inline-block
+			border-radius 50%
+			position absolute
+			top 50%
+			margin-top -10px
+			right 17px
+			letter-spacing -.005em
+			.mac & font
+				position relative
+				top 1px
+
+.job-adv
+	display flex
+	justify-content space-between
+	width 820px
+	margin 0 auto
+	&__item
+		width 260px
+	&__icon
+		fill $color__white
+		margin 0 auto
+		height 110px
+		display flex
+		align-items center
+		justify-content center
+		svg
+			display block
+		&_purse
+			svg
+				width 71px
+				height 68px
+		&_plate
+			svg
+				width 93px
+				height 66px
+		&_career
+			svg
+				width 65px
+				height 79px
+	&__title
+		margin-bottom .5em
+	&__descr
+		font-size 14px
+		line-height 20px
+
+.job-closer
+	margin 180px 80px 125px 80px
+	position relative
+	&__title
+		font-size 34px
+		text-transform uppercase
+		letter-spacing .02em
+		margin-bottom .25em
+	&__wrapper
+		width 520px
+		color #222
+		p
+			font-size 16px
+			line-height 24px
+		ul
+			list-style none
+			margin-top 25px
+			li
+				position relative
+				padding-left 30px
+				&:before, &:after
+					content ''
+					display block
+					position absolute
+					background #B7B2AC
+				&:before
+					width 16px
+					height 2px
+					left 0
+					top 50%
+					margin-top -1px
+				&:after
+					width 2px
+					height 16px
+					left 7px
+					margin-top -8px
+					top 50%
+				& + li
+					margin-top 20px
+	&__join
+		width 617px
+		height 461px
+		position absolute
+		left 50%
+		top -75px
+		background url(/f/images/job/hand.png) center no-repeat
+		background-size cover
+		margin-left 20px
+		.button
+			position absolute
+			left 30px
+			bottom 0

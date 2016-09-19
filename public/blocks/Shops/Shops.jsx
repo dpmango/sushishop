@@ -105,6 +105,12 @@ const ShopsContainer = React.createClass({
         </div>;
         return buf;
     },
+    componentWillMount: function() {
+        store.dispatch({
+            type: 'SET_META',
+            title: 'Магазины СушиШопа'
+        })
+    },
     componentWillUpdate: function(nextProps) {
         this.transition()
         if (this.props.shadow.name == 'city-choose' && nextProps.shadow.name == '') {
