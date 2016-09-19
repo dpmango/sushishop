@@ -2,7 +2,7 @@ module.exports = function (state = { cityId: 0, shopId: 0 }, action) {
     if (action.type == 'GET_IAM') {
         let data = {}
         if (isNode) {
-            console.log(cookies)
+            // console.log(cookies)
             if (cookies.cityId && cookies.shopId) {
                 data = {
                     cityId: parseInt(cookies.cityId),

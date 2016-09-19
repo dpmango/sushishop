@@ -42,11 +42,7 @@ const CatalogContainer = React.createClass({
 
         let more = document.createElement('div')
         more.classList.add('catalog-tags__more')
-        more.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 13 3">
-            <circle cx="1.5" cy="1.5" r="1.5"/>
-            <circle cx="6.5" cy="1.5" r="1.5"/>
-            <circle cx="11.5" cy="1.5" r="1.5"/>
-            </svg>`
+        more.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 13 3"><circle cx="1.5" cy="1.5" r="1.5"/><circle cx="6.5" cy="1.5" r="1.5"/><circle cx="11.5" cy="1.5" r="1.5"/></svg>`
         el.querySelector('.catalog-tags__item_hide').before(more.cloneNode(true))
     },
     componentDidMount: function() {

@@ -5,7 +5,7 @@
     <databaseInfo>
         <version>134481920</version>
         <UUID>4C71AFC0-CA70-4BDA-BD5E-133EF1370C7C</UUID>
-        <nextObjectID>150</nextObjectID>
+        <nextObjectID>153</nextObjectID>
         <metadata>
             <plist version="1.0">
                 <dict>
@@ -82,7 +82,7 @@
     </object>
     <object type="LMREQUEST" id="z104">
         <attribute name="uuid" type="string">13E17E85-2C9C-4BF7-84BF-F710B096F111</attribute>
-        <attribute name="url" type="string">http://sushi.endy.pro/api/catalog?shop_id=82\u2600city_id=2\u2600get_products=</attribute>
+        <attribute name="url" type="string">http://sushi.endy.pro/api/catalog?shop_id=82\u2600get_products=\u2600city_id=2</attribute>
         <attribute name="storecookies" type="bool">1</attribute>
         <attribute name="sendcookies" type="bool">1</attribute>
         <attribute name="redirectmethod" type="bool">0</attribute>
@@ -345,7 +345,7 @@
         <attribute name="order" type="int64">4</attribute>
         <attribute name="name" type="string">journal</attribute>
         <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM"></relationship>
-        <relationship name="children" type="0/0" destination="LMREQUESTTREEITEM" idrefs="z125 z113 z109"></relationship>
+        <relationship name="children" type="0/0" destination="LMREQUESTTREEITEM" idrefs="z113 z109 z125"></relationship>
         <relationship name="bodyparameters" type="0/0" destination="LMKEYVALUE"></relationship>
         <relationship name="headers" type="0/0" destination="LMKEYVALUE"></relationship>
         <relationship name="urlparameters" type="0/0" destination="LMKEYVALUE"></relationship>
@@ -586,5 +586,40 @@
         <relationship name="groupforheaders" type="0/1" destination="LMREQUESTGROUP"></relationship>
         <relationship name="groupforurlparameters" type="0/1" destination="LMREQUESTGROUP"></relationship>
         <relationship name="request" type="0/1" destination="LMREQUEST" idrefs="z149"></relationship>
+    </object>
+    <object type="LMREQUEST" id="z151">
+        <attribute name="uuid" type="string">38AC81D5-600B-470E-B5F5-BCB1B22D166C</attribute>
+        <attribute name="url" type="string">http://sushi.endy.pro/api/company</attribute>
+        <attribute name="storecookies" type="bool">1</attribute>
+        <attribute name="sendcookies" type="bool">1</attribute>
+        <attribute name="redirectmethod" type="bool">0</attribute>
+        <attribute name="redirectauthorization" type="bool">0</attribute>
+        <attribute name="method" type="string">GET</attribute>
+        <attribute name="followredirects" type="bool">0</attribute>
+        <attribute name="order" type="int64">0</attribute>
+        <attribute name="name" type="string">company</attribute>
+        <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM" idrefs="z153"></relationship>
+        <relationship name="children" type="0/0" destination="LMREQUESTTREEITEM"></relationship>
+        <relationship name="headers" type="0/0" destination="LMKEYVALUE" idrefs="z152"></relationship>
+    </object>
+    <object type="LMKEYVALUE" id="z152">
+        <attribute name="value" type="string"></attribute>
+        <attribute name="order" type="int64">0</attribute>
+        <attribute name="name" type="string"></attribute>
+        <attribute name="enabled" type="bool">1</attribute>
+        <relationship name="groupforbodyparameters" type="0/1" destination="LMREQUESTGROUP"></relationship>
+        <relationship name="groupforheaders" type="0/1" destination="LMREQUESTGROUP"></relationship>
+        <relationship name="groupforurlparameters" type="0/1" destination="LMREQUESTGROUP"></relationship>
+        <relationship name="request" type="0/1" destination="LMREQUEST" idrefs="z151"></relationship>
+    </object>
+    <object type="LMREQUESTGROUP" id="z153">
+        <attribute name="uuid" type="string">A2649383-D981-4F48-A667-8974C6579FC0</attribute>
+        <attribute name="order" type="int64">13</attribute>
+        <attribute name="name" type="string">company</attribute>
+        <relationship name="parent" type="0/1" destination="LMREQUESTTREEITEM"></relationship>
+        <relationship name="children" type="0/0" destination="LMREQUESTTREEITEM" idrefs="z151"></relationship>
+        <relationship name="bodyparameters" type="0/0" destination="LMKEYVALUE"></relationship>
+        <relationship name="headers" type="0/0" destination="LMKEYVALUE"></relationship>
+        <relationship name="urlparameters" type="0/0" destination="LMKEYVALUE"></relationship>
     </object>
 </database>

@@ -156,7 +156,6 @@ const MapShopsContainer = React.createClass({
                 position: myPosition,
                 map: this.map
             })
-            console.log(this.mapMarkers)
         }
 
         var longitude;

@@ -1,4 +1,4 @@
-module.exports = function (state = {}, action) {
+module.exports = function (state = { list: {}, url: {}, sort: [] }, action) {
     if (action.type == "GET_CATALOG") {
         let city_id = store.getState().iam.cityId,
             shop_id = store.getState().iam.shopId

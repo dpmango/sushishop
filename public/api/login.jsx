@@ -7,7 +7,7 @@ module.exports = function (state = {}, action) {
                     password: action.password
                 }
             }).then((data) => {
-                console.log(data)
+                // console.log(data)
             })
         }
         return state

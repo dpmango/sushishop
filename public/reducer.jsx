@@ -10,5 +10,6 @@ module.exports = combineReducers({
     products: require('./api/products.jsx'),
     product: require('./api/product.jsx'),
     cart: require('./api/cart.jsx'),
-    login: require('./api/login.jsx')
+    login: require('./api/login.jsx'),
+    company: require('./api/company.jsx'),
 });
