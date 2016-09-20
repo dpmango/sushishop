@@ -23,20 +23,24 @@ const MapShopsContainer = React.createClass({
         this.mapMarkers = {}
         this.mapWindows = {}
 
-        var buf = [];
-
-        this.mapBounds = new google.maps.LatLngBounds();
+        this.mapBounds = new google.maps.LatLngBounds()
 
         Object.keys(this.props.shops.list).map((key) => {
             let item = this.props.shops.list[key]
-            if (item.city_id === this.props.iam.cityId) {
-                this.itemShopItem(item.id);
-            }
+            this.itemShopItem(item.id)
         })
 
         if (isMove) {
-            this.map.fitBounds(this.mapBounds);
+            this.map.fitBounds(this.mapBounds)
+            this.boundsListener = google.maps.event.addListener(this.map, 'bounds_changed', () => {
+                this.bounds(this.mapBounds)
+                google.maps.event.removeListener(this.boundsListener)
+            })
         }
+    },
+    bounds: function (bounds) {
+        this.map.fitBounds(bounds)
+        this.map.setZoom(this.map.getZoom() - 1)
     },
     infobox: function (data) {
         let infobox = document.createElement('div');
@@ -106,7 +110,9 @@ const MapShopsContainer = React.createClass({
         if (item.geo_lat && item.geo_lng) {
             let latlng = new google.maps.LatLng(item.geo_lat, item.geo_lng);
 
-            this.mapBounds.extend(latlng);
+            if (item.city_id === this.props.iam.cityId) {
+                this.mapBounds.extend(latlng)
+            }
             this.mapMarkers[shopId] = new google.maps.Marker({
                 position: latlng,
                 map: this.map
@@ -242,16 +248,6 @@ const MapShopsContainer = React.createClass({
         }
         return false;
     },
-    componentWillUpdate: function(nextProps) {
-        if (this.props.near != nextProps.near) {
-            this.near();
-        }
-    },
-    render: function () {
-        return (
-            <div className="shops__map" ref="map"></div>
-        )
-    },
     componentDidMount: function() {
         if (isNode) return
 
@@ -263,7 +259,7 @@ const MapShopsContainer = React.createClass({
         this.map.addListener('zoom_changed', () => {
             this.markerUpdate()
         })
-        this.buildMarker();
+        this.buildMarker(false);
     },
     componentDidUpdate: function() {
         if (isNode) return
@@ -280,6 +276,16 @@ const MapShopsContainer = React.createClass({
                 changeCity: null
             })
         }
+    },
+    componentWillUpdate: function(nextProps) {
+        if (this.props.near != nextProps.near) {
+            this.near();
+        }
+    },
+    render: function () {
+        return (
+            <div className="shops__map" ref="map"></div>
+        )
     }
 
 });
