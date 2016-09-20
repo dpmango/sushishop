@@ -51,7 +51,7 @@ module.exports = React.createClass({
                             </Link>
                         </div>
                         <div className="swiper-slide">
-                            <Link to="#" className="pager-link">
+                            <Link to="/job" className="pager-link">
                                 <div className="pager-link__photo">
                                     <div className="pager-link__photo-wrapper">
                                         <img src="/f/images/pager/career.jpg" alt="Карьера в СушиШопе"/>

@@ -65,7 +65,8 @@ body
 	position relative
 	overflow-x hidden
 	overflow-y scroll
-	min-width 320px
+	min-width 1020px
+	//min-width 320px
 	-webkit-font-smoothing antialiased
 	-webkit-text-size-adjust 100%
 	-ms-text-size-adjust 100%
@@ -81,12 +82,16 @@ body
 
 input, textarea, select
 	font normal normal 16px/1 DIN, Helvetica, Arial, sans-serif
+	appearance none
 
 input, textarea
 	border 1px solid #979797
 	box-sizing border-box
 	padding 10px
 
+select
+	&::-ms-expand
+		display none
 
 a
 	text-decoration none

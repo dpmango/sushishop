@@ -33,8 +33,8 @@
 		padding 12px 20px 10px 20px
 		cursor pointer
 		white-space nowrap
-		&_hide
-			display none
+	&:not(&_show) &__item_hide
+		display none
 	&__more
 		width 43px
 		background alpha($color__white, .8)
@@ -50,3 +50,5 @@
 			left 15px
 			top 24px
 			fill #55534F
+	&_show &__more
+		display none

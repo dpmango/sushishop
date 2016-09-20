@@ -32,7 +32,7 @@ const JobContainer = React.createClass({
                     </div>
                     <a href="" className="job-header__button button button_border button_medium">
                         Вакансии
-                        <span><font>10</font></span>
+                        <span><font>{this.props.vacancy.length}</font></span>
                     </a>
                 </div>
                 <div className="job-closer">
@@ -60,7 +60,7 @@ const JobContainer = React.createClass({
 
 const mapStateToProps = function(store) {
     return {
-        job: store.job
+        vacancy: store.vacancy
     }
 }
 

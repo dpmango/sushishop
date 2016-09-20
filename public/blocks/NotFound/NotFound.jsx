@@ -1,5 +1,5 @@
 module.exports = React.createClass({
     render: function () {
-        return <div>Лена</div>
+        return <div>Страница не найдена</div>
     }
 })

@@ -39,6 +39,9 @@ module.exports = {
     arrow_down: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8 5">
         <path d="M7.182.11L3.646 3.647h.708L.818.11.11.82l3.536 3.536.354.353.354-.353L7.89.818"/>
     </svg>,
+    arrow_down_line: <svg xmlns="http://www.w3.org/2000/svg" width="18" height="8">
+        <path fill="none" fillRule="evenodd" stroke="#414551" d="M17 0L9 8 1 0"/>
+    </svg>,
     close: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 26.1 26.1">
         <path d="M26.1 1.4L24.7 0 13.1 11.6 1.4 0 0 1.4l11.6 11.7L0 24.7l1.4 1.4 11.7-11.6 11.6 11.6 1.4-1.4-11.6-11.6z"/>
     </svg>,

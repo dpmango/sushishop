@@ -1,0 +1,123 @@
+.vacancy
+	margin 0 160px 70px 160px
+	&__wrapper
+		display flex
+		justify-content space-between
+		padding 0 70px
+		margin-bottom 30px
+	&__title
+		font-size 36px
+		text-transform uppercase
+		letter-spacing .03em
+	&__select
+		width 280px
+		position relative
+		select
+			display block
+			background alpha(#55534F, .2)
+			border none
+			font-size 18px
+			padding 11px 20px 10px 20px
+			border-radius 20px
+			width 100%
+			box-sizing border-box
+			position relative
+			z-index 10
+			.mac &
+				padding 13px 20px 8px 20px
+		i
+			position absolute
+			width 18px
+			height 8px
+			z-index 20
+			display block
+			top 16px
+			right 20px
+			svg
+				display block
+	&__item
+		transition-property background, box-shadow
+		transition-duration .3s
+		&_active
+			background $color__white
+			box-shadow 0 5px 10px 0 alpha($color__black, .06)
+			transition-duration .15s
+			margin 10px 0 20px 0
+	&__head
+		height 54px
+		display flex
+		justify-content space-between
+		align-items center
+		padding 0 70px
+		cursor pointer
+	&__item_active &__head
+		height 90px
+		padding-top 20px
+		pointer-events none
+	&__info
+		display flex
+		width 280px
+		justify-content space-between
+	&__name
+		font-size 18px
+		font-weight bold
+		border-bottom 1px dotted $color__orange
+		transition color .3s
+	&__item_active &__name
+		font-size 28px
+		border-bottom 1px dotted alpha($color__orange, 0)
+	&__head:hover &__name
+		color $color__orange
+		transition-duration .15s
+	&__content
+		padding 0 70px 50px 70px
+		display none
+		justify-content space-between
+		align-items flex-start
+	&__item_active &__content
+		display flex
+	&__about
+		width 100%
+		padding-right 40px
+		div
+			& + div
+				margin-top 30px
+			h4
+				margin-bottom .5em
+			ul
+				list-style none
+				li
+					position relative
+					display block
+					padding-left 28px
+					margin-bottom .5em
+					&:before
+						content ''
+						display block
+						width 14px
+						height 1px
+						top 50%
+						background #222
+						position absolute
+						left 0
+.vacancy-form
+	min-width 280px
+	box-sizing border-box
+	padding 30px
+	background alpha(#F9F2E9, .6)
+	&__wrapper
+		border-bottom 1px solid alpha(#55534F, .2)
+		padding-bottom 20px
+		margin-bottom 20px
+	&__title
+		font-weight bold
+		margin-bottom .25em
+	&__phone
+		font-size 18px
+		color #222
+		margin-bottom .25em
+		display inline-block
+	&__name
+		font-size 14px
+	&__submit
+		width 100%
