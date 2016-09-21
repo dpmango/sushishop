@@ -8,6 +8,13 @@ var ProductItemContainer = React.createClass({
                 <img srcSet={this.props.image_small} alt=""/>
             </picture>
             <div className="product-item__descr" dangerouslySetInnerHTML={{ __html: this.props.part }} />
+            <div className="product-item__footer">
+                <div className="product-item__footer-wrapper">
+                    {(this.props.weight) ? <div className="product-item__weight">{this.props.weight} г</div> : ""}
+                    {(this.props.price) ? <div className="product-item__price">{this.props.price} ₽</div> : ""}
+                </div>
+                <div className="product-item__buy"></div>
+            </div>
         </Link>)
     }
 })

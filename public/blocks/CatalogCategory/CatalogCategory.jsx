@@ -1,26 +1,34 @@
 const CatalogContainer = React.createClass({
-    getInitialState: function () {
-        let category_id = this.props.catalog.url[this.props.params.categoryId]
-        return {
-            category_id: category_id,
-            indexLastTag: 0
-        }
-    },
     componentWillMount: function () {
         store.dispatch({
             type: 'GET_PRODUCTS'
         })
+
+        console.log(this.props.params)
+
+        if (this.props.params.productId != 0) {
+            store.dispatch({
+                type: 'PRODUCT_SHOW',
+                active: this.props.products.url[this.props.params.productId],
+                category: this.props.params.categoryId
+            })
+        }
     },
-    // shouldComponentUpdate: function(nextProps, nextState) {
-    //     if (this.props.params.categoryId != nextProps.params.categoryId) {
-    //         this.setState({
-    //             category_id: this.props.catalog.url
-    //         })
-    //         return true
-    //     } else {
-    //         return false
-    //     }
-    // },
+    shouldComponentUpdate: function(nextProps, nextState) {
+        if (nextProps.params.productId) {
+            store.dispatch({
+                type: 'PRODUCT_SHOW',
+                active: nextProps.products.url[nextProps.params.productId],
+                category: this.props.params.categoryId
+            })
+        } else {
+            store.dispatch({
+                type: 'PRODUCT_HIDE'
+            })
+        }
+
+        return this.props.params.categoryId !== nextProps.params.categoryId
+    },
     tags: function () {
         if (isNode) return
 
@@ -42,11 +50,13 @@ const CatalogContainer = React.createClass({
         let more = document.createElement('div')
         more.classList.add('catalog-tags__more')
         more.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 13 3"><circle cx="1.5" cy="1.5" r="1.5"/><circle cx="6.5" cy="1.5" r="1.5"/><circle cx="11.5" cy="1.5" r="1.5"/></svg>`
-        el.querySelector('.catalog-tags__item_hide').before(more.cloneNode(true))
-        document.querySelector('.catalog-tags__more').addEventListener('click', (e) => {
-            this.more()
-            e.preventDefault()
-        })
+        if (el.querySelector('.catalog-tags__item_hide')) {
+            el.querySelector('.catalog-tags__item_hide').before(more.cloneNode(true))
+            document.querySelector('.catalog-tags__more').addEventListener('click', (e) => {
+                this.more()
+                e.preventDefault()
+            })
+        }
     },
     more: function () {
         this.refs.tags.classList.add('catalog-tags_show')
@@ -55,29 +65,18 @@ const CatalogContainer = React.createClass({
         this.tags()
     },
     render: function() {
-        const products = this.props.products.category[this.state.category_id]
-        const category = this.props.catalog.list[this.state.category_id]
+        const category_id = this.props.catalog.url[this.props.params.categoryId],
+            products = this.props.products.category[category_id],
+            category = this.props.catalog.list[category_id]
 
-        const tags = [
-            "Острое",
-            "Лёгкое",
-            "С угрём",
-            "Без шампиньонов",
-            "Без бекона",
-            "Без лука",
-            "Без перца халапеньо",
-            "Без болгарского перца",
-            "Без маслин",
-            "Без мяса"
-        ]
         let i = 0
         return (
             <div>
                 <div className="catalog">
                     <h1 className="catalog__title">{category.name}</h1>
                     <div className="catalog-tags" ref="tags">
-                        {tags.map((item) => {
-                            return <div className="catalog-tags__item" key={item}>{item}</div>
+                        {category.tags.map((item) => {
+                            return <div className="catalog-tags__item" key={item.id}>{item.title}</div>
                         })}
                     </div>
                     <div className="catalog__list">
@@ -88,7 +87,6 @@ const CatalogContainer = React.createClass({
                         }) : ''}
                     </div>
                 </div>
-                {this.props.children}
             </div>
         );
     }

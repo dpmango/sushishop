@@ -5,13 +5,11 @@ var routes = (
         <IndexRoute component={Index}/>
         <Route path="catalog" component={Catalog}>
             <IndexRedirect to="rolls" />
-            <Route path=":categoryId" component={CatalogCategory}>
-                <Route path=":productId" component={CatalogProduct}/>
-            </Route>
+            <Route path=":categoryId/:productId" component={CatalogCategory} />
+            <Route path=":categoryId" component={CatalogCategory} />
         </Route>
-        <Route path="actions" component={Actions}>
-            <Route path=":actionAlt" component={CatalogProduct}/>
-        </Route>
+        <Route path="actions/:actionAlt" component={Actions} />
+        <Route path="actions" component={Actions} />
         <Route path="shops" component={Shops} />
         <Route path="about" component={About} />
         <Route path="job" component={Job} />

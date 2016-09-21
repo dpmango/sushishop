@@ -42,7 +42,7 @@ const AboutContainer = React.createClass({
                             <div className="about-growth__list">
                                 {data.growth.map((item) => {
                                     return (
-                                        <div className="about-growth-item" style={{ width: item.diameter / 820 * 100+"%" }}>
+                                        <div className="about-growth-item" key={item.year} style={{ width: item.diameter / 820 * 100+"%" }}>
                                             <div className="about-growth-item__circle"></div>
                                             <div className="about-growth-item__count">{item.count}</div>
                                             <div className="about-growth-item__year">{item.year}</div>

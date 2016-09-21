@@ -38,6 +38,9 @@ const AppContainer = React.createClass({
         store.dispatch({
             type: 'GET_CART'
         })
+        store.dispatch({
+            type: 'PRODUCT_HIDE'
+        })
         this.iam()
     },
     componentDidMount: function() {
@@ -59,10 +62,6 @@ const AppContainer = React.createClass({
         let url = (isNode) ? locationURL : this.props.location.pathname
         return (!this.mainPagerIgnoreList.has(url)) ? <Pager /> : ''
     },
-    // mainPager: function () {
-    //     return <Pager />
-    //     // return 'test'
-    // },
     hideShadow: function () {
         this.props.shadow.callback()
         store.dispatch({
@@ -70,7 +69,7 @@ const AppContainer = React.createClass({
         })
     },
     componentDidUpdate: function(prevProps) {
-        if (this.props.location.pathname != prevProps.location.pathname) {
+        if (this.props.location.pathname != prevProps.location.pathname && (this.props.routes[1].path != "catalog" || prevProps.routes[1].path != "catalog")) {
             Scroll.scrollTo(0, {
                 duration: 500,
                 delay: 0,

@@ -32,9 +32,9 @@ store = createStore(require('./public/reducer.jsx'))
 // })
 cookies = {}
 app.get('*', (req, res) => {
-    // if ([ '/catalog', '/catalog/' ].indexOf(req.url) >= 0) {
-    //     res.redirect('/catalog/rolls')
-    // }
+    if ([ '/catalog', '/catalog/' ].indexOf(req.url) >= 0) {
+        res.redirect('/catalog/rolls')
+    }
 
     locationURL = req.url
     cookies = req.cookies
