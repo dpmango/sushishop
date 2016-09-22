@@ -1,14 +1,14 @@
 module.exports = function (state = { price: 0, list: [] }, action) {
     if (action.type == "GET_CART") {
-        if (!isNode) {
-            let data = localForage.getItem('cart', (err, value) => {
-                if (value) {
-                    store.dispatch({
-                        type: 'SET_CART',
-                        data: value
-                    })
-                }
-            })
+        if (!IS_NODE) {
+            // let data = localForage.getItem('cart', (err, value) => {
+            //     if (value) {
+            //         store.dispatch({
+            //             type: 'SET_CART',
+            //             data: value
+            //         })
+            //     }
+            // })
         }
         return state
     }

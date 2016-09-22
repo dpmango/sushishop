@@ -1,7 +1,7 @@
 module.exports = function (state = { cityId: 0, shopId: 0 }, action) {
     if (action.type == 'GET_IAM') {
         let data = {}
-        if (isNode) {
+        if (IS_NODE) {
             // console.log(cookies)
             if (cookies.cityId && cookies.shopId) {
                 data = {
@@ -20,14 +20,14 @@ module.exports = function (state = { cityId: 0, shopId: 0 }, action) {
         if (data.cityId && data.shopId) {
             return Object.assign({}, data)
         }
-        if (!isNode && state.cityId != cookie.select().cityId && state.shopId != cookie.select().shopId) {
+        if (!IS_NODE && state.cityId != cookie.select().cityId && state.shopId != cookie.select().shopId) {
             cookie.save('cityId', state.cityId)
             cookie.save('shopId', state.shopId)
         }
         return state;
     }
     if (action.type == 'SET_IAM_CITY') {
-        if (!isNode) {
+        if (!IS_NODE) {
             cookie.save('cityId', action.cityId)
         }
         return Object.assign({}, state, { cityId: action.cityId });
@@ -36,7 +36,7 @@ module.exports = function (state = { cityId: 0, shopId: 0 }, action) {
         return Object.assign({}, state, { cityId: action.cityId });
     }
     if (action.type == 'SET_IAM_SHOP') {
-        if (!isNode) {
+        if (!IS_NODE) {
             cookie.save('shopId', action.shopId)
         }
         return Object.assign({}, state, { shopId: action.shopId });

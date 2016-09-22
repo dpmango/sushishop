@@ -22,7 +22,7 @@ module.exports = React.createClass({
         return (
             <div className="main-journal">
                 <h2 className="main-journal__title">Тем временем в&nbsp;журнале</h2>
-                <Swiper
+                <SwiperContainer
                     className="main-journal__list"
                     destroy={400}
                     options={{
@@ -99,7 +99,7 @@ module.exports = React.createClass({
                             category={[1,2]}
                         />
                     </div>
-                </Swiper>
+                </SwiperContainer>
                 <div className="main-journal__more">
                     <Link to="/journal/" className="button button_border button_medium">Все записи журнала</Link>
                 </div>

@@ -1,6 +1,3 @@
-var isNode = typeof window === 'undefined'
-self = (isNode) ? global : window
-
 self.App = require('./blocks/App/App.jsx')
 self.Header = require('./blocks/Header/Header.jsx')
 self.Nav = require('./blocks/Nav/Nav.jsx')

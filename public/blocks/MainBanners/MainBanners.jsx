@@ -10,7 +10,7 @@ var BannersContainer = React.createClass({
     },
     render: function() {
         return (
-            <Swiper
+            <SwiperContainer
                 className= "main-banners"
                 prevButtonContent={Icon.arrow}
                 nextButtonContent={Icon.arrow}
@@ -43,7 +43,7 @@ var BannersContainer = React.createClass({
                         />
                     )
                 })}
-            </Swiper>
+            </SwiperContainer>
         )
     }
 });

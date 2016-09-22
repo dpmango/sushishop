@@ -140,7 +140,7 @@ const MapShopsContainer = React.createClass({
         }
     },
     near: function () {
-        if (isNode) return
+        if (IS_NODE) return
 
         let myPosition = {
             lat: 59.9017779,
@@ -201,14 +201,14 @@ const MapShopsContainer = React.createClass({
         this.map.fitBounds(this.mapBounds)
     },
     changeCity: function (from, to) {
-        if (isNode) return
+        if (IS_NODE) return
 
         this.mapWindows[from].content_.classList.remove('shop-infobox_active')
         this.mapWindows[to].content_.classList.add('shop-infobox_active')
         this.markerUpdate()
     },
     markerUpdate: function () {
-        if (isNode) return
+        if (IS_NODE) return
 
         let zoom = this.map.getZoom()
         let isBig = zoom > 11
@@ -225,7 +225,7 @@ const MapShopsContainer = React.createClass({
         })
     },
     componentWillReceiveProps: function(nextProps) {
-        if (isNode) return
+        if (IS_NODE) return
 
         if (this.state.isBuild) {
             // изменение города
@@ -249,7 +249,7 @@ const MapShopsContainer = React.createClass({
         return false;
     },
     componentDidMount: function() {
-        if (isNode) return
+        if (IS_NODE) return
 
         this.map = new google.maps.Map(this.refs.map, {
             scrollwheel: false,
@@ -262,7 +262,7 @@ const MapShopsContainer = React.createClass({
         this.buildMarker(false);
     },
     componentDidUpdate: function() {
-        if (isNode) return
+        if (IS_NODE) return
 
         if (this.state.actionBuild == true) {
             this.buildMarker();

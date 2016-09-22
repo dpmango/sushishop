@@ -1,13 +1,13 @@
 module.exports = function (state = { list: {}, groups: {}, sort: [] }, action) {
     if (action.type == "GET_SHOPS") {
-        if (isNode) {
+        if (IS_NODE) {
             let data = getCache('shops')
             if (Object.keys(data).length > 0) {
                 state = Object.assign({}, data)
             }
         }
 
-        if (state.sort.length === 0 || isNode) {
+        if (state.sort.length === 0 || IS_NODE) {
             axios.get(URL_API+'shops').then(function (response) {
                 store.dispatch({
                     type: 'SET_SHOPS',
@@ -48,7 +48,7 @@ module.exports = function (state = { list: {}, groups: {}, sort: [] }, action) {
             return state.list[a].sort - state.list[b].sort
         })
 
-        if (isNode) {
+        if (IS_NODE) {
             setCache('shops', state)
         }
 

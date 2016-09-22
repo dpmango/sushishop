@@ -3,13 +3,13 @@ module.exports = function (state = { list: {}, url: {}, category: {} }, action) 
         let city_id = store.getState().iam.cityId,
             shop_id = store.getState().iam.shopId
 
-        if (isNode) {
+        if (IS_NODE) {
             let data = getCache(`products-${shop_id}`)
             if (data) {
                 state = Object.assign({}, data)
             }
         }
-        if (Object.keys(state.list).length === 0 || isNode) {
+        if (Object.keys(state.list).length === 0 || IS_NODE) {
             axios.get(URL_API+'product', {
                 params: {
                     city_id: city_id,
@@ -58,7 +58,7 @@ module.exports = function (state = { list: {}, url: {}, category: {} }, action) 
 
         state = Object.assign({}, data)
 
-        if (isNode) {
+        if (IS_NODE) {
             setCache(`products-${shop_id}`, data)
         }
         return state

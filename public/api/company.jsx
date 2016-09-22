@@ -1,12 +1,12 @@
 module.exports = function (state = {}, action) {
     if (action.type == "GET_COMPANY") {
-        if (isNode) {
+        if (IS_NODE) {
             let data = getCache('company')
             if (Object.keys(data).length > 0) {
                 state = data
             }
         }
-        if (Object.keys(state).length === 0 || isNode) {
+        if (Object.keys(state).length === 0 || IS_NODE) {
             axios.get(URL_API+'company').then(function (response) {
                 let data = response.data.result
                 store.dispatch({
@@ -18,7 +18,7 @@ module.exports = function (state = {}, action) {
         return state;
     }
     if (action.type == "SET_COMPANY") {
-        if (isNode) {
+        if (IS_NODE) {
             setCache('company', action.data)
         }
         return action.data;

@@ -30,7 +30,7 @@ const CatalogContainer = React.createClass({
         return this.props.params.categoryId !== nextProps.params.categoryId
     },
     tags: function () {
-        if (isNode) return
+        if (IS_NODE) return
 
         let el = this.refs.tags,
             first = el.children[0].offsetTop,

@@ -1,6 +1,4 @@
-var isNode = typeof window === 'undefined';
-
-var routes = (
+const routes = (
     <Route path="/" component={App}>
         <IndexRoute component={Index}/>
         <Route path="catalog" component={Catalog}>
@@ -18,7 +16,7 @@ var routes = (
 )
 
 module.exports = (
-    (isNode) ? (
+    (IS_NODE) ? (
         routes
     ) : (
         <Provider store={store}>

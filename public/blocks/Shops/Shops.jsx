@@ -168,7 +168,7 @@ const ShopsContainer = React.createClass({
                         Магазины возле меня
                     </a>
                 </div>
-                <Swiper
+                <SwiperContainer
                     className="shops__list shops__list_begin"
                     options={{
                         slidesPerView: 'auto',
@@ -197,7 +197,7 @@ const ShopsContainer = React.createClass({
                             </div>
                         </div>
                     })}
-                </Swiper>
+                </SwiperContainer>
 
                 <MapShops near={this.state.near} />
 

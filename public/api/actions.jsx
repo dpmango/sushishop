@@ -6,13 +6,13 @@ const initialState = {
 
 module.exports = function (state = initialState, action) {
     if (action.type === 'GET_ACTIONS') {
-        if (isNode) {
+        if (IS_NODE) {
             let data = getCache("actions-"+action.city_id)
             if (data) {
                 state = data
             }
         }
-        if (Object.keys(state.list).length === 0 || isNode) {
+        if (Object.keys(state.list).length === 0 || IS_NODE) {
             axios.get(URL_API+'actions', {
                 params: {
                     city_id: action.city_id
@@ -46,7 +46,7 @@ module.exports = function (state = initialState, action) {
             return state.list[a].sort - state.list[b].sort
         })
 
-        if (isNode) {
+        if (IS_NODE) {
             setCache("actions-"+action.city_id, state)
         }
 

@@ -1,6 +1,3 @@
-var isNode = typeof window === 'undefined';
-
-
 const AppContainer = React.createClass({
     iam: function () {
         if (this.props.shops.sort.length === 0 || this.props.city.sort.lenght === 0) return
@@ -23,7 +20,7 @@ const AppContainer = React.createClass({
         }
     },
     componentWillMount: function() {
-        if (!isNode && navigator.platform.indexOf('Mac') > -1) {
+        if (!IS_NODE && navigator.platform.indexOf('Mac') > -1) {
             document.body.classList.add('mac')
         }
         store.dispatch({
@@ -55,11 +52,11 @@ const AppContainer = React.createClass({
         '/shops'
     ]),
     mainJournal: function () {
-        let url = (isNode) ? locationURL : this.props.location.pathname
+        let url = (IS_NODE) ? locationURL : this.props.location.pathname
         return (url == '/') ? <MainJournal /> : ''
     },
     mainPager: function () {
-        let url = (isNode) ? locationURL : this.props.location.pathname
+        let url = (IS_NODE) ? locationURL : this.props.location.pathname
         return (!this.mainPagerIgnoreList.has(url)) ? <Pager /> : ''
     },
     hideShadow: function () {
@@ -70,11 +67,7 @@ const AppContainer = React.createClass({
     },
     componentDidUpdate: function(prevProps) {
         if (this.props.location.pathname != prevProps.location.pathname && (this.props.routes[1].path != "catalog" || prevProps.routes[1].path != "catalog")) {
-            Scroll.scrollTo(0, {
-                duration: 500,
-                delay: 0,
-                smooth: true
-            })
+            Scroll(0, 500)
         }
 
 

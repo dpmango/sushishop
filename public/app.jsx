@@ -1,8 +1,8 @@
-var self = (typeof window === 'undefined') ? global : window
-self.isNode = typeof window === 'undefined'
+self = (IS_NODE) ? global : window
 
+require('./libs.jsx')
 
-if (isNode) {
+if (IS_NODE) {
     URL_API = "http://sushi.endy.pro/api/"
 } else {
     window.URL_API = "//sushi.endy.pro/api/"
@@ -10,9 +10,8 @@ if (isNode) {
     window.store = createStore(require('./reducer.jsx'), initialState)
 }
 
+require('./blocks.jsx')
 
-require('./blocks.jsx');
-
-if (!isNode) {
+if (!IS_NODE) {
     ReactDOM.render(require('./route.jsx'), document.getElementById("app"));
 }

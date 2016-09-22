@@ -99,7 +99,7 @@ var ProductContainer = React.createClass({
                             </div>
                         </div>
                     </div>
-                    <Swiper
+                    <SwiperContainer
                         className={"product-toppings"+((Object.keys(this.state.toppings).length === 3) ? " product-toppings_all" : "")}
                         options={{
                             direction: 'vertical',
@@ -125,7 +125,7 @@ var ProductContainer = React.createClass({
                                     </div>
                                 </div>)
                         })}
-                    </Swiper>
+                    </SwiperContainer>
 
                 </div>
                 <div className="product__final">

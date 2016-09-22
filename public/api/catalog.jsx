@@ -3,13 +3,13 @@ module.exports = function (state = { list: {}, url: {}, sort: [] }, action) {
         let city_id = store.getState().iam.cityId,
             shop_id = store.getState().iam.shopId
 
-        if (isNode) {
+        if (IS_NODE) {
             let data = getCache(`catalog-${shop_id}`)
             if (data) {
                 state = Object.assign({}, data)
             }
         }
-        if (Object.keys(state).length === 0 || isNode) {
+        if (Object.keys(state).length === 0 || IS_NODE) {
             let params = {
                 city_id: city_id,
                 shop_id: shop_id,
@@ -44,7 +44,7 @@ module.exports = function (state = { list: {}, url: {}, sort: [] }, action) {
         catalog.sort.sort(function (a,b) {
             return catalog.list[a].sort - catalog.list[b].sort
         })
-        if (isNode) {
+        if (IS_NODE) {
             setCache(`catalog-${shop_id}`, catalog)
         }
         return Object.assign({}, catalog)

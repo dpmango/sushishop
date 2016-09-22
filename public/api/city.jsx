@@ -4,7 +4,7 @@ var initialState = {
     sort: []
 }
 
-if (isNode) {
+if (IS_NODE) {
     var cache = Object.assign(initialState, getCache('city'))
     if (Object.keys(cache.list).length > 0) {
         initialState = cache
@@ -54,7 +54,7 @@ module.exports = function (state = initialState, action) {
             return a - b
         })
 
-        if (isNode) {
+        if (IS_NODE) {
             setCache('city', state)
         }
 

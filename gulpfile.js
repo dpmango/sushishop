@@ -1,76 +1,153 @@
 const gulp = require('gulp')
-const plumber = require('gulp-plumber')
-const rename = require('gulp-rename')
-const concat = require('gulp-concat')
-const buffer = require('vinyl-buffer')
-const source = require('vinyl-source-stream')
-const sourcemaps = require('gulp-sourcemaps')
-const stylus = require('gulp-stylus')
-const postcss = require('gulp-postcss')
-const autoprefixer = require('autoprefixer')
-const browserify = require('browserify')
-const babelify = require('babelify')
 
-var isFirst = false
+let is_callback = false
 
-gulp.task('jsx', function() {
-	const bundler = browserify({
-		entries: './public/app.jsx',
-		debug: true
+gulp.task('script', (callback) => {
+	const webpack = require('webpack')
+	const gutil = require("gulp-util")
+
+	webpack(require('./webpack.config.js'), (err, stats) => {
+		if (err) {
+			throw new gutil.PluginError("webpack", err)
+		}
+		gutil.log("[webpack]", stats.toString({chunks:false}))
+
+		if (!is_callback) {
+			callback()
+			is_callback = true
+		}
 	})
-	bundler.transform(babelify)
-
-	if (!isFirst) {
-		gulp.run('jsx-libs')
-		isFirst = true
-	}
-
-	return bundler.bundle()
-		.on('error', function (err) {
-			console.log(err.toString())
-			this.emit("end")
-		})
-		.pipe(source('app.js'))
-		.pipe(buffer())
-		.pipe(sourcemaps.init({ loadMaps: true }))
-		// .pipe(uglify())
-		.pipe(sourcemaps.write('./'))
-		.pipe(gulp.dest('./build/f/script'))
-})
-
-gulp.task('jsx-libs', function() {
-	const bundler = browserify({
-		entries: './public/libs.jsx',
-		debug: true
-	})
-	bundler.transform(babelify)
-
-	return bundler.bundle()
-		.on('error', function (err) {
-			console.log(err.toString())
-			this.emit("end")
-		})
-		.pipe(source('libs.js'))
-		.pipe(buffer())
-		.pipe(sourcemaps.init({ loadMaps: true }))
-		// .pipe(uglify())
-		.pipe(sourcemaps.write('./'))
-		.pipe(gulp.dest('./build/f/script'))
 })
 
 gulp.task('style', function () {
-	return gulp.src([ './public/blocks/App/App.styl', './public/blocks/*/*.styl' ])
+	const header = require('gulp-header')
+	const fs = require('fs')
+	const newer = require('gulp-newer')
+	const cssnano = require('cssnano')
+	const plumber = require('gulp-plumber')
+	const concat = require('gulp-concat')
+	const sourcemaps = require('gulp-sourcemaps')
+	const stylus = require('gulp-stylus')
+	const postcss = require('gulp-postcss')
+	const autoprefixer = require('autoprefixer')
+
+	let postcss_action = [ autoprefixer({browsers: ['> 0.00001%']}) ]
+	if (process.env.NODE_ENV == 'production') {
+		postcss_action.push(cssnano())
+	}
+
+	return gulp.src(['!./public/blocks/App/Config.styl', './public/blocks/App/App.styl', './public/blocks/*/*.styl'])
+		.pipe(sourcemaps.init({}))
 		.pipe(plumber())
-		.pipe(concat('style.styl'))
+		.pipe(header(fs.readFileSync('./public/blocks/App/Config.styl', 'utf8')+"\n\n", false))
 		.pipe(stylus())
-		.pipe(postcss([
-			autoprefixer()
-		]))
+		.pipe(postcss(postcss_action))
+		.pipe(concat('style.css'))
 		.pipe(plumber.stop())
+		.pipe(sourcemaps.write('./'))
 		.pipe(gulp.dest('./build/f/style'))
 })
 
-gulp.task('default', [ 'jsx', 'style' ], function () {
-	gulp.watch([ './public/**/*.jsx' ], [ 'jsx' ])
+
+gulp.task('server', () => {
+	const express = require('express')
+	const vhost = require('vhost')
+	const cookieParser = require('cookie-parser')
+	const app = express()
+
+	app.use(cookieParser())
+	app.use('/f', express.static('./build/f'))
+
+	require('node-jsx').install({extension: '.jsx'})
+	fs = require('graceful-fs')
+
+	IS_NODE = true
+	self = global
+
+	setCache = function(name, data) {
+		fs.writeFile('./cache/'+name+'.json', JSON.stringify(data))
+	}
+	getCache = function(name) {
+		var path = './cache/'+name+'.json'
+		if (fs.existsSync(path)) {
+			return JSON.parse(fs.readFileSync(path))
+		} else {
+			return false
+		}
+	}
+
+	cached = require('cached')
+	require('./public/libs.jsx')
+	require('./public/app.jsx')
+	routes = require('./public/route.jsx')
+
+	store = createStore(require('./public/reducer.jsx'))
+	cookies = {}
+	app.get('*', (req, res) => {
+		if ([ '/catalog', '/catalog/' ].indexOf(req.url) >= 0) {
+			res.redirect('/catalog/rolls')
+		}
+
+		locationURL = req.url
+		cookies = req.cookies
+		match({ routes: routes, location: req.url }, (err, redirect, props) => {
+			const html = ReactDOMServer.renderToString(React.createElement(
+				Provider,
+				{ store: store },
+				React.createElement(RouterContext, props))
+			)
+			res.send(renderPage(html, store.getState()))
+		})
+	})
+	function renderPage(html, state) {
+		let storeJSON = JSON.stringify(state)
+		return `<!DOCTYPE html>
+        <html>
+        <head>
+            <title>${state.meta.title}</title>
+            <link rel="apple-touch-icon" sizes="57x57" href="/f/favicons/apple-touch-icon-57x57.png">
+            <link rel="apple-touch-icon" sizes="60x60" href="/f/favicons/apple-touch-icon-60x60.png">
+            <link rel="apple-touch-icon" sizes="72x72" href="/f/favicons/apple-touch-icon-72x72.png">
+            <link rel="apple-touch-icon" sizes="76x76" href="/f/favicons/apple-touch-icon-76x76.png">
+            <link rel="apple-touch-icon" sizes="114x114" href="/f/favicons/apple-touch-icon-114x114.png">
+            <link rel="apple-touch-icon" sizes="120x120" href="/f/favicons/apple-touch-icon-120x120.png">
+            <link rel="apple-touch-icon" sizes="144x144" href="/f/favicons/apple-touch-icon-144x144.png">
+            <link rel="apple-touch-icon" sizes="152x152" href="/f/favicons/apple-touch-icon-152x152.png">
+            <link rel="apple-touch-icon" sizes="180x180" href="/f/favicons/apple-touch-icon-180x180.png">
+            <link rel="icon" type="image/png" href="/f/favicons/favicon-32x32.png" sizes="32x32">
+            <link rel="icon" type="image/png" href="/f/favicons/android-chrome-192x192.png" sizes="192x192">
+            <link rel="icon" type="image/png" href="/f/favicons/favicon-96x96.png" sizes="96x96">
+            <link rel="icon" type="image/png" href="/f/favicons/favicon-16x16.png" sizes="16x16">
+            <link rel="manifest" href="/f/favicons/manifest.json">
+            <link rel="mask-icon" href="/f/favicons/safari-pinned-tab.svg" color="#f16722">
+            <link rel="shortcut icon" href="/f/favicons/favicon.ico">
+            <meta name="msapplication-TileColor" content="#f16722">
+            <meta name="msapplication-TileImage" content="/f/favicons/mstile-144x144.png">
+            <meta name="msapplication-config" content="/f/favicons/browserconfig.xml">
+            <meta name="theme-color" content="#ffffff">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+            <link rel="stylesheet" href="/f/style/style.css">
+        </head>
+        <body>
+            <div id="app">${html}</div>
+            <script id="store" type="application/json">${storeJSON}</script>
+            <script src="//cdn.polyfill.io/v2/polyfill.min.js?features=default&unknown=polyfill&flags=gated"></script>
+            <script src="//unpkg.com/swiper@3.3.1/dist/js/swiper.min.js"></script>
+            <script src="//unpkg.com/react@15.3.1/dist/react${(process.env.NODE_ENV != 'dev') ? ".min" : "" }.js"></script>
+            <script src="//unpkg.com/react-dom@15.3.1/dist/react-dom${(process.env.NODE_ENV != 'dev') ? ".min" : "" }.js"></script>
+            <script src="//maps.googleapis.com/maps/api/js?key=AIzaSyCO26nKWXJSUraUFRGGhQgNUQEyGiauFDU&libraries=geometry"></script>
+            <script src="/f/js/libs.js"></script>
+            <script src="/f/js/app.js"></script>
+        </body>
+        </html>`
+	}
+
+	const PORT = process.env.PORT || 8080
+	app.listen(PORT, function() {
+		console.log('Production Express server running at localhost:' + PORT)
+	})
+})
+
+gulp.task('default', [ 'style', 'script', 'server' ], function () {
 	gulp.watch([ './public/blocks/*/*.styl' ], [ 'style' ])
 })

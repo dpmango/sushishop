@@ -5,7 +5,7 @@ module.exports = React.createClass({
         }
     },
     componentDidMount: function () {
-        if (!isNode) {
+        if (!IS_NODE) {
             if (this.props.className && this.props.options) {
                 if (!this.props.destroy) {
                     this.init()
@@ -27,7 +27,7 @@ module.exports = React.createClass({
     },
 
     init: function () {
-        this.swiper = new SwiperLib(ReactDOM.findDOMNode(this), this.props.options)
+        this.swiper = new Swiper(ReactDOM.findDOMNode(this), this.props.options)
         this.isSwiper = true
     },
 

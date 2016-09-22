@@ -16,7 +16,7 @@ module.exports = React.createClass({
                 </div>
 
                 <div className="pager__links">
-                    <Swiper
+                    <SwiperContainer
                         className="pager__wrapper"
                         options={{
                             pagination: ".swiper-pagination",
@@ -78,7 +78,7 @@ module.exports = React.createClass({
                                 </div>
                             </Link>
                         </div>
-                    </Swiper>
+                    </SwiperContainer>
                 </div>
             </div>
         );

@@ -29,7 +29,7 @@ const CatalogListCategoryContainer = React.createClass({
     render: function() {
         return (
             <div className={"catalog-list-category catalog-list-category_"+this.props.align}>
-                <Swiper
+                <SwiperContainer
                     className="catalog-list-category__wrapper"
                     options={{
                         slidesPerView: 'auto',
@@ -46,7 +46,7 @@ const CatalogListCategoryContainer = React.createClass({
                             <CatalogListCategoryItem {...item} key={'catalog-list-category-'+item.id} />
                         );
                     })}
-                </Swiper>
+                </SwiperContainer>
             </div>
         )
     }
