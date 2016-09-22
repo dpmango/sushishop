@@ -24,7 +24,8 @@ module.exports = function (state = { cityId: 0, shopId: 0 }, action) {
             cookie.save('cityId', state.cityId)
             cookie.save('shopId', state.shopId)
         }
-        return state;
+        // return state;
+        return { cityId: 2, shopId: 29 }
     }
     if (action.type == 'SET_IAM_CITY') {
         if (!IS_NODE) {

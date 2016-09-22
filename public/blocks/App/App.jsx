@@ -1,23 +1,23 @@
 const AppContainer = React.createClass({
     iam: function () {
-        if (this.props.shops.sort.length === 0 || this.props.city.sort.lenght === 0) return
-        if (this.props.iam.cityId === 0) {
-            Object.keys(this.props.city.list).map((key) => {
-                if (this.props.city.list[key].isChange === true) {
-                    let cityId = key
-                    store.dispatch({
-                        type: 'SET_IAM_CITY',
-                        cityId: parseInt(cityId)
-                    })
-                    if (this.props.iam.shopId === 0) {
-                        store.dispatch({
-                            type: 'SET_IAM_SHOP',
-                            shopId: parseInt(this.props.shops.city[cityId][0])
-                        })
-                    }
-                }
-            })
-        }
+        // if (this.props.shops.sort.length === 0 || this.props.city.sort.lenght === 0) return
+        // if (this.props.iam.cityId === 0) {
+        //     Object.keys(this.props.city.list).map((key) => {
+        //         if (this.props.city.list[key].isChange === true) {
+        //             let cityId = key
+        //             store.dispatch({
+        //                 type: 'SET_IAM_CITY',
+        //                 cityId: parseInt(cityId)
+        //             })
+        //             if (this.props.iam.shopId === 0) {
+        //                 store.dispatch({
+        //                     type: 'SET_IAM_SHOP',
+        //                     shopId: parseInt(this.props.shops.city[cityId][0])
+        //                 })
+        //             }
+        //         }
+        //     })
+        // }
     },
     componentWillMount: function() {
         if (!IS_NODE && navigator.platform.indexOf('Mac') > -1) {

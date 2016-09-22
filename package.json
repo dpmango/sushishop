@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "server": "clear && node index.jsx",
-    "server-prod": "clear &&  NODE_ENV=production forever start gulpfile.js",
+    "server/prod": "clear && NODE_ENV=production forever start server.js",
     "rock": "clear && NODE_ENV=dev gulp",
-    "rock-prod": "clear && NODE_ENV=production gulp"
+    "rock/prod": "clear && NODE_ENV=production gulp"
   },
   "author": "",
   "license": "ISC",
