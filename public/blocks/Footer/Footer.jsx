@@ -11,7 +11,7 @@ module.exports = React.createClass({
                     <a href="//www.instagr.am/sushi_shop" className="footer-social footer-social_insta">{Icon.insta}</a>
                 </div>
                 <div className="footer__franchise">
-                    <a href="#">Открыть свой СушиШоп</a>
+                    <a href="//sushishop-fr.ru/" target="_blank">Открыть свой СушиШоп</a>
                 </div>
                 <div className="footer__endy">
                     Приготовлено <a href="//www.endy.pro">в&nbsp;ENDY</a>

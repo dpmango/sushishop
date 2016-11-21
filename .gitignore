@@ -1,6 +1,7 @@
 node_modules
 .DS_Store
 .idea
+build/f/js
 build/f/script
 build/f/style
 /index.jsx

@@ -256,9 +256,11 @@ const MapShopsContainer = React.createClass({
             zoom: 7
         });
 
-        this.map.addListener('zoom_changed', () => {
+        this.boundsListener = google.maps.event.addListener(this.map, 'bounds_changed', () => {
             this.markerUpdate()
+            google.maps.event.removeListener(this.boundsListener)
         })
+
         this.buildMarker(false);
     },
     componentDidUpdate: function() {
