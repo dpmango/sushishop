@@ -5,6 +5,11 @@ const JobContainer = React.createClass({
             title: 'Работа в СушиШопе'
         })
     },
+    goToVacancy: function (e) {
+        let top = document.querySelector('.vacancy').getBoundingClientRect().top + document.body.scrollTop - 20
+        Scroll(top, 300)
+        e.preventDefault()
+    },
     render: function() {
         return (
             <div className="job">
@@ -26,11 +31,11 @@ const JobContainer = React.createClass({
                         </div>
                         <div className="job-adv__item">
                             <div className="job-adv__icon job-adv__icon_career">{Icon.career}</div>
-                            <h3 className="job-adv__title">Премии и бонусы</h3>
+                            <h3 className="job-adv__title">Карьерный рост</h3>
                             <div className="job-adv__descr">Мы активно продвигаем по&nbsp;карьерной лестнице тех&nbsp;сотрудников, кто успешно развивается вместе с&nbsp;нами.</div>
                         </div>
                     </div>
-                    <a href="" className="job-header__button button button_border button_medium">
+                    <a href="" className="job-header__button button button_border button_medium" onClick={this.goToVacancy}>
                         Вакансии
                         <span><font>{this.props.vacancy.length}</font></span>
                     </a>
