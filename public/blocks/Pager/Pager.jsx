@@ -64,7 +64,7 @@ module.exports = React.createClass({
                             </Link>
                         </div>
                         <div className="swiper-slide">
-                            <Link to="#" className="pager-link">
+                            <Link to="/journal" className="pager-link">
                                 <div className="pager-link__photo">
                                     <div className="pager-link__photo-wrapper">
                                         <div className="pager-link__photo-wrapper">

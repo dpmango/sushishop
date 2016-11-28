@@ -1,0 +1,85 @@
+.journal-article
+	background $color__white
+	padding 80px 380px 100px 100px
+	&__section
+		text-transform uppercase
+		color rgba(0, 0, 0, .5)
+		font-weight bold
+		font-size 24px
+		letter-spacing .06em
+		margin-bottom .75em
+		display inline-block
+	&__title
+		font-size 48px
+	&__category
+		text-transform uppercase
+		font-weight bold
+		font-size 16px
+		letter-spacing .06em
+		margin-top .5em
+		a
+			color rgba(0, 0, 0, .5)
+			& + a
+				margin-left 20px
+				position relative
+				&:before
+					content '•'
+					display block
+					color rgba(0, 0, 0, .5)
+					text-align center
+					width 20px
+					position absolute
+					top 0
+					right 100%
+	&__article
+		font-size 20px
+		margin-top 2em
+		color #414551
+		p + p
+			margin-top 1em
+	&__area
+		position relative
+	&__social
+		position absolute
+		left calc(100% + 40px)
+		width 240px
+		top 0
+
+
+.journal-article-social
+	display block
+	border-radius 5px
+	border 2px solid $color__orange
+	box-sizing border-box
+	padding 30px 20px
+	&__label
+		opacity .8
+		color #222222
+		text-align center
+		line-height calc(22 / 16)
+	&__links
+		display flex
+		justify-content center
+		margin-top 10px
+	&__link
+		border-radius 50%
+		border 2px solid $color__orange
+		width 40px
+		height 40px
+		box-sizing border-box
+		display flex
+		align-items center
+		justify-content center
+		margin 0 8px
+		&_vk svg
+			width 11px
+			height 15px
+		&_fb svg
+			width 8px
+			height 17px
+		&_ok svg
+			width 12px
+			height 20px
+		svg
+			display block
+			fill $color__orange

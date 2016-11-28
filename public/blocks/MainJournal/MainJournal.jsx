@@ -17,7 +17,15 @@ function MainJournalShadow(swiper) {
 }
 
 
-module.exports = React.createClass({
+const MainJournalContainer = React.createClass({
+    componentWillMount: function() {
+        store.dispatch({
+            type: 'GET_JOURNAL'
+        })
+        store.dispatch({
+            type: 'GET_JOURNAL_CATEGORY'
+        })
+    },
     render: function() {
         return (
             <div className="main-journal">
@@ -43,62 +51,22 @@ module.exports = React.createClass({
                         }
                     }}
                 >
-                    <div className="swiper-slide">
-                        <JournalItem
-                            name="Открываем два СушиШопа в&nbsp;Нарьян-Маре"
-                            alt="open-narian-mare"
-                            bg_to="#FBD249"
-                            bg_from="#F5A623"
-                            category={[1,2]}
-                            descr="В&nbsp;краю холодных рек и&nbsp;озёр совсем скоро откроется самое тёплое и&nbsp;гостепреимное место, в&nbsp;котором можно купить что-нибудь вкусненькое."
-                        />
-                    </div>
-                    <div className="swiper-slide">
-                        <JournalItem
-                            name="Готовим ролл с&nbsp;угрём"
-                            alt="open-narian-mare"
-                            image_medium="/f/images/journal/open-narian-mare-medium.jpg"
-                            image_small="/f/images/journal/open-narian-mare-small.jpg"
-                            category={[1,2]}
-                        />
-                    </div>
-                    <div className="swiper-slide">
-                        <JournalItem
-                            name="Открываем два СушиШопа в&nbsp;Нарьян-Маре"
-                            alt="gourmet-home"
-                            image_medium="/f/images/journal/gourmet-home-medium.jpg"
-                            image_small="/f/images/journal/gourmet-home-small.jpg"
-                            category={[1,2]}
-                        />
-                    </div>
-                    <div className="swiper-slide">
-                        <JournalItem
-                            name="Открываем два СушиШопа в&nbsp;Нарьян-Маре"
-                            alt="open-narian-mare"
-                            bg_to="#FBD249"
-                            bg_from="#F5A623"
-                            category={[1,2]}
-                            descr="В&nbsp;краю холодных рек и&nbsp;озёр совсем скоро откроется самое тёплое и&nbsp;гостепреимное место, в&nbsp;котором можно купить что-нибудь вкусненькое."
-                        />
-                    </div>
-                    <div className="swiper-slide">
-                        <JournalItem
-                            name="Готовим ролл с&nbsp;угрём"
-                            alt="open-narian-mare"
-                            image_medium="/f/images/journal/open-narian-mare-medium.jpg"
-                            image_small="/f/images/journal/open-narian-mare-small.jpg"
-                            category={[1,2]}
-                        />
-                    </div>
-                    <div className="swiper-slide">
-                        <JournalItem
-                            name="Открываем два СушиШопа в&nbsp;Нарьян-Маре"
-                            alt="gourmet-home"
-                            image_medium="/f/images/journal/gourmet-home-medium.jpg"
-                            image_small="/f/images/journal/gourmet-home-small.jpg"
-                            category={[1,2]}
-                        />
-                    </div>
+                    {this.props.journal.map((item) => {
+                        let category = this.props.journalCategory.filter((category) => {
+                            if (category.id == item.category[0]) return category
+                        })[0].alt
+                        return <div className="swiper-slide" key={item.id}>
+                            <JournalItem
+                                name={item.name}
+                                alt={category+'/'+item.alt}
+                                bg_to={item.bg_to}
+                                bg_from={item.bg_from}
+                                image_medium={item.image_medium}
+                                category={item.category}
+                                descr={item.descr}
+                            />
+                        </div>
+                    })}
                 </SwiperContainer>
                 <div className="main-journal__more">
                     <Link to="/journal/" className="button button_border button_medium">Все записи журнала</Link>
@@ -107,3 +75,13 @@ module.exports = React.createClass({
         );
     }
 });
+
+const mapStateToProps = function(store) {
+    return {
+        journal: store.journal,
+        journalCategory: store.journalCategory,
+    }
+};
+
+
+module.exports = connect(mapStateToProps)(MainJournalContainer);

@@ -13,5 +13,8 @@ module.exports = combineReducers({
     login: require('./api/login.jsx'),
     company: require('./api/company.jsx'),
     meta: require('./api/meta.jsx'),
-    vacancy: require('./api/vacancy.jsx')
+    vacancy: require('./api/vacancy.jsx'),
+    journal: require('./api/journal.jsx'),
+    journalCategory: require('./api/journalCategory.jsx'),
+    journalArticle: require('./api/journalArticle.jsx')
 });

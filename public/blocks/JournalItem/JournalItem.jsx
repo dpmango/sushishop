@@ -1,6 +1,6 @@
 module.exports = React.createClass({
     render: function() {
-        let descr = (this.props.descr) ? <div className="journal-item__descr">{this.props.descr}</div> : '',
+        let descr = (this.props.descr) ? <div className="journal-item__descr" dangerouslySetInnerHTML={{__html: this.props.descr}} /> : '',
             photo = (this.props.image_medium) ? <picture className="journal-item__photo">
                     <source media="" srcSet={this.props.image_medium}/>
                     <img src={this.props.image_medium} alt={this.props.name} />
@@ -8,7 +8,7 @@ module.exports = React.createClass({
             gradient = (this.props.bg_to && this.props.bg_from) ? <div className="journal-item__gradient" style={{ backgroundImage: 'linear-gradient(to bottom right, '+this.props.bg_to+', '+this.props.bg_from+')' }}></div> : '';
         return (
             <div>
-                <Link to={'/journal/test/'+this.props.alt} className="journal-item">
+                <Link to={'/journal/'+this.props.alt} className="journal-item">
                     {photo}
                     {gradient}
                     <div className="journal-item__wrapper">

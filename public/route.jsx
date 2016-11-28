@@ -11,6 +11,9 @@ const routes = (
         <Route path="shops" component={Shops} />
         <Route path="about" component={About} />
         <Route path="job" component={Job} />
+        <Route path="journal/:categoryAlt/:articleAlt" component={JournalArticle} />
+        <Route path="journal/:categoryAlt" component={Journal} />
+        <Route path="journal" component={Journal} />
         <Route path="*" component={NotFound}/>
     </Route>
 )
