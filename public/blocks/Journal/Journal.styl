@@ -5,10 +5,64 @@
 		font-size 48px
 		text-transform uppercase
 		letter-spacing .06em
-		margin-bottom 1em
+	&__header
+		display flex
+		align-items center
+		margin-bottom 3em
 	&__list
 		display flex
 		flex-wrap wrap
 		justify-content space-between
 		& > *
 			width 50%
+
+
+.journal-category
+	display flex
+	align-items center
+	margin-left 25px
+	&__item
+		display block
+		font-size 18px
+		text-transform uppercase
+		letter-spacing .06em
+		color $color__gray
+		font-weight bold
+		padding 8px 20px
+		position relative
+		border-radius 5px
+		transition-property color, background
+		transition-duration .3s
+		&:before
+			content '×'
+			display block
+			position absolute
+			right 9px
+			line-height 1
+			top calc(50% - 18px / 2)
+			transition-property opacity, transform
+			transition-duration .3s
+			opacity 0
+			transform translateX(-8px)
+		.mac &
+			padding 10px 20px 6px 20px
+			&:before
+				top calc(50% - 18px / 2 + 1px)
+		span
+			display block
+			transition .3s transform
+		&_active
+			background $color__orange
+			color $color__white
+			transition-duration .15s
+			&:before
+				opacity 1
+				transform translateX(0)
+			span
+				transform translateX(-7px)
+			&:hover
+				background $color__orange_lighten
+				color $color__white
+			&:active
+				background $color__orange_dark
+				color $color__white

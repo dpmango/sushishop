@@ -10,6 +10,7 @@ if (!IS_NODE) {
     self.cookie = require('react-cookie')
     self.InfoBox = require('./blocks/Libs/InfoBox.jsx')
     self.RichMarker = require('./blocks/Libs/RichMarker.jsx')
+    self.likely = require('ilyabirman-likely')
 }
 
 self.Router = require('react-router').Router

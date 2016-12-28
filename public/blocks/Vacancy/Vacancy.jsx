@@ -2,7 +2,8 @@ const VacancyContainer = React.createClass({
     getInitialState: function() {
         return {
             city: 0,
-            active: 0
+            active: 0,
+            popup: false
         }
     },
     componentWillMount: function() {
@@ -23,6 +24,13 @@ const VacancyContainer = React.createClass({
         this.setState({
             city: this.refs.select.value
         })
+    },
+    popup: function (e) {
+        store.dispatch({
+            type: 'POPUP_SHOW'
+        })
+
+        this.refs.vacancy_select.value = e.target.closest('.vacancy-form__submit').getAttribute('data-id')
     },
     render: function() {
         if (this.props.vacancy.length === 0) return <div></div>
@@ -86,12 +94,63 @@ const VacancyContainer = React.createClass({
                                         <a href={"tel:"+item.recruiter.phone} className="vacancy-form__phone">{item.recruiter.phone}</a>
                                         <div className="vacancy-form__name">{item.recruiter.name}</div>
                                     </div>
-                                    <div className="vacancy-form__submit button button_fill button_medium">Откликнуться</div>
+                                    <div className="vacancy-form__submit button button_fill button_medium" onClick={this.popup} data-id={item.id}>Откликнуться</div>
                                 </div>
                             </div>
                         </div> : "")
                     })}
                 </div>
+                <Popup
+                    title="Анкета соискателя"
+                    type="send_vacancy"
+                    city={this.props.city.list}
+                    vacancy={this.props.vacancy}
+                    checked="Подтверждаю передачу своих личных данных, разрешаю их&nbsp;обработку и&nbsp;использование"
+                    content={<div className="form">
+                        <div className="form__item form__item_left">
+                            <label htmlFor="fio" className="form__label">ФИО</label>
+                            <div className="form__input">
+                                <input type="text" name="user_fio" id="fio" />
+                            </div>
+                        </div>
+                        <div className="form__item form__item_right">
+                            <label htmlFor="vacancy" className="form__label">Вакансия</label>
+                            <div className="form__select">
+                                <select name="vac_id" id="vacancy" ref="vacancy_select">
+                                    {this.props.vacancy.map((item) => {
+                                        return <option value={item.id} key={item.id}>{item.name}&nbsp;&mdash; {this.props.city.list[item.city_id].name}</option>
+                                    })}
+                                </select>
+                            </div>
+                        </div>
+                        <div className="form__clear"></div>
+                        <div className="form__item form__item_left">
+                            <label htmlFor="phone" className="form__label">Телефон</label>
+                            <div className="form__input">
+                                <input type="phone" name="user_phone" id="phone" />
+                            </div>
+                        </div>
+                        <div className="form__item form__item_right">
+                            <label htmlFor="experience" className="form__label">Имеющийся опыт работы <span>(не обязательно)</span></label>
+                            <div className="form__textarea">
+                                <textarea name="user_description" id="experience"></textarea>
+                            </div>
+                        </div>
+                        <div className="form__item form__item_left">
+                            <label htmlFor="email" className="form__label">Эл. почта</label>
+                            <div className="form__input">
+                                <input type="email" name="user_email" id="email" />
+                            </div>
+                        </div>
+                        <div className="form__item form__item_left">
+                            <label htmlFor="birth" className="form__label">Дата рождения</label>
+                            <div className="form__input form__input_small">
+                                <input type="date" name="user_birthday" id="birth" />
+                            </div>
+                        </div>
+                        <div className="form__clear"></div>
+                    </div>}
+                />
             </div>
         )
     }

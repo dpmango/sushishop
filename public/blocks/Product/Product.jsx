@@ -50,6 +50,11 @@ var ProductContainer = React.createClass({
         let id = this.props.product.active,
             product = this.props.products.list[id]
 
+        store.dispatch({
+            type: "SET_META",
+            title: product.name
+        })
+
         return (<div className="product">
             <div className="product__shadow"></div>
             <div className="product__window">

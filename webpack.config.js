@@ -14,6 +14,9 @@ module.exports = {
         aggregateTimeout: 100
     },
     devtool: ((NODE_ENV == 'dev') ? 'cheap-inline-module-source-map' : false),
+    performance : {
+        hints : false
+    },
     plugins: [
         new webpack.DefinePlugin({
             NODE_ENV: JSON.stringify(NODE_ENV),
@@ -21,13 +24,12 @@ module.exports = {
             SELF: JSON.stringify('window')
         })
     ],
-
     module: {
         loaders: [
             {
                 test: /\.jsx$/,
                 exclude: /(node_modules|bower_components)/,
-                loader: 'babel',
+                loader: 'babel-loader',
                 query: {
                     presets: ['react', 'es2015']
                 }

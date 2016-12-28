@@ -16,5 +16,6 @@ module.exports = combineReducers({
     vacancy: require('./api/vacancy.jsx'),
     journal: require('./api/journal.jsx'),
     journalCategory: require('./api/journalCategory.jsx'),
-    journalArticle: require('./api/journalArticle.jsx')
+    journalArticle: require('./api/journalArticle.jsx'),
+    popup: require('./api/popup.jsx')
 });

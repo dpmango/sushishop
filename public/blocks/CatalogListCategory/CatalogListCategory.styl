@@ -1,11 +1,21 @@
 .catalog-list-category
 	background #2A2A2A
-	height 180px
 	overflow hidden
+	@media (min-width 850px)
+		height 180px
+	@media (max-width 851px) and (min-width 550px)
+		height 140px
+	@media (max-width 551px)
+		height 100px
 	&__wrapper
 		height 100%
 	&__item-outer
-		width 200px !important
+		@media (min-width 850px)
+			width 200px !important
+		@media (max-width 851px) and (min-width 550px)
+			width 150px !important
+		@media (max-width 551px)
+			width 100px !important
 	&__item
 		width 100%
 		height 100%
@@ -23,13 +33,21 @@
 			display block
 			position absolute
 			left 50%
-			margin-left -13px
+			@media (min-width 550px)
+				margin-left -13px
+			@media (max-width 551px)
+				margin-left -8px
 		&_active
 			cursor default
 	&_top &__item:before
-		border 13px solid transparent
-		border-bottom 13px solid $color__bg
-		bottom -26px
+		@media (min-width 550px)
+			border 13px solid transparent
+			border-bottom 13px solid $color__bg
+			bottom -26px
+		@media (max-width 551px)
+			border 8px solid transparent
+			border-bottom 8px solid $color__bg
+			bottom -16px
 	&_top &__item_active:before
 		bottom 0
 	&_bottom &__item:before
@@ -42,3 +60,15 @@
 		text-transform uppercase
 		color $color__white
 		letter-spacing .075em
+		@media (max-width 851px) and (min-width 550px)
+			font-size 13px
+		@media (max-width 551px)
+			font-size 10px
+	&__photo
+		img
+			@media (min-width 850px)
+				max-height 150px !important
+			@media (max-width 851px) and (min-width 550px)
+				max-height 100px !important
+			@media (max-width 551px)
+				max-height 50px !important

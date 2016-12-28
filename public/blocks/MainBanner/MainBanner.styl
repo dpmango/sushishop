@@ -1,6 +1,9 @@
 .main-banner
-	color $color__white
 	position relative
+	display block
+	height 100%
+	&, &:hover, &:active
+		color $color__white
 	@media (min-width 1280px)
 		height 400px
 	@media (max-width 1280px)
@@ -22,9 +25,12 @@
 		justify-content center
 		@media (min-width 1280px)
 			bottom 0
-			left 56.5%
 			width 610px
 			margin-left -305px
+			.main-banner_price &
+				left 56.5%
+			.main-banner:not(.main-banner_price) &
+				left 63.5%
 		@media (max-width 1280px) and (min-width 700px)
 			height 310px
 			right 0

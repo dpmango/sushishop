@@ -8,8 +8,19 @@ const JournalArticleContainer = React.createClass({
             type: "GET_JOURNAL_CATEGORY"
         })
     },
+    componentDidMount: function() {
+        window.likely.initiate();
+    },
     render: function() {
-        let item = this.props.journalArticle
+        let item = this.props.journalArticle[this.props.routeParams.articleAlt]
+
+        if (!item) return <div></div>
+
+        store.dispatch({
+            type: "SET_META",
+            title: `${item.name}. Журнал Суши Шопа`
+        })
+
         return <div className="journal-article">
             <div className="journal-article__wrapper">
                 <Link to="/journal" className="journal-article__section">Журнал</Link>
@@ -26,10 +37,10 @@ const JournalArticleContainer = React.createClass({
                 <div className="journal-article__area">
                     <div className="journal-article-social journal-article__social">
                         <div className="journal-article-social__label">Понравился рецепт, расскажите друзьям</div>
-                        <div className="journal-article-social__links">
-                            <div className="journal-article-social__link journal-article-social__link_vk">{Icon.vk}</div>
-                            <div className="journal-article-social__link journal-article-social__link_fb">{Icon.fb}</div>
-                            <div className="journal-article-social__link journal-article-social__link_ok">{Icon.ok}</div>
+                        <div className="journal-article-social__links likely">
+                            <div className="journal-article-social__link journal-article-social__link_vk vkontakte">{Icon.vk}</div>
+                            <div className="journal-article-social__link journal-article-social__link_fb facebook">{Icon.fb}</div>
+                            <div className="journal-article-social__link journal-article-social__link_ok odnoklassniki">{Icon.ok}</div>
                         </div>
                     </div>
                     <div className="journal-article__article"  dangerouslySetInnerHTML={{__html: item.content}}  />

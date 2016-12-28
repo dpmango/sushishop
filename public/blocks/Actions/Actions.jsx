@@ -7,6 +7,13 @@ const ActionsContainer = React.createClass({
     },
     Action: function () {
         var data = this.props.actions.list[this.props.actions.alt[this.props.params.actionAlt]];
+
+        store.dispatch({
+            type: "SET_META",
+            title: `${data.name}. Акции в Суши Шопе`,
+            noResponsive: true
+        })
+
         return (<div className="action">
             <div className="action__wrapper">
                 <div className="action__image">
@@ -20,6 +27,13 @@ const ActionsContainer = React.createClass({
         </div>)
     },
     render: function () {
+        if (!this.props.params.actionAlt) {
+            store.dispatch({
+                type: "SET_META",
+                title: `Акции в Суши Шопе`,
+                noResponsive: true
+            })
+        }
         return (
             <div className="actions">
                 {(this.props.params.actionAlt) ? this.Action() : ''}

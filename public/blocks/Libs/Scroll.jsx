@@ -25,16 +25,16 @@ module.exports = function (to, duration) {
             if (lastpos) {
                 if (lastpos === element.scrollTop) {
                     lastpos = val;
-                    element.scrollTop = val;
+                    element.scrollTop = document.documentElement.scrollTop = val;
                 } else {
                     animating = false;
                 }
             } else {
                 lastpos = val;
-                element.scrollTop = val;
+                element.scrollTop = document.documentElement.scrollTop = val;
             }
             if (now > animationStart + duration) {
-                element.scrollTop = to;
+                element.scrollTop = document.documentElement.scrollTop = to;
                 animating = false;
                 if (callback) { callback(); }
             }

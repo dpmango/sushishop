@@ -10,7 +10,7 @@ module.exports = React.createClass({
             <div>
                 <Link to={'/journal/'+this.props.alt} className="journal-item">
                     {photo}
-                    {gradient}
+                    {photo ? '' : gradient}
                     <div className="journal-item__wrapper">
                         <div className="journal-item__name">{this.props.name}</div>
                         {descr}

@@ -23,7 +23,8 @@ var BannersContainer = React.createClass({
                     simulateTouch: false,
                     className: "main-banners",
                     slidesPerView: 1,
-                    spaceBetween: 0
+                    spaceBetween: 0,
+                    loop: true
                 }}
             >
                 {this.props.banners.map((item) => {
@@ -40,6 +41,8 @@ var BannersContainer = React.createClass({
                             weight={item.weight}
                             count={item.count}
                             part={item.part}
+                            url={item.url}
+                            productId={item.product_id}
                         />
                     )
                 })}

@@ -52,9 +52,9 @@ const JobContainer = React.createClass({
                             <li>Бесплатное питание</li>
                         </ul>
                     </div>
-                    <div className="job-closer__join">
-                        <div className="button button_border button_medium">Вступить в команду</div>
-                    </div>
+                    {/*<div className="job-closer__join">*/}
+                        {/*<div className="button button_border button_medium" onClick={this.openPopup}>Вступить в команду</div>*/}
+                    {/*</div>*/}
                 </div>
                 <Vacancy />
             </div>

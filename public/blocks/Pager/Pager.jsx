@@ -41,7 +41,7 @@ module.exports = React.createClass({
                             <Link to="/about" className="pager-link">
                                 <div className="pager-link__photo">
                                     <div className="pager-link__photo-wrapper">
-                                        <img src="/f/images/pager/philosophy.jpg" alt="Философия СушиШопа"/>
+                                        <img src="/f/images/pager/philosophy.jpg?2" alt="Философия СушиШопа"/>
                                     </div>
                                 </div>
                                 <div className="pager-link__wrapper">

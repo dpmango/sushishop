@@ -4,9 +4,16 @@ module.exports = function (state = { title: 'СушиШоп' }, action) {
             if (action.title) {
                 document.querySelector('title').innerHTML = action.title
             }
+
+            if (action.noResponsive) {
+                document.querySelector('html').classList.add('no-responsive')
+            } else {
+                document.querySelector('html').classList.remove('no-responsive')
+            }
         }
         return {
-            title: action.title
+            title: action.title,
+            noResponsive: action.noResponsive ? action.noResponsive : false
         }
     }
     return state

@@ -1,10 +1,13 @@
 const CatalogContainer = React.createClass({
+    getInitialState: function() {
+        return {
+            tag: 0
+        }
+    },
     componentWillMount: function () {
         store.dispatch({
             type: 'GET_PRODUCTS'
         })
-
-        console.log(this.props.params)
 
         if (this.props.params.productId != 0) {
             store.dispatch({
@@ -27,7 +30,7 @@ const CatalogContainer = React.createClass({
             })
         }
 
-        return this.props.params.categoryId !== nextProps.params.categoryId
+        return this.props.params.categoryId !== nextProps.params.categoryId || this.state.tag != nextState.tag
     },
     tags: function () {
         if (IS_NODE) return
@@ -64,28 +67,57 @@ const CatalogContainer = React.createClass({
     componentDidMount: function() {
         this.tags()
     },
+    filter: function (e) {
+        let block = e.target.closest('.catalog-tags__item')
+
+        if (block.classList.contains('catalog-tags__item_active')) {
+            this.setState({
+                tag: 0
+            })
+        } else {
+            this.setState({
+                tag: parseInt(block.getAttribute('data-id'))
+            })
+        }
+    },
+    hasTag: function (id, list) {
+        let isStatus = false
+        list.map((item) => {
+            if (parseInt(item) == parseInt(id)) {
+                isStatus = true
+            }
+        })
+        return isStatus
+    },
     render: function() {
         const category_id = this.props.catalog.url[this.props.params.categoryId],
             products = this.props.products.category[category_id],
             category = this.props.catalog.list[category_id]
 
         let i = 0
+
+        store.dispatch({
+            type: "SET_META",
+            title: category.name
+        })
+
         return (
-            <div>
-                <div className="catalog">
-                    <h1 className="catalog__title">{category.name}</h1>
-                    <div className="catalog-tags" ref="tags">
-                        {category.tags.map((item) => {
-                            return <div className="catalog-tags__item" key={item.id}>{item.title}</div>
-                        })}
-                    </div>
-                    <div className="catalog__list">
-                        {(products) ? products.map((id) => {
-                            let item = this.props.products.list[id]
-                            item = Object.assign(item, {link: '/catalog/'+category.alt+'/'+item.alt})
-                            return (<ProductItem {...item} key={item.id} />)
-                        }) : ''}
-                    </div>
+            <div className="catalog">
+                <h1 className="catalog__title">{category.name}</h1>
+                <div className={"catalog-tags"+(this.state.tag ? " catalog-tags_choose" : "")} ref="tags">
+                    {category.tags.map((item) => {
+                        return <div className={"catalog-tags__item"+(this.state.tag == item.id ? ` catalog-tags__item_active` : ``)} key={item.id} data-id={item.id} onClick={this.filter}>
+                            <span>{item.title}</span>
+                        </div>
+                    })}
+                </div>
+                <div className="catalog__list">
+                    {(products) ? products.map((id) => {
+                        let item = this.props.products.list[id]
+                        item = Object.assign(item, {link: '/catalog/'+category.alt+'/'+item.alt})
+                        console.log('break', this.state.tag > 0, this.hasTag(this.state.tag, item.tags), item)
+                        return (this.state.tag > 0 && this.hasTag(this.state.tag, item.tags) || this.state.tag == 0) ? (<ProductItem {...item} key={item.id} />) : ''
+                    }) : ''}
                 </div>
             </div>
         );
